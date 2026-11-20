@@ -28,7 +28,7 @@
     --pattern-opacity: 0.13;
     --pattern-img: none;
 
-    /* 4 KADEMELİ PASTEL TONLAR (KAĞIT TEMASI) */
+    /* 4 KADEMELİ PASTEL TONLAR */
     --tier-1-bg: rgba(253, 251, 246, 0.86);
     --tier-2-bg: rgba(246, 242, 232, 0.86);
     --tier-3-bg: rgba(238, 235, 224, 0.88);
@@ -366,7 +366,7 @@
     50% { height: 12px; }
   }
 
-  /* SOLDAN AÇILIR MENÜ (DRAWER) + ORGANİK ARKA PLAN DESENİ */
+  /* SOLDAN AÇILIR MENÜ (DRAWER) + ORGANİK DESEN */
   .drawer-backdrop {
     position: fixed;
     inset: 0;
@@ -896,22 +896,159 @@
     gap: 10px;
   }
 
-  /* ISI HARİTASI (HEATMAP) */
-  .heatmap-grid {
-    display: grid;
-    grid-template-columns: repeat(14, 1fr);
-    gap: 4px;
-    margin-top: 8px;
+  /* DAİRESEL PUSULA HALKASI & AYLIK TAKVİM ISI HARİTASI */
+  .compass-dial-wrap {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 6px 2px 4px;
   }
-  .heat-cell {
+  .compass-dial-svg {
+    width: 116px;
+    height: 116px;
+    flex-shrink: 0;
+  }
+  .dial-stats {
+    flex: 1;
+  }
+  .dial-headline {
+    font-family: Georgia, serif;
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .dial-sub {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  .month-nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .month-title-label {
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--accent);
+  }
+
+  .month-cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+  }
+  .cal-cell {
     aspect-ratio: 1;
-    border-radius: 4px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    padding: 2px;
+    transition: transform 0.14s ease, box-shadow 0.18s ease;
+    user-select: none;
+  }
+  .cal-cell:active { transform: scale(0.92); }
+  .cal-cell.selected-day {
+    box-shadow: 0 0 0 2.5px var(--accent);
+    transform: scale(1.04);
+    z-index: 2;
+  }
+  .cal-cell.today-cell {
+    border-width: 2px;
+    border-color: var(--accent);
+  }
+  .cal-day-num {
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .cal-badge-icon {
+    font-size: 0.72rem;
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  /* 5 KADEMELİ RENK PALETİ (GÖZ YORMAYAN DENGELİ TONLAR) */
+  .cal-future {
+    opacity: 0.42;
+    background: var(--bg-elevated);
+    color: var(--text-muted);
+  }
+  .cal-lvl-0 {
+    /* %0: Yumuşak Mercan / Kırmızı */
+    background: rgba(214, 90, 82, 0.22);
+    border-color: rgba(214, 90, 82, 0.45);
+    color: var(--text);
+  }
+  .cal-lvl-1 {
+    /* %1 - %25: Sarı */
+    background: rgba(234, 195, 68, 0.30);
+    border-color: rgba(218, 174, 40, 0.55);
+    color: var(--text);
+  }
+  .cal-lvl-2 {
+    /* %26 - %49: Turuncu */
+    background: rgba(232, 138, 62, 0.32);
+    border-color: rgba(220, 118, 38, 0.58);
+    color: var(--text);
+  }
+  .cal-lvl-3 {
+    /* %50 - %74: Pusula Doğru Yönde (Amber-Turuncu + Pusula Yıldızı) */
+    background: rgba(224, 152, 54, 0.42);
+    border-color: rgba(206, 130, 30, 0.75);
+    color: var(--text);
+  }
+  .cal-lvl-4 {
+    /* %75 - %99: Açık Yeşil + Pusula Yıldızı */
+    background: rgba(114, 184, 126, 0.36);
+    border-color: rgba(88, 162, 102, 0.65);
+    color: var(--text);
+  }
+  .cal-lvl-5 {
+    /* %100: Tamamlandı + Altın Rozet */
+    background: linear-gradient(135deg, rgba(84, 158, 106, 0.46), rgba(224, 182, 72, 0.38));
+    border-color: rgba(202, 156, 42, 0.85);
+    color: var(--text);
+  }
+
+  .cal-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    align-items: center;
+  }
+  .legend-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .legend-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  .day-breakdown-card {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 16px;
     background: var(--bg-elevated);
     border: 1px solid var(--border);
+    animation: smoothViewIn 0.22s ease;
   }
-  .heat-1 { background: var(--accent-soft); }
-  .heat-2 { background: var(--accent); opacity: 0.65; }
-  .heat-3 { background: var(--accent); opacity: 1; }
 
   /* SES STÜDYOSU IZGARASI */
   .sound-grid {
@@ -1162,7 +1299,6 @@
         </div>
       </div>
 
-      <!-- İLERLEME MANTIĞI SEÇİMİ -->
       <div class="form-group" id="progressionModeGroup">
         <label>İlerleme Şekli</label>
         <select id="gProgressMode" onchange="toggleLinkedGoalField()">
@@ -1258,13 +1394,32 @@
 
   <!-- 4. GÖRÜNÜM: ÖZ FEEDBACK & ZAMAN KAPSÜLÜ -->
   <section id="view-feedback" class="view">
+    <!-- DAİRESEL PUSULA HALKASI (GÜNLÜK & AYLIK DENGE) -->
     <div class="card">
-      <div class="section-label"><span>📊 Son 28 Gün Ritim Isı Haritası</span></div>
-      <div class="heatmap-grid" id="heatmapGrid"></div>
-      <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-muted); margin-top:8px;">
-        <span>Daha az</span>
-        <span>Tam uyum</span>
+      <div class="section-label"><span>🧭 Ritim Pusulası & Günlük Denge</span></div>
+      <div class="compass-dial-wrap" id="compassDialContainer"></div>
+    </div>
+
+    <!-- AYLIK TAKVİM ISI HARİTASI & DOKUNMATİK GÜN DÖKÜMÜ -->
+    <div class="card">
+      <div class="section-label">
+        <span>📅 Aylık Ritim Takvimi</span>
+        <span style="font-size:0.7rem; font-weight:400;">Güne dokunup dökümü açın</span>
       </div>
+      <div class="month-nav-row">
+        <button class="mini-btn" onclick="shiftCalendarMonth(-1)">‹ Önceki Ay</button>
+        <span class="month-title-label" id="calMonthTitle"></span>
+        <button class="mini-btn" onclick="shiftCalendarMonth(1)">Sonraki Ay ›</button>
+      </div>
+      <div class="month-cal-grid" id="monthCalGrid"></div>
+      <div class="cal-legend">
+        <span class="legend-pill"><span class="legend-dot" style="background:rgba(214, 90, 82, 0.35);"></span>%0</span>
+        <span class="legend-pill"><span class="legend-dot" style="background:rgba(234, 195, 68, 0.45);"></span>%25</span>
+        <span class="legend-pill"><span class="legend-dot" style="background:rgba(224, 152, 54, 0.55);"></span>%50+ ✦</span>
+        <span class="legend-pill"><span class="legend-dot" style="background:rgba(114, 184, 126, 0.50);"></span>%75+</span>
+        <span class="legend-pill"><span class="legend-dot" style="background:rgba(202, 156, 42, 0.65);"></span>%100 🏅</span>
+      </div>
+      <div id="selectedDayBreakdown"></div>
     </div>
 
     <div class="card">
@@ -1278,7 +1433,7 @@
     </div>
 
     <div class="card">
-      <div class="section-label"><span>📅 Haftalık Plan & Not Arşivi</span></div>
+      <div class="section-label"><span>🗂️ Haftalık Plan & Not Arşivi</span></div>
       <div id="weeklyArchiveList"></div>
     </div>
 
@@ -1562,6 +1717,7 @@ const DEFAULT_SOUNDS = [
 ];
 
 const WEEK_DAYS_TR = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"];
+const MONTHS_TR = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
 
 /* --- UYGULAMA DURUMU (STATE) --- */
 let state = {
@@ -1596,15 +1752,27 @@ let expandedTodayDailyId = null;
 let expandedTodayCycleId = null;
 let expandedTodayCompassId = null;
 
+// Aylık Takvim Durumu
+let calViewYear = new Date().getFullYear();
+let calViewMonth = new Date().getMonth();
+let selectedCalDateKey = null;
+
 /* --- TARİH VE HAFTA ANAHTARI YARDIMCILARI --- */
+function toDateKey(dateObj) {
+  return dateObj.getFullYear() + "-" + String(dateObj.getMonth() + 1).padStart(2, "0") + "-" + String(dateObj.getDate()).padStart(2, "0");
+}
+
 function getTodayKey() {
-  const d = new Date();
-  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  return toDateKey(new Date());
+}
+
+function getWeekdayIndexFromDate(dateObj) {
+  const day = dateObj.getDay();
+  return day === 0 ? 6 : day - 1;
 }
 
 function getTodayWeekdayIndex() {
-  const day = new Date().getDay();
-  return day === 0 ? 6 : day - 1;
+  return getWeekdayIndexFromDate(new Date());
 }
 
 function getCurrentWeekKey(dateObj = new Date()) {
@@ -1618,12 +1786,69 @@ function getCurrentWeekKey(dateObj = new Date()) {
 
 function formatDateTR(dateObj) {
   const days = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
-  const months = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
-  return `${dateObj.getDate()} ${months[dateObj.getMonth()]} ${dateObj.getFullYear()}, ${days[dateObj.getDay()]}`;
+  return `${dateObj.getDate()} ${MONTHS_TR[dateObj.getMonth()]} ${dateObj.getFullYear()}, ${days[dateObj.getDay()]}`;
 }
 
 function createEmptyWeekSlots() {
   return Array.from({ length: 7 }, () => ({ plan: "", note: "", done: false }));
+}
+
+/* BELİRLİ BİR GÜN İÇİN AĞIRLIKLI TAMAMLANMA YÜZDESİ VE DETAY DÖKÜMÜ HESABI */
+function evaluateDayCompletion(dateKey, dateObj) {
+  const dailyGoals = state.goals.filter(g => g.horizon === "daily" || g.type === "weekly_plan");
+  if (dailyGoals.length === 0) {
+    return { percent: 0, items: [], hasActivity: false };
+  }
+
+  const log = state.logs[dateKey] || { completedIds: [], numericDaily: {}, goalNotesDaily: {}, answers: {}, mood: "" };
+  const isToday = dateKey === getTodayKey();
+  const weekdayIdx = getWeekdayIndexFromDate(dateObj);
+
+  let totalPctSum = 0;
+  let hasActivity = !!(log.mood || Object.values(log.answers || {}).some(a => a && a.trim()));
+  const items = [];
+
+  dailyGoals.forEach(g => {
+    let itemPct = 0;
+    let detailStr = "";
+    const noteText = (log.goalNotesDaily && log.goalNotesDaily[g.id]) ? log.goalNotesDaily[g.id] : "";
+
+    if (g.type === "weekly_plan") {
+      let done = false;
+      let wNote = "";
+      if (isToday && g.weekSlots && g.weekSlots[weekdayIdx]) {
+        done = !!g.weekSlots[weekdayIdx].done;
+        wNote = g.weekSlots[weekdayIdx].note || "";
+      } else {
+        done = (log.completedIds || []).includes(g.id);
+      }
+      itemPct = done ? 100 : 0;
+      detailStr = done ? "Tamamlandı (%100)" : "Yapılmadı (%0)";
+      if (done) hasActivity = true;
+      items.push({ title: g.title, pct: itemPct, detail: detailStr, note: wNote || noteText });
+
+    } else if (g.type === "check") {
+      const done = (log.completedIds || []).includes(g.id);
+      itemPct = done ? 100 : 0;
+      detailStr = done ? "Tamamlandı (%100)" : "Yapılmadı (%0)";
+      if (done) hasActivity = true;
+      items.push({ title: g.title, pct: itemPct, detail: detailStr, note: noteText });
+
+    } else {
+      // Sayısal hedef: orantılı yüzde hesabı (ör. 10/20 = %50)
+      const val = (log.numericDaily && log.numericDaily[g.id]) ? Number(log.numericDaily[g.id]) : 0;
+      const target = Math.max(1, Number(g.target) || 1);
+      itemPct = Math.min(100, Math.round((val / target) * 100));
+      detailStr = `${val} / ${target} ${g.unit} (%${itemPct})`;
+      if (val > 0) hasActivity = true;
+      items.push({ title: g.title, pct: itemPct, detail: detailStr, note: noteText });
+    }
+
+    totalPctSum += itemPct;
+  });
+
+  const avgPercent = Math.round(totalPctSum / dailyGoals.length);
+  return { percent: avgPercent, items, hasActivity, log };
 }
 
 /* OTOMATİK GÜN GEÇİŞİ VE HAFTALIK YENİLEME KONTROLLERİ */
@@ -1633,7 +1858,6 @@ function runAutomatedProgressions() {
   let changed = false;
 
   state.goals.forEach(g => {
-    // 1) Haftalık 7 günlük plan devir kontrolü
     if (g.type === "weekly_plan") {
       if (!g.weekSlots) g.weekSlots = createEmptyWeekSlots();
       if (!g.weekArchive) g.weekArchive = [];
@@ -1661,7 +1885,6 @@ function runAutomatedProgressions() {
       }
     }
 
-    // 2) Gün Geçtikçe Otomatik (+1) İlerleme Modu
     if (g.progressMode === "auto_daily") {
       if (!g.lastAutoDate) {
         g.lastAutoDate = todayKey;
@@ -1686,7 +1909,6 @@ function runAutomatedProgressions() {
   if (changed) saveState();
 }
 
-/* GÜNLÜK RİTME BAĞLI OTOMATİK ZİNCİR İLERLEMESİ */
 function triggerLinkedGoals(dailyGoalId, deltaAmount) {
   if (!deltaAmount) return;
   let updatedAny = false;
@@ -1737,6 +1959,7 @@ function loadState() {
   } catch (e) { console.error(e); }
   const daySeed = Math.floor(Date.now() / 86400000);
   currentQuoteIndex = daySeed % state.quotes.length;
+  selectedCalDateKey = getTodayKey();
   runAutomatedProgressions();
 }
 
@@ -1879,19 +2102,19 @@ function toggleTodayCompassExpand(id) {
 
 function renderToday() {
   runAutomatedProgressions();
-  document.getElementById("headerDate").textContent = formatDateTR(new Date());
+  const nowObj = new Date();
+  const todayKey = getTodayKey();
+  document.getElementById("headerDate").textContent = formatDateTR(nowObj);
   document.getElementById("dailyQuoteText").textContent = "“" + (state.quotes[currentQuoteIndex] || DEFAULT_QUOTES[0]) + "”";
 
   const log = ensureTodayLog();
   const todayIdx = getTodayWeekdayIndex();
   const todayDayName = WEEK_DAYS_TR[todayIdx];
 
-  // 1. KADEME: GÜNLÜK RİTİMLER (HEPSİ DOKUNULUP AÇILABİLİR)
   const dailyGoals = state.goals.filter(g => g.horizon === "daily" || g.type === "weekly_plan");
   const habitsContainer = document.getElementById("dailyHabitsList");
   habitsContainer.innerHTML = "";
 
-  let doneCount = 0;
   if (dailyGoals.length === 0) {
     habitsContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.86rem;">Henüz günlük ritim eklenmemiş. Sağ üstten ekleyebilirsiniz.</p>`;
   } else {
@@ -1904,7 +2127,6 @@ function renderToday() {
       } else {
         isDone = (log.numericDaily[g.id] || 0) >= g.target;
       }
-      if (isDone) doneCount++;
 
       const isOpen = expandedTodayDailyId === g.id;
       const dailyNote = log.goalNotesDaily[g.id] || "";
@@ -1978,8 +2200,9 @@ function renderToday() {
     });
   }
 
-  const pct = dailyGoals.length ? Math.round((doneCount / dailyGoals.length) * 100) : 0;
-  document.getElementById("dailyProgressBadge").textContent = `Bugün: %${pct}`;
+  // Ağırlıklı ortalama yüzdesini üst karta yazdır
+  const todayEval = evaluateDayCompletion(todayKey, nowObj);
+  document.getElementById("dailyProgressBadge").textContent = `Bugün: %${todayEval.percent}`;
 
   document.querySelectorAll(".mood-chip").forEach(btn => {
     btn.classList.toggle("selected", btn.dataset.mood === log.mood);
@@ -2010,7 +2233,7 @@ function renderToday() {
     qContainer.appendChild(block);
   }
 
-  // 3. KADEME: AYLIK / SPRINT / ÖZEL DÖNGÜ HEDEFLERİ (DOKUNULUP AÇILABİLİR)
+  // 3. KADEME: AYLIK / SPRINT / ÖZEL DÖNGÜ HEDEFLERİ
   const cycleGoals = state.goals.filter(g => ["monthly", "sprint", "custom"].includes(g.horizon));
   const cycleStrip = document.getElementById("cycleGoalsStrip");
   cycleStrip.innerHTML = "";
@@ -2075,7 +2298,7 @@ function renderToday() {
     });
   }
 
-  // 4. KADEME: UZUN VADELİ PUSULA (DOKUNULUP AÇILABİLİR + ARŞİVLE/SIFIRLA)
+  // 4. KADEME: UZUN VADELİ PUSULA
   const longGoals = state.goals.filter(g => g.horizon === "yearly");
   const longStrip = document.getElementById("longTermStrip");
   longStrip.innerHTML = "";
@@ -2211,7 +2434,6 @@ function advanceCycleGoal(id) {
   showToast("İlerleme güncellendi");
 }
 
-/* TAMAMLANAN / KAPATILAN PUSULA VEYA DÖNGÜ HEDEFİNİ ARŞİVE TAŞIYIP SIFIRLAMA */
 function archiveAndResetGoal(id) {
   const g = state.goals.find(x => x.id === id);
   if (!g) return;
@@ -2232,7 +2454,6 @@ function archiveAndResetGoal(id) {
     note: g.note || ""
   });
 
-  // Hedefi yeni dönem için sıfırla
   if (g.type === "numeric") g.current = 0;
   else if (g.type === "weekly_plan") {
     g.weekSlots = g.weekSlots.map(s => ({ plan: s.plan || "", note: "", done: false }));
@@ -2457,7 +2678,6 @@ function renderGoalsStudio() {
           </div>
         `;
       } else {
-        // STANDART / SAYISAL / PUSULA HEDEFLERİ İÇİN EVRENSEL DÜZENLEME ÇEKMECESİ
         const isDaily = g.horizon === "daily";
         const currentVal = isDaily ? (log.numericDaily[g.id] || 0) : (g.current || 0);
         const currentNote = isDaily ? (log.goalNotesDaily[g.id] || "") : (g.note || "");
@@ -2634,44 +2854,175 @@ function removeQuote(idx) {
   renderPoolManager();
 }
 
-/* --- ÖZ FEEDBACK & ZAMAN KAPSÜLÜ --- */
+/* --- ÖZ FEEDBACK, DAİRESEL PUSULA VE AYLIK TAKVİM ISI HARİTASI --- */
+function shiftCalendarMonth(delta) {
+  calViewMonth += delta;
+  if (calViewMonth < 0) {
+    calViewMonth = 11;
+    calViewYear--;
+  } else if (calViewMonth > 11) {
+    calViewMonth = 0;
+    calViewYear++;
+  }
+  selectedCalDateKey = `${calViewYear}-${String(calViewMonth + 1).padStart(2, "0")}-01`;
+  renderFeedbackView();
+}
+
+function selectCalendarDay(dateKey) {
+  selectedCalDateKey = dateKey;
+  renderFeedbackView();
+}
+
 function renderFeedbackView() {
-  const grid = document.getElementById("heatmapGrid");
-  grid.innerHTML = "";
-  const dailyGoals = state.goals.filter(g => g.horizon === "daily" || g.type === "weekly_plan");
-  let activeDays = 0;
+  const nowObj = new Date();
+  const todayKey = getTodayKey();
+  const todayEval = evaluateDayCompletion(todayKey, nowObj);
+
+  // 1) Aylık Takvim Verilerini ve Ay Ortalamasını Hesapla (1'den ayın son gününe kadar düz sıra)
+  const daysInMonth = new Date(calViewYear, calViewMonth + 1, 0).getDate();
+  document.getElementById("calMonthTitle").textContent = `${MONTHS_TR[calViewMonth]} ${calViewYear}`;
+
+  const calGrid = document.getElementById("monthCalGrid");
+  calGrid.innerHTML = "";
+
+  let elapsedDaysCount = 0;
+  let monthPercentSum = 0;
+  let activeDaysInMonth = 0;
   const moodCounts = {};
 
-  for (let i = 27; i >= 0; i--) {
-    const d = new Date();
-    d.setDate(d.getDate() - i);
-    const key = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-    const log = state.logs[key];
-    let level = 0;
-    if (log) {
-      if (log.mood) moodCounts[log.mood] = (moodCounts[log.mood] || 0) + 1;
-      const done = (log.completedIds || []).length + Object.values(log.numericDaily || {}).filter(v => v > 0).length;
-      if (done > 0 || Object.keys(log.answers || {}).length > 0) activeDays++;
-      if (dailyGoals.length > 0) {
-        const ratio = done / dailyGoals.length;
-        if (ratio >= 0.8) level = 3;
-        else if (ratio >= 0.4) level = 2;
-        else if (done > 0) level = 1;
-      }
-    }
+  for (let dayNum = 1; dayNum <= daysInMonth; dayNum++) {
+    const cellDate = new Date(calViewYear, calViewMonth, dayNum);
+    const cellKey = toDateKey(cellDate);
+    const isFuture = cellKey > todayKey;
+    const isToday = cellKey === todayKey;
+    const isSelected = cellKey === selectedCalDateKey;
+
     const cell = document.createElement("div");
-    cell.className = "heat-cell" + (level ? ` heat-${level}` : "");
-    cell.title = key;
-    grid.appendChild(cell);
+    cell.className = "cal-cell" + (isToday ? " today-cell" : "") + (isSelected ? " selected-day" : "");
+    cell.onclick = () => selectCalendarDay(cellKey);
+
+    if (isFuture) {
+      cell.classList.add("cal-future");
+      cell.innerHTML = `<span class="cal-day-num">${dayNum}</span>`;
+    } else {
+      const ev = evaluateDayCompletion(cellKey, cellDate);
+      elapsedDaysCount++;
+      monthPercentSum += ev.percent;
+      if (ev.hasActivity || ev.percent > 0) activeDaysInMonth++;
+      if (ev.log && ev.log.mood) moodCounts[ev.log.mood] = (moodCounts[ev.log.mood] || 0) + 1;
+
+      const pct = ev.percent;
+      let levelClass = "cal-lvl-0";
+      let badgeIcon = "";
+
+      if (pct >= 100) {
+        levelClass = "cal-lvl-5";
+        badgeIcon = "🏅"; // %100 Altın Rozet
+      } else if (pct >= 75) {
+        levelClass = "cal-lvl-4";
+        badgeIcon = "✦"; // %75+ Pusula Yıldızı
+      } else if (pct >= 50) {
+        levelClass = "cal-lvl-3";
+        badgeIcon = "✦"; // %50+ Pusula Doğru Yönde Yıldızı
+      } else if (pct >= 26) {
+        levelClass = "cal-lvl-2";
+      } else if (pct >= 1) {
+        levelClass = "cal-lvl-1";
+      }
+
+      cell.classList.add(levelClass);
+      cell.innerHTML = `
+        <span class="cal-day-num">${dayNum}</span>
+        ${badgeIcon ? `<span class="cal-badge-icon">${badgeIcon}</span>` : ""}
+      `;
+    }
+    calGrid.appendChild(cell);
   }
 
-  const topMood = Object.entries(moodCounts).sort((a, b) => b[1] - a[1])[0];
-  document.getElementById("mirrorSummary").innerHTML = `
-    <p style="margin-top:0;">Son 28 günde <strong>${activeDays} gün</strong> kendinle temas kurdun ve ritimlerine özen gösterdin.</p>
-    <p style="margin-bottom:0;">${topMood ? `Bu dönemde en sık kaydettiğin zihin hali: <strong>${topMood[0]}</strong> (${topMood[1]} gün).` : "Zihin halini işaretledikçe burada sana özel desenler belirecek."}</p>
+  const monthAvgPct = elapsedDaysCount > 0 ? Math.round(monthPercentSum / elapsedDaysCount) : 0;
+
+  // 2) Çift Halkalı Dairesel Pusula Göstergesini Çiz
+  const outerR = 48;
+  const outerC = 2 * Math.PI * outerR;
+  const outerOffset = outerC - (monthAvgPct / 100) * outerC;
+
+  const innerR = 35;
+  const innerC = 2 * Math.PI * innerR;
+  const innerOffset = innerC - (todayEval.percent / 100) * innerC;
+
+  let compassMessage = "Bugün için henüz adım atılmadı; ilk küçük ritimle pusulayı hareket ettir.";
+  if (todayEval.percent >= 100) compassMessage = "🏅 Bugünün tüm ritimleri eksiksiz tamamlandı, altın rozet senin!";
+  else if (todayEval.percent >= 50) compassMessage = "✦ Pusulan doğru yönde! Günlük hedeflerinin yarısını aştın.";
+  else if (todayEval.percent > 0) compassMessage = "Ritim başladı; %50 eşiğine ulaştığında pusula yıldızı parlayacak.";
+
+  document.getElementById("compassDialContainer").innerHTML = `
+    <svg class="compass-dial-svg" viewBox="0 0 116 116">
+      <!-- Dış Halka (Ay Ortalaması) -->
+      <circle cx="58" cy="58" r="${outerR}" fill="none" stroke="var(--border)" stroke-width="7"/>
+      <circle cx="58" cy="58" r="${outerR}" fill="none" stroke="var(--accent)" stroke-width="7" stroke-opacity="0.45"
+        stroke-dasharray="${outerC}" stroke-dashoffset="${outerOffset}" stroke-linecap="round" transform="rotate(-90 58 58)"/>
+      <!-- İç Halka (Bugün) -->
+      <circle cx="58" cy="58" r="${innerR}" fill="none" stroke="var(--border)" stroke-width="7"/>
+      <circle cx="58" cy="58" r="${innerR}" fill="none" stroke="var(--accent)" stroke-width="7"
+        stroke-dasharray="${innerC}" stroke-dashoffset="${innerOffset}" stroke-linecap="round" transform="rotate(-90 58 58)"/>
+      <!-- Merkez Pusula Yıldızı ve Yüzde -->
+      <text x="58" y="54" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">%${todayEval.percent}</text>
+      <text x="58" y="70" text-anchor="middle" font-size="11" fill="var(--accent)">${todayEval.percent >= 100 ? "🏅" : (todayEval.percent >= 50 ? "✦" : "🧭")}</text>
+    </svg>
+    <div class="dial-stats">
+      <div class="dial-headline">Bugün %${todayEval.percent} • Ay Ort. %${monthAvgPct}</div>
+      <div class="dial-sub">${compassMessage}</div>
+    </div>
   `;
 
-  // Tamamlanan / Kapatılan Pusula & Döngü Hedefleri Arşivi
+  // 3) Dokunulan Günün Detay Dökümü Kartı
+  const breakdownBox = document.getElementById("selectedDayBreakdown");
+  const activeSelKey = selectedCalDateKey || todayKey;
+  const selDateObj = new Date(activeSelKey + "T00:00:00");
+  const isSelFuture = activeSelKey > todayKey;
+
+  if (isSelFuture) {
+    breakdownBox.innerHTML = `
+      <div class="day-breakdown-card">
+        <div style="font-weight:700; font-size:0.86rem; color:var(--accent);">${formatDateTR(selDateObj)}</div>
+        <div style="font-size:0.82rem; color:var(--text-muted); margin-top:4px;">Bu tarih henüz gelmedi.</div>
+      </div>
+    `;
+  } else {
+    const selEval = evaluateDayCompletion(activeSelKey, selDateObj);
+    const itemsHtml = selEval.items.map(it => `
+      <div style="display:flex; justify-content:space-between; font-size:0.82rem; padding:4px 0; border-bottom:1px dashed var(--border);">
+        <span>${it.pct >= 100 ? "✓ " : "• "}${it.title}${it.note ? `<br><em style="color:var(--text-muted); font-size:0.76rem;">Not: ${it.note}</em>` : ""}</span>
+        <strong style="color:var(--accent); margin-left:8px; flex-shrink:0;">${it.detail}</strong>
+      </div>
+    `).join("");
+
+    const answersHtml = Object.values((selEval.log && selEval.log.answers) || {})
+      .filter(x => x && x.trim())
+      .map(ans => `<div style="font-size:0.8rem; font-style:italic; color:var(--text-muted); margin-top:6px;">“${ans}”</div>`)
+      .join("");
+
+    breakdownBox.innerHTML = `
+      <div class="day-breakdown-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <strong style="font-size:0.86rem; color:var(--accent);">${formatDateTR(selDateObj)}</strong>
+          <span style="font-size:0.82rem; font-weight:700;">Genel Uyum: %${selEval.percent} ${selEval.percent >= 100 ? "🏅" : (selEval.percent >= 50 ? "✦" : "")}</span>
+        </div>
+        ${selEval.log && selEval.log.mood ? `<div style="font-size:0.78rem; color:var(--text-muted); margin-bottom:6px;">Zihin Hali: <strong>${selEval.log.mood}</strong></div>` : ""}
+        ${itemsHtml || `<div style="font-size:0.8rem; color:var(--text-muted);">Bu gün için tanımlı günlük ritim yok.</div>`}
+        ${answersHtml}
+      </div>
+    `;
+  }
+
+  // 4) Kendi Kendine Ayna Özeti
+  const topMood = Object.entries(moodCounts).sort((a, b) => b[1] - a[1])[0];
+  document.getElementById("mirrorSummary").innerHTML = `
+    <p style="margin-top:0;"><strong>${MONTHS_TR[calViewMonth]} ${calViewYear}</strong> ayında geçen ${elapsedDaysCount} günün <strong>${activeDaysInMonth} gününde</strong> ritimlerinle temas kurdun (Aylık ortalama: <strong>%${monthAvgPct}</strong>).</p>
+    <p style="margin-bottom:0;">${topMood ? `Bu ayda en sık kaydettiğin zihin hali: <strong>${topMood[0]}</strong> (${topMood[1]} gün).` : "Zihin halini işaretledikçe burada sana özel desenler belirecek."}</p>
+  `;
+
+  // 5) Tamamlanan / Kapatılan Pusula & Döngü Hedefleri Arşivi
   const closedContainer = document.getElementById("closedGoalsArchiveList");
   closedContainer.innerHTML = "";
   const closedList = state.closedGoalsArchive || [];
@@ -2691,7 +3042,7 @@ function renderFeedbackView() {
     });
   }
 
-  // Haftalık Plan Arşivi
+  // 6) Haftalık Plan Arşivi
   const weeklyArchContainer = document.getElementById("weeklyArchiveList");
   weeklyArchContainer.innerHTML = "";
   let archCount = 0;
@@ -2716,7 +3067,7 @@ function renderFeedbackView() {
     weeklyArchContainer.innerHTML = `<p style="font-size:0.83rem; color:var(--text-muted); margin:0;">Haftalık planlı hedeflerinizde hafta tamamlandığında veya arşivlediğinizde geçmiş haftaların notları burada toplanır.</p>`;
   }
 
-  // Günlük Öz Yansıma Arşivi
+  // 7) Günlük Öz Yansıma Arşivi
   const archive = document.getElementById("pastReflectionsList");
   archive.innerHTML = "";
   const keys = Object.keys(state.logs).sort().reverse();
