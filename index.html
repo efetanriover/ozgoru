@@ -8,63 +8,66 @@
 <meta name="apple-mobile-web-app-title" content="Öz'görü">
 <meta name="theme-color" content="#f5f0e6">
 <title>Öz'görü — Pusula, Ritim ve Yansıma</title>
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%234a6b5d'/%3E%3Ccircle cx='90' cy='90' r='54' fill='none' stroke='%23f5f0e6' stroke-width='4' opacity='0.85'/%3E%3Ccircle cx='90' cy='90' r='34' fill='none' stroke='%23f5f0e6' stroke-width='2.5' opacity='0.5'/%3E%3Cpath d='M90 36 L98 82 L144 90 L98 98 L90 144 L82 98 L36 90 L82 82 Z' fill='%23f5f0e6'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="icon" type="image/png" href="icon.png">
 <style>
   :root {
     --bg: #f5f0e6;
-    --bg-card: rgba(255, 252, 245, 0.86);
-    --bg-elevated: #ede5d5;
+    --bg-card: rgba(255, 252, 245, 0.78);
+    --bg-elevated: rgba(237, 229, 213, 0.85);
     --text: #2c2620;
     --text-muted: #6e6357;
     --border: rgba(44, 38, 32, 0.12);
     --accent: #4a6b5d;
-    --accent-soft: rgba(74, 107, 93, 0.14);
+    --accent-soft: rgba(74, 107, 93, 0.15);
     --accent-text: #ffffff;
     --shadow: 0 8px 24px rgba(44, 38, 32, 0.06);
     --font-scale: 1;
     --space-scale: 1;
     --radius: 22px;
-    --pattern-opacity: 0.055;
+    --pattern-opacity: 0.13;
   }
 
   /* TEMALAR */
   [data-theme="paper"] {
     --bg: #f5f0e6;
-    --bg-card: rgba(255, 252, 245, 0.88);
-    --bg-elevated: #ebe2d1;
+    --bg-card: rgba(255, 252, 245, 0.78);
+    --bg-elevated: rgba(235, 226, 209, 0.86);
     --text: #2c2620;
     --text-muted: #6e6357;
     --border: rgba(44, 38, 32, 0.12);
     --shadow: 0 8px 24px rgba(44, 38, 32, 0.06);
+    --pattern-opacity: 0.13;
   }
   [data-theme="day"] {
     --bg: #f8f9fa;
-    --bg-card: rgba(255, 255, 255, 0.92);
-    --bg-elevated: #eef1f4;
+    --bg-card: rgba(255, 255, 255, 0.82);
+    --bg-elevated: rgba(238, 241, 244, 0.88);
     --text: #1c2127;
     --text-muted: #5c6672;
     --border: rgba(28, 33, 39, 0.1);
     --shadow: 0 8px 24px rgba(28, 33, 39, 0.05);
+    --pattern-opacity: 0.11;
   }
   [data-theme="night"] {
     --bg: #181b1e;
-    --bg-card: rgba(30, 34, 39, 0.88);
-    --bg-elevated: #262b31;
+    --bg-card: rgba(30, 34, 39, 0.80);
+    --bg-elevated: rgba(38, 43, 49, 0.88);
     --text: #e6e3de;
     --text-muted: #989e9a;
     --border: rgba(255, 255, 255, 0.09);
     --shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
-    --pattern-opacity: 0.04;
+    --pattern-opacity: 0.09;
   }
   [data-theme="oled"] {
     --bg: #000000;
-    --bg-card: rgba(18, 19, 21, 0.92);
-    --bg-elevated: #1c1e22;
+    --bg-card: rgba(18, 19, 21, 0.84);
+    --bg-elevated: rgba(28, 30, 34, 0.90);
     --text: #ece9e2;
     --text-muted: #8e9398;
     --border: rgba(255, 255, 255, 0.11);
     --shadow: none;
-    --pattern-opacity: 0.035;
+    --pattern-opacity: 0.08;
   }
 
   /* SAKİNLEŞTİRİCİ VURGU RENKLERİ */
@@ -116,9 +119,7 @@
     padding: 24px;
     text-align: center;
   }
-  #lockScreen.hidden {
-    display: none;
-  }
+  #lockScreen.hidden { display: none; }
   .lock-emblem {
     width: 68px;
     height: 68px;
@@ -161,9 +162,7 @@
     background: var(--accent);
     transform: scale(1.12);
   }
-  .pin-dots.shake {
-    animation: shakeAnim 0.35s ease;
-  }
+  .pin-dots.shake { animation: shakeAnim 0.35s ease; }
   @keyframes shakeAnim {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-8px); }
@@ -215,16 +214,16 @@
   }
   [data-pattern="none"] #bg-pattern { background-image: none; }
   [data-pattern="ripples"] #bg-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='160' height='160' viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='80' cy='80' r='22' fill='none' stroke='%23888888' stroke-width='1.2'/%3E%3Ccircle cx='80' cy='80' r='44' fill='none' stroke='%23888888' stroke-width='1'/%3E%3Ccircle cx='80' cy='80' r='68' fill='none' stroke='%23888888' stroke-width='0.8'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='150' height='150' viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='75' cy='75' r='20' fill='none' stroke='%236f7d72' stroke-width='1.6'/%3E%3Ccircle cx='75' cy='75' r='42' fill='none' stroke='%236f7d72' stroke-width='1.3'/%3E%3Ccircle cx='75' cy='75' r='66' fill='none' stroke='%236f7d72' stroke-width='1'/%3E%3C/svg%3E");
   }
   [data-pattern="topo"] #bg-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40 Q 50 10, 100 40 T 200 40 M0 90 Q 60 60, 110 90 T 200 90 M0 140 Q 45 170, 95 140 T 200 140 M0 185 Q 55 155, 105 185 T 200 185' fill='none' stroke='%23888888' stroke-width='1.1'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='180' height='180' viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 36 Q 45 8, 90 36 T 180 36 M0 82 Q 55 52, 100 82 T 180 82 M0 128 Q 40 158, 85 128 T 180 128 M0 168 Q 50 140, 95 168 T 180 168' fill='none' stroke='%236f7d72' stroke-width='1.5'/%3E%3C/svg%3E");
   }
   [data-pattern="geometry"] #bg-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='60' cy='60' r='30' fill='none' stroke='%23888888' stroke-width='1'/%3E%3Ccircle cx='60' cy='30' r='30' fill='none' stroke='%23888888' stroke-width='0.8'/%3E%3Ccircle cx='60' cy='90' r='30' fill='none' stroke='%23888888' stroke-width='0.8'/%3E%3Ccircle cx='30' cy='60' r='30' fill='none' stroke='%23888888' stroke-width='0.8'/%3E%3Ccircle cx='90' cy='60' r='30' fill='none' stroke='%23888888' stroke-width='0.8'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='60' cy='60' r='30' fill='none' stroke='%236f7d72' stroke-width='1.3'/%3E%3Ccircle cx='60' cy='30' r='30' fill='none' stroke='%236f7d72' stroke-width='1.1'/%3E%3Ccircle cx='60' cy='90' r='30' fill='none' stroke='%236f7d72' stroke-width='1.1'/%3E%3Ccircle cx='30' cy='60' r='30' fill='none' stroke='%236f7d72' stroke-width='1.1'/%3E%3Ccircle cx='90' cy='60' r='30' fill='none' stroke='%236f7d72' stroke-width='1.1'/%3E%3C/svg%3E");
   }
   [data-pattern="grain"] #bg-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='18' r='1' fill='%23888888'/%3E%3Ccircle cx='45' cy='32' r='0.9' fill='%23888888'/%3E%3Ccircle cx='78' cy='14' r='1.1' fill='%23888888'/%3E%3Ccircle cx='24' cy='67' r='1' fill='%23888888'/%3E%3Ccircle cx='66' cy='74' r='0.8' fill='%23888888'/%3E%3Ccircle cx='88' cy='55' r='1' fill='%23888888'/%3E%3Ccircle cx='38' cy='89' r='0.9' fill='%23888888'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='90' height='90' viewBox='0 0 90 90' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='18' r='1.3' fill='%236f7d72'/%3E%3Ccircle cx='45' cy='32' r='1.1' fill='%236f7d72'/%3E%3Ccircle cx='78' cy='14' r='1.4' fill='%236f7d72'/%3E%3Ccircle cx='24' cy='67' r='1.2' fill='%236f7d72'/%3E%3Ccircle cx='66' cy='74' r='1.1' fill='%236f7d72'/%3E%3Ccircle cx='82' cy='55' r='1.3' fill='%236f7d72'/%3E%3Ccircle cx='38' cy='82' r='1.2' fill='%236f7d72'/%3E%3C/svg%3E");
   }
 
   /* ÜST BAR */
@@ -236,9 +235,9 @@
     align-items: center;
     justify-content: space-between;
     padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
-    background: var(--bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: var(--bg-card);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
   }
 
@@ -391,19 +390,84 @@
     font-weight: 600;
   }
 
+  /* SABİT ALT GEZİNME VE GERİ/İLERİ ÇUBUĞU */
+  .bottom-dock {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border);
+    padding: 8px 14px calc(8px + env(safe-area-inset-bottom));
+    display: flex;
+    justify-content: center;
+  }
+  .dock-inner {
+    width: 100%;
+    max-width: 680px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .dock-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    border-radius: 14px;
+    padding: 7px 11px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+    flex: 1;
+  }
+  .dock-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
+    transition: transform 0.2s ease;
+  }
+  .dock-btn:active svg { transform: scale(0.88); }
+  .dock-btn.active {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-color: rgba(74, 107, 93, 0.22);
+  }
+  .dock-btn.nav-arrow {
+    flex: 0 0 46px;
+    height: 44px;
+    padding: 0;
+    background: var(--bg-elevated);
+    border-color: var(--border);
+    color: var(--text);
+  }
+  .dock-btn.nav-arrow:disabled {
+    opacity: 0.32;
+    pointer-events: none;
+  }
+
   /* ANA KONTEYNER VE SAYFALAR */
   main {
     position: relative;
     z-index: 1;
     max-width: 680px;
     margin: 0 auto;
-    padding: calc(14px * var(--space-scale)) calc(14px * var(--space-scale)) calc(44px + env(safe-area-inset-bottom));
+    padding: calc(14px * var(--space-scale)) calc(14px * var(--space-scale)) calc(86px + env(safe-area-inset-bottom));
   }
 
-  .view { display: none; animation: fadeIn 0.25s ease; }
+  .view { display: none; animation: smoothViewIn 0.28s cubic-bezier(0.22, 1, 0.36, 1); }
   .view.active { display: block; }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(4px); }
+  @keyframes smoothViewIn {
+    from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
@@ -466,14 +530,19 @@
   /* 1. KADEME: GÜNLÜK ALIŞKANLIKLAR */
   .habit-item {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
     padding: calc(11px * var(--space-scale)) calc(12px * var(--space-scale));
     border-radius: 15px;
     background: var(--bg-elevated);
     margin-bottom: 8px;
     border: 1px solid transparent;
     transition: all 0.2s ease;
+  }
+  .habit-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
   }
   .habit-item.done {
     border-color: var(--accent);
@@ -491,6 +560,19 @@
   .habit-meta {
     font-size: calc(0.76rem * var(--font-scale));
     color: var(--text-muted);
+  }
+  .daily-plan-inline {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border);
+    width: 100%;
+  }
+  .daily-plan-tag {
+    font-size: 0.76rem;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 4px;
+    display: block;
   }
 
   .check-circle {
@@ -658,6 +740,44 @@
   }
   .compass-row:last-child { margin-bottom: 0; }
 
+  /* HAFTALIK 7 GÜNLÜK PLAN AKORDEONU */
+  .weekly-accordion {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 12px;
+    margin-top: 10px;
+  }
+  .day-slot {
+    padding: 10px;
+    border-radius: 13px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    margin-bottom: 8px;
+  }
+  .day-slot:last-child { margin-bottom: 0; }
+  .day-slot.today-highlight {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent-soft);
+  }
+  .day-slot-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .day-name-badge {
+    font-weight: 700;
+    font-size: 0.86rem;
+    color: var(--accent);
+  }
+  .compact-input {
+    padding: 7px 10px !important;
+    font-size: 0.82rem !important;
+    margin-top: 5px;
+    background: var(--bg-elevated) !important;
+  }
+
   /* BUTONLAR VE FORM ELEMANLARI */
   .btn-primary {
     background: var(--accent);
@@ -718,7 +838,7 @@
     margin-bottom: 14px;
   }
   .sound-tile {
-    padding: 14px 12px;
+    padding: 13px 12px;
     border-radius: 16px;
     background: var(--bg-elevated);
     border: 1px solid var(--border);
@@ -728,6 +848,7 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
+    transition: all 0.2s ease;
   }
   .sound-tile.active {
     background: var(--accent-soft);
@@ -739,7 +860,7 @@
   /* TOAST BİLDİRİM */
   #toast {
     position: fixed;
-    bottom: 24px;
+    bottom: 78px;
     left: 50%;
     transform: translateX(-50%) translateY(80px);
     background: var(--text);
@@ -758,17 +879,18 @@
   }
 
   .list-row {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .list-row:last-child { border-bottom: none; }
+  .list-row-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
     gap: 8px;
   }
-  .list-row:last-child { border-bottom: none; }
   .danger-txt { color: #c0564b; background: none; border: none; cursor: pointer; font-size: 0.85rem; }
 
-  /* TOGGLE ANAHTARI */
   .switch-row {
     display: flex;
     align-items: center;
@@ -864,7 +986,6 @@
 <main>
   <!-- 1. GÖRÜNÜM: ANA EKRAN (BUGÜN) -->
   <section id="view-today" class="view active">
-    <!-- GÜNÜN SÖZÜ / ŞÜKRAN KARTI -->
     <div class="card quote-card">
       <div class="section-label">
         <span>✨ Günün Farkındalık Notu</span>
@@ -877,7 +998,7 @@
       </div>
     </div>
 
-    <!-- 1. KADEME (BÜYÜK ALAN): GÜNLÜK ODAK -->
+    <!-- 1. KADEME: GÜNLÜK ODAK -->
     <div class="card">
       <div class="section-label">
         <span>🌱 Günlük Ritimler</span>
@@ -904,7 +1025,7 @@
       <div id="dailyQuestionsContainer"></div>
     </div>
 
-    <!-- 2. KADEME (ORTA ŞERİT): AYLIK / ÖZEL DÖNGÜ HEDEFLERİ -->
+    <!-- 2. KADEME: AYLIK / ÖZEL DÖNGÜ HEDEFLERİ -->
     <div class="card" style="padding-bottom:12px;">
       <div class="section-label">
         <span>🗓️ Aylık & Döngü Hedefleri</span>
@@ -913,7 +1034,7 @@
       <div class="horizontal-scroll" id="cycleGoalsStrip"></div>
     </div>
 
-    <!-- 3. KADEME (ALT İNCE ŞERİT): UZUN VADELİ PUSULA -->
+    <!-- 3. KADEME: UZUN VADELİ PUSULA -->
     <div class="compass-strip">
       <div class="section-label" style="margin-bottom:6px;">
         <span>🧭 Uzun Vadeli Pusula</span>
@@ -929,7 +1050,7 @@
       <div class="section-label"><span>➕ Yeni Hedef veya Ritim Oluştur</span></div>
       <div class="form-group">
         <label>Hedef Başlığı</label>
-        <input type="text" id="gTitle" placeholder="Örn: Sabah 20 sayfa okuma, Haftada 4 gün yürüyüş...">
+        <input type="text" id="gTitle" placeholder="Örn: Haftalık Beslenme Planı, Sabah Okuması...">
       </div>
       <div class="row-2">
         <div class="form-group">
@@ -947,8 +1068,13 @@
           <select id="gType" onchange="toggleTargetFields()">
             <option value="check">Süreklilik (Tik / Frekans)</option>
             <option value="numeric">Birikimli / Sayısal Değer</option>
+            <option value="weekly_plan">📅 Haftalık 7 Günlük Plan & Not</option>
           </select>
         </div>
+      </div>
+
+      <div id="weeklyPlanHint" style="display:none; font-size:0.8rem; color:var(--accent); background:var(--accent-soft); padding:9px 12px; border-radius:12px; margin-bottom:12px;">
+        Hedefi oluşturduktan sonra aşağıdaki <strong>Aktif Hedeflerim</strong> listesinden üzerine dokunarak Pazartesi–Pazar günlerinin sabit planını ve günlük notlarını düzenleyebilirsiniz.
       </div>
 
       <div id="numericFields" style="display:none;">
@@ -982,7 +1108,10 @@
     </div>
 
     <div class="card">
-      <div class="section-label"><span>📋 Aktif Hedeflerim</span></div>
+      <div class="section-label">
+        <span>📋 Aktif Hedeflerim</span>
+        <span style="font-size:0.7rem; font-weight:400;">Planlı hedeflere dokunup açın</span>
+      </div>
       <div id="allGoalsList"></div>
     </div>
   </section>
@@ -1040,6 +1169,11 @@
     </div>
 
     <div class="card">
+      <div class="section-label"><span>📅 Haftalık Plan & Not Arşivi</span></div>
+      <div id="weeklyArchiveList"></div>
+    </div>
+
+    <div class="card">
       <div class="section-label"><span>⏳ Geçmişten Yankı & Günlük Arşivi</span></div>
       <div id="pastReflectionsList"></div>
     </div>
@@ -1049,7 +1183,7 @@
   <section id="view-sounds" class="view">
     <div class="card">
       <div class="section-label">
-        <span>🎧 Doğa & Dinginlik Sesleri</span>
+        <span>🎧 Doğa & Dinginlik Koleksiyonu</span>
         <button class="mini-btn" onclick="stopAllSounds()">⏹ Durdur</button>
       </div>
       <div class="sound-grid" id="soundGrid"></div>
@@ -1072,12 +1206,12 @@
 
     <div class="card">
       <div class="section-label"><span>➕ Kendi Ses Bağlantını Ekle</span></div>
-      <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0;">İnternetteki herhangi bir doğrudan .mp3 veya ses bağlantısını koleksiyonunuza ekleyebilirsiniz.</p>
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0;">iPhone uyumlu doğrudan .mp3 veya .m4a bağlantılarınızı koleksiyonunuza ekleyebilirsiniz.</p>
       <div class="form-group">
-        <input type="text" id="customSoundName" placeholder="Ses Adı (Örn: Gece Cırcır Böcekleri)">
+        <input type="text" id="customSoundName" placeholder="Ses Adı">
       </div>
       <div class="form-group">
-        <input type="text" id="customSoundUrl" placeholder="https://... (Doğrudan ses linki)">
+        <input type="text" id="customSoundUrl" placeholder="https://... (.mp3 / .m4a)">
       </div>
       <button class="btn-secondary" style="width:100%;" onclick="addCustomSound()">Koleksiyona Ekle</button>
     </div>
@@ -1143,6 +1277,39 @@
     </div>
   </section>
 </main>
+
+<!-- SABİT ALT GEZİNME VE GERİ / İLERİ ÇUBUĞU -->
+<nav class="bottom-dock" aria-label="Hızlı Gezinme">
+  <div class="dock-inner">
+    <button class="dock-btn nav-arrow" id="btnBack" onclick="goBack()" aria-label="Önceki Ekran" disabled>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+
+    <button class="dock-btn active" data-dock="today" onclick="switchView('today')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+      <span>Bugün</span>
+    </button>
+
+    <button class="dock-btn" data-dock="goals" onclick="switchView('goals')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      <span>Hedefler</span>
+    </button>
+
+    <button class="dock-btn" data-dock="feedback" onclick="switchView('feedback')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+      <span>Analiz</span>
+    </button>
+
+    <button class="dock-btn" data-dock="sounds" onclick="switchView('sounds')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+      <span>Sesler</span>
+    </button>
+
+    <button class="dock-btn nav-arrow" id="btnForward" onclick="goForward()" aria-label="Sonraki Ekran" disabled>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+</nav>
 
 <div id="toast"></div>
 
@@ -1273,13 +1440,19 @@ const DEFAULT_POOL_QUESTIONS = [
 ];
 
 const DEFAULT_SOUNDS = [
-  { id: "synth_rain", name: "Hafif Yağmur", icon: "🌧️", type: "synth", preset: "rain" },
-  { id: "synth_forest", name: "Derin Orman Uğultusu", icon: "🌲", type: "synth", preset: "brown" },
-  { id: "synth_wind", name: "Gece Rüzgarı", icon: "🍃", type: "synth", preset: "wind" },
-  { id: "url_birds", name: "Sabah Kuşları", icon: "🐦", type: "url", url: "https://actions.google.com/sounds/v1/ambiences/morning_birds.ogg" },
-  { id: "url_fire", name: "Kamp Ateşi", icon: "🔥", type: "url", url: "https://actions.google.com/sounds/v1/ambiences/fire.ogg" },
-  { id: "url_stream", name: "Dere Şırıltısı", icon: "🏞️", type: "url", url: "https://actions.google.com/sounds/v1/water/small_stream_flowing.ogg" }
+  { id: "s_drizzle", name: "Hafif Çiseleyen Yağmur", icon: "🌦️", type: "synth", preset: "drizzle" },
+  { id: "s_ocean", name: "Okyanus Dalgaları", icon: "🌊", type: "synth", preset: "ocean" },
+  { id: "s_breeze", name: "Dalgalı Gece Esintisi", icon: "🍃", type: "synth", preset: "breeze" },
+  { id: "s_birds", name: "Sabah Kuşları", icon: "🐦", type: "synth", preset: "birds" },
+  { id: "s_fire", name: "Kamp Ateşi", icon: "🔥", type: "synth", preset: "fire" },
+  { id: "s_stream", name: "Dere Şırıltısı", icon: "🏞️", type: "synth", preset: "stream" },
+  { id: "s_crickets", name: "Yaz Gecesi Cırcırları", icon: "🦗", type: "synth", preset: "crickets" },
+  { id: "s_chimes", name: "Bambu Rüzgar Çanı", icon: "🎐", type: "synth", preset: "chimes" },
+  { id: "s_bowl", name: "Tibet Şifa Çanağı", icon: "🔔", type: "synth", preset: "bowl" },
+  { id: "s_theta", name: "432 Hz Derin Huzur", icon: "🌌", type: "synth", preset: "theta" }
 ];
+
+const WEEK_DAYS_TR = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"];
 
 /* --- UYGULAMA DURUMU (STATE) --- */
 let state = {
@@ -1307,17 +1480,74 @@ let state = {
 };
 
 let currentQuoteIndex = 0;
+let expandedGoalId = null;
 
-/* --- TARİH YARDIMCILARI --- */
+/* --- TARİH VE HAFTA ANAHTARI YARDIMCILARI --- */
 function getTodayKey() {
   const d = new Date();
   return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+
+function getTodayWeekdayIndex() {
+  // Pazartesi: 0 ... Pazar: 6
+  const day = new Date().getDay();
+  return day === 0 ? 6 : day - 1;
+}
+
+function getCurrentWeekKey(dateObj = new Date()) {
+  const d = new Date(Date.UTC(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  return `${d.getUTCFullYear()}-H${String(weekNo).padStart(2, "0")}`;
 }
 
 function formatDateTR(dateObj) {
   const days = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
   const months = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
   return `${dateObj.getDate()} ${months[dateObj.getMonth()]} ${dateObj.getFullYear()}, ${days[dateObj.getDay()]}`;
+}
+
+function createEmptyWeekSlots() {
+  return Array.from({ length: 7 }, () => ({ plan: "", note: "", done: false }));
+}
+
+/* YENİ HAFTAYA GEÇİLDİĞİNDE ESKİ HAFTAYI ARŞİVLE VE TİKLERİ SIFIRLA (ŞABLONU KORU) */
+function checkWeeklyRollover() {
+  const currentWeek = getCurrentWeekKey();
+  let changed = false;
+
+  state.goals.forEach(g => {
+    if (g.type !== "weekly_plan") return;
+    if (!g.weekSlots) g.weekSlots = createEmptyWeekSlots();
+    if (!g.weekArchive) g.weekArchive = [];
+
+    if (!g.activeWeekKey) {
+      g.activeWeekKey = currentWeek;
+      changed = true;
+    } else if (g.activeWeekKey !== currentWeek) {
+      const doneCount = g.weekSlots.filter(s => s.done).length;
+      const hasAnyNote = g.weekSlots.some(s => (s.note && s.note.trim()) || s.done);
+      if (hasAnyNote) {
+        g.weekArchive.unshift({
+          weekKey: g.activeWeekKey,
+          doneCount,
+          slots: JSON.parse(JSON.stringify(g.weekSlots))
+        });
+      }
+      // Sabit plan şablonu korunur, tikler ve haftalık anlık notlar yeni hafta için yenilenir
+      g.weekSlots = g.weekSlots.map(s => ({
+        plan: s.plan || "",
+        note: "",
+        done: false
+      }));
+      g.activeWeekKey = currentWeek;
+      changed = true;
+    }
+  });
+
+  if (changed) saveState();
 }
 
 function ensureTodayLog() {
@@ -1346,6 +1576,7 @@ function loadState() {
   } catch (e) { console.error(e); }
   const daySeed = Math.floor(Date.now() / 86400000);
   currentQuoteIndex = daySeed % state.quotes.length;
+  checkWeeklyRollover();
 }
 
 function saveState() {
@@ -1361,13 +1592,30 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove("show"), 2200);
 }
 
-/* --- NAVİGASYON & DRAWER --- */
+/* --- NAVİGASYON, DRAWER VE GERİ/İLERİ GEÇMİŞİ --- */
+let navHistory = ["today"];
+let navPointer = 0;
+
 function toggleDrawer() {
   document.getElementById("drawer").classList.toggle("open");
   document.getElementById("drawerBackdrop").classList.toggle("open");
 }
 
-function switchView(viewName) {
+function updateNavArrows() {
+  const backBtn = document.getElementById("btnBack");
+  const fwdBtn = document.getElementById("btnForward");
+  if (backBtn) backBtn.disabled = navPointer <= 0;
+  if (fwdBtn) fwdBtn.disabled = navPointer >= navHistory.length - 1;
+}
+
+function switchView(viewName, fromHistory = false) {
+  const currentView = navHistory[navPointer];
+  if (!fromHistory && viewName !== currentView) {
+    navHistory = navHistory.slice(0, navPointer + 1);
+    navHistory.push(viewName);
+    navPointer = navHistory.length - 1;
+  }
+
   document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
   document.getElementById("view-" + viewName).classList.add("active");
 
@@ -1375,9 +1623,16 @@ function switchView(viewName) {
     n.classList.toggle("active", n.dataset.view === viewName);
   });
 
+  document.querySelectorAll(".dock-btn[data-dock]").forEach(d => {
+    d.classList.toggle("active", d.dataset.dock === viewName);
+  });
+
   if (document.getElementById("drawer").classList.contains("open")) {
     toggleDrawer();
   }
+
+  updateNavArrows();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 
   if (viewName === "today") renderToday();
   if (viewName === "goals") renderGoalsStudio();
@@ -1385,6 +1640,20 @@ function switchView(viewName) {
   if (viewName === "feedback") renderFeedbackView();
   if (viewName === "sounds") renderSoundsGrid();
   if (viewName === "settings") renderSettingsView();
+}
+
+function goBack() {
+  if (navPointer > 0) {
+    navPointer--;
+    switchView(navHistory[navPointer], true);
+  }
+}
+
+function goForward() {
+  if (navPointer < navHistory.length - 1) {
+    navPointer++;
+    switchView(navHistory[navPointer], true);
+  }
 }
 
 /* --- GÖRÜNÜM & TEMA AYARLARI --- */
@@ -1433,11 +1702,16 @@ function nextQuote() {
 }
 
 function renderToday() {
+  checkWeeklyRollover();
   document.getElementById("headerDate").textContent = formatDateTR(new Date());
   document.getElementById("dailyQuoteText").textContent = "“" + (state.quotes[currentQuoteIndex] || DEFAULT_QUOTES[0]) + "”";
 
   const log = ensureTodayLog();
-  const dailyGoals = state.goals.filter(g => g.horizon === "daily");
+  const todayIdx = getTodayWeekdayIndex();
+  const todayDayName = WEEK_DAYS_TR[todayIdx];
+
+  // Günlük ritimler + haftalık 7 günlük planlı hedefler ana ekranda birlikte yer alır
+  const dailyGoals = state.goals.filter(g => g.horizon === "daily" || g.type === "weekly_plan");
   const habitsContainer = document.getElementById("dailyHabitsList");
   habitsContainer.innerHTML = "";
 
@@ -1446,32 +1720,57 @@ function renderToday() {
     habitsContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.86rem;">Henüz günlük ritim eklenmemiş. Sağ üstten ekleyebilirsiniz.</p>`;
   } else {
     dailyGoals.forEach(g => {
-      const isDone = g.type === "check"
-        ? log.completedIds.includes(g.id)
-        : (log.numericDaily[g.id] || 0) >= g.target;
+      let isDone = false;
+      if (g.type === "weekly_plan") {
+        isDone = !!(g.weekSlots && g.weekSlots[todayIdx] && g.weekSlots[todayIdx].done);
+      } else if (g.type === "check") {
+        isDone = log.completedIds.includes(g.id);
+      } else {
+        isDone = (log.numericDaily[g.id] || 0) >= g.target;
+      }
       if (isDone) doneCount++;
 
       const div = document.createElement("div");
       div.className = "habit-item" + (isDone ? " done" : "");
 
-      if (g.type === "check") {
+      if (g.type === "weekly_plan") {
+        const slot = g.weekSlots[todayIdx];
+        const weekDone = g.weekSlots.filter(s => s.done).length;
         div.innerHTML = `
-          <div class="habit-info">
-            <span class="habit-title">${g.title}</span>
-            <span class="habit-meta">${g.freqNote || "Günlük Ritim"}</span>
+          <div class="habit-top-row">
+            <div class="habit-info">
+              <span class="habit-title">${g.title}</span>
+              <span class="habit-meta">📅 ${todayDayName} • Haftalık: ${weekDone}/7 gün</span>
+            </div>
+            <button class="check-circle" onclick="toggleWeeklySlotDone('${g.id}', ${todayIdx}, true)">${isDone ? "✓" : ""}</button>
           </div>
-          <button class="check-circle" onclick="toggleDailyCheck('${g.id}')">${isDone ? "✓" : ""}</button>
+          <div class="daily-plan-inline">
+            ${slot.plan ? `<span class="daily-plan-tag">Plan: ${slot.plan}</span>` : `<span class="daily-plan-tag" style="opacity:0.75;">Bugünün planı için Hedefler'den şablon yazabilir veya aşağıya not alabilirsiniz</span>`}
+            <input type="text" class="compact-input" placeholder="${todayDayName} gününe özel not / değişiklik..." value="${(slot.note || "").replace(/"/g, '&quot;')}" oninput="updateWeeklySlotField('${g.id}', ${todayIdx}, 'note', this.value, false)">
+          </div>
+        `;
+      } else if (g.type === "check") {
+        div.innerHTML = `
+          <div class="habit-top-row">
+            <div class="habit-info">
+              <span class="habit-title">${g.title}</span>
+              <span class="habit-meta">${g.freqNote || "Günlük Ritim"}</span>
+            </div>
+            <button class="check-circle" onclick="toggleDailyCheck('${g.id}')">${isDone ? "✓" : ""}</button>
+          </div>
         `;
       } else {
         const cur = log.numericDaily[g.id] || 0;
         div.innerHTML = `
-          <div class="habit-info">
-            <span class="habit-title">${g.title}</span>
-            <span class="habit-meta">${cur} / ${g.target} ${g.unit}</span>
-          </div>
-          <div class="counter-controls">
-            <button class="step-btn minus" onclick="stepDailyNumeric('${g.id}', -${g.step})">-${g.step}</button>
-            <button class="step-btn" onclick="stepDailyNumeric('${g.id}', ${g.step})">+${g.step}</button>
+          <div class="habit-top-row">
+            <div class="habit-info">
+              <span class="habit-title">${g.title}</span>
+              <span class="habit-meta">${cur} / ${g.target} ${g.unit}</span>
+            </div>
+            <div class="counter-controls">
+              <button class="step-btn minus" onclick="stepDailyNumeric('${g.id}', -${g.step})">-${g.step}</button>
+              <button class="step-btn" onclick="stepDailyNumeric('${g.id}', ${g.step})">+${g.step}</button>
+            </div>
           </div>
         `;
       }
@@ -1511,6 +1810,7 @@ function renderToday() {
     qContainer.appendChild(block);
   }
 
+  // 2. Kademe: Aylık / Sprint / Özel Döngü Hedefleri
   const cycleGoals = state.goals.filter(g => ["monthly", "sprint", "custom"].includes(g.horizon));
   const cycleStrip = document.getElementById("cycleGoalsStrip");
   cycleStrip.innerHTML = "";
@@ -1524,7 +1824,26 @@ function renderToday() {
         const diff = Math.ceil((new Date(g.deadline) - new Date()) / 86400000);
         extraTag = diff >= 0 ? `Son ${diff} gün` : "Süre doldu";
       }
-      const ratio = g.type === "numeric" ? Math.min(100, Math.round(((g.current || 0) / g.target) * 100)) : (g.done ? 100 : 0);
+
+      let ratio = 0;
+      let subText = "";
+      let actionHtml = "";
+
+      if (g.type === "weekly_plan") {
+        const doneDays = (g.weekSlots || []).filter(s => s.done).length;
+        ratio = Math.round((doneDays / 7) * 100);
+        subText = `Bu hafta: ${doneDays}/7 gün (%${ratio})`;
+        actionHtml = `<button class="mini-btn" onclick="openGoalDetail('${g.id}')">7 Gün Planı</button>`;
+      } else if (g.type === "numeric") {
+        ratio = Math.min(100, Math.round(((g.current || 0) / g.target) * 100));
+        subText = `${g.current || 0}/${g.target} ${g.unit}`;
+        actionHtml = `<button class="mini-btn" onclick="advanceCycleGoal('${g.id}')">+ İlerlet</button>`;
+      } else {
+        ratio = g.done ? 100 : 0;
+        subText = `%${ratio}`;
+        actionHtml = `<button class="mini-btn" onclick="advanceCycleGoal('${g.id}')">+ İlerlet</button>`;
+      }
+
       const card = document.createElement("div");
       card.className = "cycle-card";
       card.innerHTML = `
@@ -1532,14 +1851,15 @@ function renderToday() {
         <div class="cycle-title">${g.title}</div>
         <div class="progress-track"><div class="progress-fill" style="width:${ratio}%"></div></div>
         <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; color:var(--text-muted);">
-          <span>${g.type === "numeric" ? `${g.current || 0}/${g.target} ${g.unit}` : `%${ratio}`}</span>
-          <button class="mini-btn" onclick="advanceCycleGoal('${g.id}')">+ İlerlet</button>
+          <span>${subText}</span>
+          ${actionHtml}
         </div>
       `;
       cycleStrip.appendChild(card);
     });
   }
 
+  // 3. Kademe: Uzun Vadeli Pusula
   const longGoals = state.goals.filter(g => g.horizon === "yearly");
   const longStrip = document.getElementById("longTermStrip");
   longStrip.innerHTML = "";
@@ -1547,16 +1867,28 @@ function renderToday() {
     longStrip.innerHTML = `<span style="font-size:0.8rem; color:var(--text-muted);">Uzun vadeli yıllık pusula hedefi ekleyebilirsiniz.</span>`;
   } else {
     longGoals.forEach(g => {
-      const ratio = g.type === "numeric" ? Math.min(100, Math.round(((g.current || 0) / g.target) * 100)) : (g.done ? 100 : 0);
+      let ratio = 0;
+      let rightTxt = "";
+      if (g.type === "weekly_plan") {
+        const doneDays = (g.weekSlots || []).filter(s => s.done).length;
+        ratio = Math.round((doneDays / 7) * 100);
+        rightTxt = `${doneDays}/7 gün`;
+      } else if (g.type === "numeric") {
+        ratio = Math.min(100, Math.round(((g.current || 0) / g.target) * 100));
+        rightTxt = `${g.current || 0}/${g.target} ${g.unit}`;
+      } else {
+        ratio = g.done ? 100 : 0;
+        rightTxt = `%${ratio}`;
+      }
       const row = document.createElement("div");
       row.className = "compass-row";
-      row.onclick = () => advanceCycleGoal(g.id);
+      row.onclick = () => g.type === "weekly_plan" ? openGoalDetail(g.id) : advanceCycleGoal(g.id);
       row.style.cursor = "pointer";
       row.innerHTML = `
         <div style="flex:1;">
           <div style="display:flex; justify-content:space-between; font-size:0.83rem; font-weight:600; margin-bottom:4px;">
             <span>${g.title}</span>
-            <span style="color:var(--accent);">${g.type === "numeric" ? `${g.current || 0}/${g.target} ${g.unit}` : `%${ratio}`}</span>
+            <span style="color:var(--accent);">${rightTxt}</span>
           </div>
           <div class="progress-track" style="margin-bottom:0;"><div class="progress-fill" style="width:${ratio}%"></div></div>
         </div>
@@ -1564,6 +1896,11 @@ function renderToday() {
       longStrip.appendChild(row);
     });
   }
+}
+
+function openGoalDetail(goalId) {
+  expandedGoalId = goalId;
+  switchView("goals");
 }
 
 function toggleDailyCheck(id) {
@@ -1610,11 +1947,60 @@ function saveAnswer(key, val) {
   document.getElementById("saveStatus").textContent = "Kaydedildi ✓";
 }
 
+/* --- HAFTALIK 7 GÜNLÜK PLAN İŞLEMLERİ --- */
+function toggleWeeklySlotDone(goalId, dayIdx, fromToday = false) {
+  const g = state.goals.find(x => x.id === goalId);
+  if (!g || !g.weekSlots) return;
+  g.weekSlots[dayIdx].done = !g.weekSlots[dayIdx].done;
+
+  // Isı haritası senkronizasyonu: Eğer işaretlenen gün bugünse bugünün loguna da yansıt
+  if (dayIdx === getTodayWeekdayIndex()) {
+    const log = ensureTodayLog();
+    const pos = log.completedIds.indexOf(goalId);
+    if (g.weekSlots[dayIdx].done && pos === -1) log.completedIds.push(goalId);
+    if (!g.weekSlots[dayIdx].done && pos > -1) log.completedIds.splice(pos, 1);
+  }
+
+  saveState();
+  if (fromToday) renderToday();
+  else renderGoalsStudio();
+}
+
+function updateWeeklySlotField(goalId, dayIdx, field, val, rerender = false) {
+  const g = state.goals.find(x => x.id === goalId);
+  if (!g || !g.weekSlots) return;
+  g.weekSlots[dayIdx][field] = val;
+  saveState();
+  if (rerender) renderGoalsStudio();
+}
+
+function archiveCurrentWeekManually(goalId) {
+  const g = state.goals.find(x => x.id === goalId);
+  if (!g || !g.weekSlots) return;
+  if (!g.weekArchive) g.weekArchive = [];
+
+  const doneCount = g.weekSlots.filter(s => s.done).length;
+  g.weekArchive.unshift({
+    weekKey: (g.activeWeekKey || getCurrentWeekKey()) + " (Kayıt)",
+    doneCount,
+    slots: JSON.parse(JSON.stringify(g.weekSlots))
+  });
+  g.weekSlots = g.weekSlots.map(s => ({
+    plan: s.plan || "",
+    note: "",
+    done: false
+  }));
+  saveState();
+  renderGoalsStudio();
+  showToast("Hafta arşivlendi ve tikler yeni hafta için yenilendi");
+}
+
 /* --- HEDEF & DÖNGÜ STÜDYOSU --- */
 function toggleTargetFields() {
   const t = document.getElementById("gType").value;
   document.getElementById("numericFields").style.display = t === "numeric" ? "block" : "none";
   document.getElementById("frequencyField").style.display = t === "check" ? "block" : "none";
+  document.getElementById("weeklyPlanHint").style.display = t === "weekly_plan" ? "block" : "none";
 }
 
 function toggleDeadlineField() {
@@ -1628,8 +2014,9 @@ function addGoal() {
 
   const horizon = document.getElementById("gHorizon").value;
   const type = document.getElementById("gType").value;
+  const newId = "g_" + Date.now();
   const newGoal = {
-    id: "g_" + Date.now(),
+    id: newId,
     title,
     horizon,
     type,
@@ -1641,32 +2028,92 @@ function addGoal() {
     deadline: document.getElementById("gDeadline").value
   };
 
+  if (type === "weekly_plan") {
+    newGoal.activeWeekKey = getCurrentWeekKey();
+    newGoal.weekSlots = createEmptyWeekSlots();
+    newGoal.weekArchive = [];
+    expandedGoalId = newId;
+  }
+
   state.goals.push(newGoal);
   saveState();
   document.getElementById("gTitle").value = "";
   renderGoalsStudio();
-  showToast("Hedef oluşturuldu");
+  showToast(type === "weekly_plan" ? "7 günlük plan hedefi oluşturuldu, günlere dokunarak düzenleyebilirsiniz" : "Hedef oluşturuldu");
 }
 
 function deleteGoal(id) {
   state.goals = state.goals.filter(g => g.id !== id);
+  if (expandedGoalId === id) expandedGoalId = null;
   saveState();
   renderGoalsStudio();
 }
 
+function toggleExpandGoal(id) {
+  expandedGoalId = expandedGoalId === id ? null : id;
+  renderGoalsStudio();
+}
+
 function renderGoalsStudio() {
+  checkWeeklyRollover();
   const list = document.getElementById("allGoalsList");
   list.innerHTML = "";
   const names = { daily: "Günlük", monthly: "Aylık", sprint: "12 Haftalık Döngü", custom: "Özel Tarih", yearly: "Uzun Vade" };
+  const todayIdx = getTodayWeekdayIndex();
+
   state.goals.forEach(g => {
     const row = document.createElement("div");
     row.className = "list-row";
+    const isWeekly = g.type === "weekly_plan";
+    const isExpanded = expandedGoalId === g.id;
+    const doneDays = isWeekly ? (g.weekSlots || []).filter(s => s.done).length : 0;
+
+    let subDesc = `${names[g.horizon]} • `;
+    if (isWeekly) subDesc += `7 Günlük Plan (${doneDays}/7 tamamlandı)`;
+    else if (g.type === "numeric") subDesc += `${g.target} ${g.unit}`;
+    else subDesc += "Süreklilik";
+
+    let accordionHtml = "";
+    if (isWeekly && isExpanded) {
+      let daysHtml = "";
+      WEEK_DAYS_TR.forEach((dayName, dIdx) => {
+        const slot = g.weekSlots[dIdx] || { plan: "", note: "", done: false };
+        const isTodaySlot = dIdx === todayIdx;
+        daysHtml += `
+          <div class="day-slot ${isTodaySlot ? "today-highlight" : ""}">
+            <div class="day-slot-header">
+              <span class="day-name-badge">${dayName} ${isTodaySlot ? "• Bugün" : ""}</span>
+              <button class="check-circle" style="width:28px; height:28px; ${slot.done ? "background:var(--accent);" : ""}" onclick="toggleWeeklySlotDone('${g.id}', ${dIdx}, false)">${slot.done ? "✓" : ""}</button>
+            </div>
+            <input type="text" class="compact-input" placeholder="Sabit Plan Şablonu (Her hafta korunur)..." value="${(slot.plan || "").replace(/"/g, '&quot;')}" oninput="updateWeeklySlotField('${g.id}', ${dIdx}, 'plan', this.value)">
+            <input type="text" class="compact-input" placeholder="Bu haftaya özel değişiklik / not..." value="${(slot.note || "").replace(/"/g, '&quot;')}" oninput="updateWeeklySlotField('${g.id}', ${dIdx}, 'note', this.value)">
+          </div>
+        `;
+      });
+
+      accordionHtml = `
+        <div class="weekly-accordion">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span style="font-size:0.78rem; color:var(--text-muted); font-weight:600;">Aktif Dönem: ${g.activeWeekKey || getCurrentWeekKey()}</span>
+            <button class="mini-btn" onclick="archiveCurrentWeekManually('${g.id}')">📦 Haftayı Arşivle & Yeni Hafta</button>
+          </div>
+          ${daysHtml}
+        </div>
+      `;
+    }
+
     row.innerHTML = `
-      <div>
-        <strong style="font-size:0.92rem;">${g.title}</strong>
-        <div style="font-size:0.76rem; color:var(--text-muted);">${names[g.horizon]} • ${g.type === "numeric" ? `${g.target} ${g.unit}` : "Süreklilik"}</div>
+      <div class="list-row-top">
+        <div style="flex:1; cursor:${isWeekly ? "pointer" : "default"};" ${isWeekly ? `onclick="toggleExpandGoal('${g.id}')"` : ""}>
+          <strong style="font-size:0.93rem;">${isWeekly ? (isExpanded ? "▾ " : "▸ ") : ""}${g.title}</strong>
+          <div style="font-size:0.76rem; color:var(--text-muted);">${subDesc}</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          ${isWeekly ? `<button class="mini-btn" onclick="toggleExpandGoal('${g.id}')">${isExpanded ? "Kapat" : "Günler"}</button>` : ""}
+          <button class="danger-txt" onclick="deleteGoal('${g.id}')">Sil</button>
+        </div>
       </div>
-      <button class="danger-txt" onclick="deleteGoal('${g.id}')">Sil</button>
+      ${accordionHtml}
     `;
     list.appendChild(row);
   });
@@ -1695,7 +2142,7 @@ function renderPoolManager() {
   state.poolQuestions.forEach((q, idx) => {
     const row = document.createElement("div");
     row.className = "list-row";
-    row.innerHTML = `<span style="font-size:0.84rem;">${q}</span><button class="danger-txt" onclick="removePoolQ(${idx})">Sil</button>`;
+    row.innerHTML = `<div class="list-row-top"><span style="font-size:0.84rem;">${q}</span><button class="danger-txt" onclick="removePoolQ(${idx})">Sil</button></div>`;
     poolList.appendChild(row);
   });
 
@@ -1704,7 +2151,7 @@ function renderPoolManager() {
   state.quotes.forEach((q, idx) => {
     const row = document.createElement("div");
     row.className = "list-row";
-    row.innerHTML = `<span style="font-size:0.83rem; font-style:italic;">“${q}”</span><button class="danger-txt" onclick="removeQuote(${idx})">Sil</button>`;
+    row.innerHTML = `<div class="list-row-top"><span style="font-size:0.83rem; font-style:italic;">“${q}”</span><button class="danger-txt" onclick="removeQuote(${idx})">Sil</button></div>`;
     qList.appendChild(row);
   });
 }
@@ -1762,7 +2209,7 @@ function removeQuote(idx) {
 function renderFeedbackView() {
   const grid = document.getElementById("heatmapGrid");
   grid.innerHTML = "";
-  const dailyGoals = state.goals.filter(g => g.horizon === "daily");
+  const dailyGoals = state.goals.filter(g => g.horizon === "daily" || g.type === "weekly_plan");
   let activeDays = 0;
   const moodCounts = {};
 
@@ -1795,6 +2242,32 @@ function renderFeedbackView() {
     <p style="margin-bottom:0;">${topMood ? `Bu dönemde en sık kaydettiğin zihin hali: <strong>${topMood[0]}</strong> (${topMood[1]} gün).` : "Zihin halini işaretledikçe burada sana özel desenler belirecek."}</p>
   `;
 
+  // Haftalık Plan Arşivi Dökümü
+  const weeklyArchContainer = document.getElementById("weeklyArchiveList");
+  weeklyArchContainer.innerHTML = "";
+  let archCount = 0;
+  state.goals.filter(g => g.type === "weekly_plan").forEach(g => {
+    (g.weekArchive || []).forEach(arch => {
+      archCount++;
+      const notesSummary = arch.slots
+        .map((s, idx) => (s.note && s.note.trim()) ? `<strong>${WEEK_DAYS_TR[idx].slice(0,3)}:</strong> ${s.note}` : "")
+        .filter(Boolean)
+        .join(" • ");
+      const item = document.createElement("div");
+      item.style.padding = "9px 0";
+      item.style.borderBottom = "1px solid var(--border)";
+      item.innerHTML = `
+        <div style="font-size:0.8rem; color:var(--accent); font-weight:700;">${g.title} — ${arch.weekKey} (${arch.doneCount}/7 gün)</div>
+        <div style="font-size:0.82rem; color:var(--text-muted); margin-top:3px;">${notesSummary || "Bu haftada ek not girilmemiş."}</div>
+      `;
+      weeklyArchContainer.appendChild(item);
+    });
+  });
+  if (archCount === 0) {
+    weeklyArchContainer.innerHTML = `<p style="font-size:0.83rem; color:var(--text-muted); margin:0;">Haftalık planlı hedeflerinizde hafta tamamlandığında veya arşivlediğinizde geçmiş haftaların notları burada toplanır.</p>`;
+  }
+
+  // Günlük Öz Yansıma Arşivi
   const archive = document.getElementById("pastReflectionsList");
   archive.innerHTML = "";
   const keys = Object.keys(state.logs).sort().reverse();
@@ -1815,17 +2288,17 @@ function renderFeedbackView() {
     }
   });
   if (shown === 0) {
-    archive.innerHTML = `<p style="font-size:0.84rem; color:var(--text-muted);">Ana ekrandaki öz sorulara yanıt yazdıkça geçmiş notların burada zaman kapsülü olarak birikecek.</p>`;
+    archive.innerHTML = `<p style="font-size:0.84rem; color:var(--text-muted); margin:0;">Ana ekrandaki öz sorulara yanıt yazdıkça geçmiş notların burada zaman kapsülü olarak birikecek.</p>`;
   }
 }
 
-/* --- HİBRİT AMBİYANS SES MOTORU --- */
+/* --- GELİŞMİŞ 10 KARAKTERLİ DAHİLİ DOĞA & DİNGİNLİK SES MOTORU --- */
 let audioCtx = null;
-let synthNode = null;
-let synthGain = null;
+let activeNodes = [];
+let activeTimers = [];
+let masterGain = null;
 let htmlAudio = new Audio();
 htmlAudio.loop = true;
-htmlAudio.crossOrigin = "anonymous";
 let activeSoundId = null;
 let currentVolume = 0.6;
 let sleepTimerId = null;
@@ -1843,57 +2316,318 @@ function renderSoundsGrid() {
     btn.onclick = () => toggleSound(s.id);
     btn.innerHTML = `
       <span style="font-size:1.3rem;">${s.icon || "🎵"}</span>
-      <span style="font-size:0.88rem;">${s.name}</span>
+      <span style="font-size:0.86rem;">${s.name}</span>
     `;
     grid.appendChild(btn);
   });
+}
+
+function createNoiseBuffer(ctx, mode) {
+  const bufferSize = 3 * ctx.sampleRate;
+  const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const data = buffer.getChannelData(0);
+  let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0, lastOut = 0;
+
+  for (let i = 0; i < bufferSize; i++) {
+    const white = Math.random() * 2 - 1;
+    if (mode === "pink") {
+      b0 = 0.99886 * b0 + white * 0.0555179;
+      b1 = 0.99332 * b1 + white * 0.0750759;
+      b2 = 0.96900 * b2 + white * 0.1538520;
+      b3 = 0.86650 * b3 + white * 0.3104856;
+      b4 = 0.55000 * b4 + white * 0.5329522;
+      b5 = -0.7616 * b5 - white * 0.0168980;
+      data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.04;
+      b6 = white * 0.115926;
+    } else if (mode === "brown") {
+      data[i] = (lastOut + (0.02 * white)) / 1.02;
+      lastOut = data[i];
+      data[i] *= 2.8;
+    } else {
+      data[i] = white * 0.5;
+    }
+  }
+  return buffer;
 }
 
 function startSynth(preset) {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   if (audioCtx.state === "suspended") audioCtx.resume();
 
-  const bufferSize = 2 * audioCtx.sampleRate;
-  const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-  const data = buffer.getChannelData(0);
+  masterGain = audioCtx.createGain();
+  masterGain.gain.value = currentVolume;
+  masterGain.connect(audioCtx.destination);
 
-  let lastOut = 0.0;
-  for (let i = 0; i < bufferSize; i++) {
-    const white = Math.random() * 2 - 1;
-    if (preset === "brown" || preset === "wind") {
-      data[i] = (lastOut + (0.02 * white)) / 1.02;
-      lastOut = data[i];
-      data[i] *= 3.2;
-    } else {
-      data[i] = (lastOut + (0.08 * white)) / 1.08;
-      lastOut = data[i];
-      data[i] *= 1.8;
-    }
+  if (preset === "drizzle") {
+    const src = audioCtx.createBufferSource();
+    src.buffer = createNoiseBuffer(audioCtx, "pink");
+    src.loop = true;
+
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = "lowpass";
+    filter.frequency.value = 480;
+
+    const bedGain = audioCtx.createGain();
+    bedGain.gain.value = 0.38;
+
+    src.connect(filter);
+    filter.connect(bedGain);
+    bedGain.connect(masterGain);
+    src.start();
+    activeNodes.push(src);
+
+    const dropTimer = setInterval(() => {
+      if (!audioCtx || activeSoundId !== "s_drizzle") return;
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = "sine";
+      const freq = 750 + Math.random() * 650;
+      osc.frequency.setValueAtTime(freq, now);
+      osc.frequency.exponentialRampToValueAtTime(freq * 1.45, now + 0.09);
+      g.gain.setValueAtTime(0.001, now);
+      g.gain.linearRampToValueAtTime(0.055, now + 0.015);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+      osc.connect(g);
+      g.connect(masterGain);
+      osc.start(now);
+      osc.stop(now + 0.13);
+    }, 340);
+    activeTimers.push(dropTimer);
+
+  } else if (preset === "ocean") {
+    const src = audioCtx.createBufferSource();
+    src.buffer = createNoiseBuffer(audioCtx, "pink");
+    src.loop = true;
+
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = "lowpass";
+    filter.frequency.value = 380;
+
+    const waveGain = audioCtx.createGain();
+    waveGain.gain.value = 0.35;
+
+    const lfo = audioCtx.createOscillator();
+    lfo.type = "sine";
+    lfo.frequency.value = 0.09;
+    const lfoDepth = audioCtx.createGain();
+    lfoDepth.gain.value = 0.30;
+    const filterDepth = audioCtx.createGain();
+    filterDepth.gain.value = 260;
+
+    lfo.connect(lfoDepth);
+    lfoDepth.connect(waveGain.gain);
+    lfo.connect(filterDepth);
+    filterDepth.connect(filter.frequency);
+
+    src.connect(filter);
+    filter.connect(waveGain);
+    waveGain.connect(masterGain);
+    src.start();
+    lfo.start();
+    activeNodes.push(src, lfo);
+
+  } else if (preset === "breeze") {
+    const src = audioCtx.createBufferSource();
+    src.buffer = createNoiseBuffer(audioCtx, "pink");
+    src.loop = true;
+
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = "bandpass";
+    filter.frequency.value = 320;
+    filter.Q.value = 3.2;
+
+    const lfo = audioCtx.createOscillator();
+    lfo.type = "sine";
+    lfo.frequency.value = 0.15;
+    const lfoGain = audioCtx.createGain();
+    lfoGain.gain.value = 140;
+
+    lfo.connect(lfoGain);
+    lfoGain.connect(filter.frequency);
+
+    const g = audioCtx.createGain();
+    g.gain.value = 0.55;
+
+    src.connect(filter);
+    filter.connect(g);
+    g.connect(masterGain);
+    src.start();
+    lfo.start();
+    activeNodes.push(src, lfo);
+
+  } else if (preset === "birds") {
+    const birdTimer = setInterval(() => {
+      if (!audioCtx || activeSoundId !== "s_birds") return;
+      const notes = 2 + Math.floor(Math.random() * 3);
+      for (let n = 0; n < notes; n++) {
+        const start = audioCtx.currentTime + n * 0.16;
+        const osc = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        osc.type = "sine";
+        const baseFreq = 2100 + Math.random() * 1400;
+        osc.frequency.setValueAtTime(baseFreq, start);
+        osc.frequency.exponentialRampToValueAtTime(baseFreq * (0.82 + Math.random() * 0.45), start + 0.11);
+
+        g.gain.setValueAtTime(0.0001, start);
+        g.gain.linearRampToValueAtTime(0.075, start + 0.025);
+        g.gain.exponentialRampToValueAtTime(0.0001, start + 0.13);
+
+        osc.connect(g);
+        g.connect(masterGain);
+        osc.start(start);
+        osc.stop(start + 0.14);
+      }
+    }, 2400);
+    activeTimers.push(birdTimer);
+
+  } else if (preset === "fire") {
+    const src = audioCtx.createBufferSource();
+    src.buffer = createNoiseBuffer(audioCtx, "brown");
+    src.loop = true;
+
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = "lowpass";
+    filter.frequency.value = 180;
+
+    const g = audioCtx.createGain();
+    g.gain.value = 0.32;
+    src.connect(filter);
+    filter.connect(g);
+    g.connect(masterGain);
+    src.start();
+    activeNodes.push(src);
+
+    const crackleTimer = setInterval(() => {
+      if (!audioCtx || activeSoundId !== "s_fire") return;
+      if (Math.random() > 0.45) return;
+      const now = audioCtx.currentTime;
+      const popSrc = audioCtx.createBufferSource();
+      popSrc.buffer = createNoiseBuffer(audioCtx, "white");
+      const hp = audioCtx.createBiquadFilter();
+      hp.type = "bandpass";
+      hp.frequency.value = 1600 + Math.random() * 1800;
+      const pg = audioCtx.createGain();
+      pg.gain.setValueAtTime(0.18, now);
+      pg.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
+      popSrc.connect(hp);
+      hp.connect(pg);
+      pg.connect(masterGain);
+      popSrc.start(now);
+      popSrc.stop(now + 0.04);
+    }, 260);
+    activeTimers.push(crackleTimer);
+
+  } else if (preset === "stream") {
+    const src = audioCtx.createBufferSource();
+    src.buffer = createNoiseBuffer(audioCtx, "pink");
+    src.loop = true;
+
+    const bp = audioCtx.createBiquadFilter();
+    bp.type = "bandpass";
+    bp.frequency.value = 820;
+    bp.Q.value = 1.1;
+
+    const lfo = audioCtx.createOscillator();
+    lfo.frequency.value = 0.45;
+    const lfoG = audioCtx.createGain();
+    lfoG.gain.value = 190;
+    lfo.connect(lfoG);
+    lfoG.connect(bp.frequency);
+
+    const g = audioCtx.createGain();
+    g.gain.value = 0.45;
+    src.connect(bp);
+    bp.connect(g);
+    g.connect(masterGain);
+    src.start();
+    lfo.start();
+    activeNodes.push(src, lfo);
+
+  } else if (preset === "crickets") {
+    const cricketTimer = setInterval(() => {
+      if (!audioCtx || activeSoundId !== "s_crickets") return;
+      for (let p = 0; p < 3; p++) {
+        const t = audioCtx.currentTime + p * 0.07;
+        const osc = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        osc.type = "sine";
+        osc.frequency.value = 4150;
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.linearRampToValueAtTime(0.035, t + 0.015);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.055);
+        osc.connect(g);
+        g.connect(masterGain);
+        osc.start(t);
+        osc.stop(t + 0.06);
+      }
+    }, 1350);
+    activeTimers.push(cricketTimer);
+
+  } else if (preset === "chimes") {
+    const scale = [523.25, 587.33, 659.25, 783.99, 880.0, 1046.5];
+    const chimeTimer = setInterval(() => {
+      if (!audioCtx || activeSoundId !== "s_chimes") return;
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = "sine";
+      osc.frequency.value = scale[Math.floor(Math.random() * scale.length)];
+      g.gain.setValueAtTime(0.0001, now);
+      g.gain.linearRampToValueAtTime(0.09, now + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + 2.4);
+      osc.connect(g);
+      g.connect(masterGain);
+      osc.start(now);
+      osc.stop(now + 2.5);
+    }, 2800);
+    activeTimers.push(chimeTimer);
+
+  } else if (preset === "bowl") {
+    const playBowl = () => {
+      if (!audioCtx || activeSoundId !== "s_bowl") return;
+      const now = audioCtx.currentTime;
+      [216, 432, 648].forEach((freq, idx) => {
+        const osc = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        osc.type = "sine";
+        osc.frequency.value = freq;
+        const amp = idx === 0 ? 0.14 : (idx === 1 ? 0.07 : 0.03);
+        g.gain.setValueAtTime(0.0001, now);
+        g.gain.linearRampToValueAtTime(amp, now + 0.35);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + 6.5);
+        osc.connect(g);
+        g.connect(masterGain);
+        osc.start(now);
+        osc.stop(now + 6.6);
+      });
+    };
+    playBowl();
+    const bowlTimer = setInterval(playBowl, 7200);
+    activeTimers.push(bowlTimer);
+
+  } else if (preset === "theta") {
+    [432, 436].forEach(freq => {
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = "sine";
+      osc.frequency.value = freq;
+      g.gain.value = 0.075;
+      osc.connect(g);
+      g.connect(masterGain);
+      osc.start();
+      activeNodes.push(osc);
+    });
   }
-
-  const noise = audioCtx.createBufferSource();
-  noise.buffer = buffer;
-  noise.loop = true;
-
-  const filter = audioCtx.createBiquadFilter();
-  filter.type = "lowpass";
-  filter.frequency.value = preset === "wind" ? 340 : (preset === "brown" ? 260 : 950);
-
-  synthGain = audioCtx.createGain();
-  synthGain.gain.value = currentVolume * 0.45;
-
-  noise.connect(filter);
-  filter.connect(synthGain);
-  synthGain.connect(audioCtx.destination);
-  noise.start(0);
-  synthNode = noise;
 }
 
 function stopAllSounds() {
-  if (synthNode) {
-    try { synthNode.stop(); synthNode.disconnect(); } catch (e) {}
-    synthNode = null;
-  }
+  activeNodes.forEach(n => {
+    try { n.stop(); n.disconnect(); } catch (e) {}
+  });
+  activeNodes = [];
+  activeTimers.forEach(t => clearInterval(t));
+  activeTimers = [];
   htmlAudio.pause();
   htmlAudio.src = "";
   activeSoundId = null;
@@ -1917,8 +2651,9 @@ function toggleSound(id) {
     htmlAudio.src = sound.url;
     htmlAudio.volume = currentVolume;
     htmlAudio.play().catch(() => {
-      showToast("Bağlantı açılamadı, dingin yağmur tonuna geçiliyor...");
-      startSynth("rain");
+      showToast("Bağlantı açılamadı, hafif yağmur tonuna geçiliyor...");
+      activeSoundId = "s_drizzle";
+      startSynth("drizzle");
     });
   }
   updateSoundHeader(sound.name);
@@ -1930,7 +2665,7 @@ function updateSoundHeader(name) {
   const lbl = document.getElementById("headerSoundLabel");
   if (activeSoundId && name) {
     pill.classList.add("playing");
-    lbl.textContent = name;
+    lbl.textContent = name.split(" ")[0];
   } else {
     pill.classList.remove("playing");
     lbl.textContent = "Ambiyans";
@@ -1940,7 +2675,7 @@ function updateSoundHeader(name) {
 function changeVolume(val) {
   currentVolume = Number(val) / 100;
   document.getElementById("volLabel").textContent = "%" + val;
-  if (synthGain) synthGain.gain.value = currentVolume * 0.45;
+  if (masterGain) masterGain.gain.value = currentVolume;
   htmlAudio.volume = currentVolume;
 }
 
@@ -1954,7 +2689,7 @@ function setSleepTimer(mins) {
     st.textContent = "";
     return;
   }
-  st.textContent = `${mins} dakika sonra ses yavaşça kapanacak.`;
+  st.textContent = `${mins} dakika sonra ses otomatik kapanacak.`;
   sleepTimerId = setTimeout(() => {
     stopAllSounds();
     st.textContent = "Zamanlayıcı tamamlandı.";
@@ -1990,6 +2725,7 @@ function importData(event) {
     try {
       const imported = JSON.parse(e.target.result);
       state = { ...state, ...imported };
+      checkWeeklyRollover();
       saveState();
       applyPrefs();
       renderToday();
