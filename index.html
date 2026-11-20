@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Öz'görü">
+<meta name="theme-color" content="#f5f0e6">
+<title>Öz'görü — Pusula, Ritim ve Yansıma</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%234a6b5d'/%3E%3Ccircle cx='90' cy='90' r='54' fill='none' stroke='%23f5f0e6' stroke-width='4' opacity='0.85'/%3E%3Ccircle cx='90' cy='90' r='34' fill='none' stroke='%23f5f0e6' stroke-width='2.5' opacity='0.5'/%3E%3Cpath d='M90 36 L98 82 L144 90 L98 98 L90 144 L82 98 L36 90 L82 82 Z' fill='%23f5f0e6'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #f5f0e6;
+    --bg-card: rgba(255, 252, 245, 0.86);
+    --bg-elevated: #ede5d5;
+    --text: #2c2620;
+    --text-muted: #6e6357;
+    --border: rgba(44, 38, 32, 0.12);
+    --accent: #4a6b5d;
+    --accent-soft: rgba(74, 107, 93, 0.14);
+    --accent-text: #ffffff;
+    --shadow: 0 8px 24px rgba(44, 38, 32, 0.06);
+    --font-scale: 1;
+    --space-scale: 1;
+    --radius: 22px;
+    --pattern-opacity: 0.055;
+  }
+
+  /* TEMALAR */
+  [data-theme="paper"] {
+    --bg: #f5f0e6;
+    --bg-card: rgba(255, 252, 245, 0.88);
+    --bg-elevated: #ebe2d1;
+    --text: #2c2620;
+    --text-muted: #6e6357;
+    --border: rgba(44, 38, 32, 0.12);
+    --shadow: 0 8px 24px rgba(44, 38, 32, 0.06);
+  }
+  [data-theme="day"] {
+    --bg: #f8f9fa;
+    --bg-card: rgba(255, 255, 255, 0.92);
+    --bg-elevated: #eef1f4;
+    --text: #1c2127;
+    --text-muted: #5c6672;
+    --border: rgba(28, 33, 39, 0.1);
+    --shadow: 0 8px 24px rgba(28, 33, 39, 0.05);
+  }
+  [data-theme="night"] {
+    --bg: #181b1e;
+    --bg-card: rgba(30, 34, 39, 0.88);
+    --bg-elevated: #262b31;
+    --text: #e6e3de;
+    --text-muted: #989e9a;
+    --border: rgba(255, 255, 255, 0.09);
+    --shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+    --pattern-opacity: 0.04;
+  }
+  [data-theme="oled"] {
+    --bg: #000000;
+    --bg-card: rgba(18, 19, 21, 0.92);
+    --bg-elevated: #1c1e22;
+    --text: #ece9e2;
+    --text-muted: #8e9398;
+    --border: rgba(255, 255, 255, 0.11);
+    --shadow: none;
+    --pattern-opacity: 0.035;
+  }
+
+  /* SAKİNLEŞTİRİCİ VURGU RENKLERİ */
+  [data-accent="sage"] {
+    --accent: #4a6b5d;
+    --accent-soft: rgba(74, 107, 93, 0.15);
+  }
+  [data-accent="terracotta"] {
+    --accent: #b5654d;
+    --accent-soft: rgba(181, 101, 77, 0.15);
+  }
+  [data-accent="slate"] {
+    --accent: #49667a;
+    --accent-soft: rgba(73, 102, 122, 0.15);
+  }
+  [data-accent="amber"] {
+    --accent: #a87638;
+    --accent-soft: rgba(168, 118, 56, 0.16);
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: calc(15px * var(--font-scale));
+    line-height: 1.55;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+
+  /* KİLİT EKRANI (PIN GATE) */
+  #lockScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+  }
+  #lockScreen.hidden {
+    display: none;
+  }
+  .lock-emblem {
+    width: 68px;
+    height: 68px;
+    border-radius: 22px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.9rem;
+    margin-bottom: 14px;
+    border: 1px solid var(--accent);
+  }
+  .lock-title {
+    font-family: Georgia, serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0 0 4px;
+  }
+  .lock-sub {
+    font-size: 0.86rem;
+    color: var(--text-muted);
+    margin: 0 0 24px;
+  }
+  .pin-dots {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 26px;
+  }
+  .pin-dot {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background: transparent;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .pin-dot.filled {
+    background: var(--accent);
+    transform: scale(1.12);
+  }
+  .pin-dots.shake {
+    animation: shakeAnim 0.35s ease;
+  }
+  @keyframes shakeAnim {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    50% { transform: translateX(8px); }
+    75% { transform: translateX(-6px); }
+  }
+  .keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 72px);
+    gap: 14px;
+  }
+  .key-btn {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text);
+    font-size: 1.45rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.1s ease, background 0.15s ease;
+  }
+  .key-btn:active {
+    transform: scale(0.92);
+    background: var(--accent-soft);
+  }
+  .key-btn.action-key {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    background: transparent;
+    box-shadow: none;
+    border-color: transparent;
+  }
+
+  /* ORGANİK ARKA PLAN DESENLERİ */
+  #bg-pattern {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: var(--pattern-opacity);
+    background-repeat: repeat;
+    transition: opacity 0.4s ease;
+  }
+  [data-pattern="none"] #bg-pattern { background-image: none; }
+  [data-pattern="ripples"] #bg-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='160' height='160' viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='80' cy='80' r='22' fill='none' stroke='%23888888' stroke-width='1.2'/%3E%3Ccircle cx='80' cy='80' r='44' fill='none' stroke='%23888888' stroke-width='1'/%3E%3Ccircle cx='80' cy='80' r='68' fill='none' stroke='%23888888' stroke-width='0.8'/%3E%3C/svg%3E");
+  }
+  [data-pattern="topo"] #bg-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40 Q 50 10, 100 40 T 200 40 M0 90 Q 60 60, 110 90 T 200 90 M0 140 Q 45 170, 95 140 T 200 140 M0 185 Q 55 155, 105 185 T 200 185' fill='none' stroke='%23888888' stroke-width='1.1'/%3E%3C/svg%3E");
+  }
+  [data-pattern="geometry"] #bg-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='60' cy='60' r='30' fill='none' stroke='%23888888' stroke-width='1'/%3E%3Ccircle cx='60' cy='30' r='30' fill='none' stroke='%23888888' stroke-width='0.8'/%3E%3Ccircle cx='60' cy='90' r='30' fill='none' stroke='%23888888' stroke-width='0.8'/%3E%3Ccircle cx='30' cy='60' r='30' fill='none' stroke='%23888888' stroke-width='0.8'/%3E%3Ccircle cx='90' cy='60' r='30' fill='none' stroke='%23888888' stroke-width='0.8'/%3E%3C/svg%3E");
+  }
+  [data-pattern="grain"] #bg-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='18' r='1' fill='%23888888'/%3E%3Ccircle cx='45' cy='32' r='0.9' fill='%23888888'/%3E%3Ccircle cx='78' cy='14' r='1.1' fill='%23888888'/%3E%3Ccircle cx='24' cy='67' r='1' fill='%23888888'/%3E%3Ccircle cx='66' cy='74' r='0.8' fill='%23888888'/%3E%3Ccircle cx='88' cy='55' r='1' fill='%23888888'/%3E%3Ccircle cx='38' cy='89' r='0.9' fill='%23888888'/%3E%3C/svg%3E");
+  }
+
+  /* ÜST BAR */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
+    background: var(--bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .icon-btn {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 40px;
+    height: 40px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.2s ease;
+  }
+  .icon-btn:active { transform: scale(0.94); }
+
+  .brand-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: calc(1.25rem * var(--font-scale));
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: var(--accent);
+  }
+  .brand-date {
+    font-size: calc(0.76rem * var(--font-scale));
+    color: var(--text-muted);
+    display: block;
+    margin-top: -2px;
+  }
+
+  .sound-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: calc(0.8rem * var(--font-scale));
+    cursor: pointer;
+  }
+  .sound-pill.playing {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .wave-bars {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 12px;
+  }
+  .wave-bars span {
+    width: 2.5px;
+    height: 5px;
+    background: currentColor;
+    border-radius: 2px;
+  }
+  .sound-pill.playing .wave-bars span:nth-child(1) { animation: wave 0.9s infinite ease-in-out; }
+  .sound-pill.playing .wave-bars span:nth-child(2) { animation: wave 0.9s 0.25s infinite ease-in-out; }
+  .sound-pill.playing .wave-bars span:nth-child(3) { animation: wave 0.9s 0.5s infinite ease-in-out; }
+  @keyframes wave {
+    0%, 100% { height: 4px; }
+    50% { height: 12px; }
+  }
+
+  /* SOLDAN AÇILIR MENÜ (DRAWER) */
+  .drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.42);
+    z-index: 50;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+  }
+  .drawer-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .drawer {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 285px;
+    max-width: 82vw;
+    background: var(--bg);
+    border-right: 1px solid var(--border);
+    z-index: 60;
+    transform: translateX(-102%);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    display: flex;
+    flex-direction: column;
+    padding: calc(20px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom));
+  }
+  .drawer.open { transform: translateX(0); }
+
+  .drawer-header {
+    padding: 4px 8px 18px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .drawer-header h2 {
+    margin: 0;
+    font-family: Georgia, serif;
+    color: var(--accent);
+    font-size: 1.4rem;
+  }
+  .drawer-header p {
+    margin: 4px 0 0;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 0.95rem;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .nav-item.active {
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ANA KONTEYNER VE SAYFALAR */
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: calc(14px * var(--space-scale)) calc(14px * var(--space-scale)) calc(44px + env(safe-area-inset-bottom));
+  }
+
+  .view { display: none; animation: fadeIn 0.25s ease; }
+  .view.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* KARTLAR VE KADEMELER */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: calc(16px * var(--space-scale));
+    margin-bottom: calc(14px * var(--space-scale));
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: calc(0.75rem * var(--font-scale));
+    text-transform: uppercase;
+    letter-spacing: 0.9px;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: calc(10px * var(--space-scale));
+  }
+
+  /* GÜNÜN SÖZÜ KARTI */
+  .quote-card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--bg-card), var(--accent-soft));
+    border-left: 4px solid var(--accent);
+  }
+  .quote-text {
+    font-family: Georgia, "Times New Roman", serif;
+    font-style: italic;
+    font-size: calc(1.02rem * var(--font-scale));
+    line-height: 1.6;
+    margin: 0 0 8px;
+    color: var(--text);
+  }
+  .quote-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: calc(0.78rem * var(--font-scale));
+    color: var(--text-muted);
+  }
+  .mini-btn {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: calc(0.75rem * var(--font-scale));
+    cursor: pointer;
+  }
+
+  /* 1. KADEME: GÜNLÜK ALIŞKANLIKLAR */
+  .habit-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: calc(11px * var(--space-scale)) calc(12px * var(--space-scale));
+    border-radius: 15px;
+    background: var(--bg-elevated);
+    margin-bottom: 8px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+  }
+  .habit-item.done {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .habit-info {
+    flex: 1;
+    padding-right: 10px;
+  }
+  .habit-title {
+    font-weight: 600;
+    font-size: calc(0.95rem * var(--font-scale));
+    display: block;
+  }
+  .habit-meta {
+    font-size: calc(0.76rem * var(--font-scale));
+    color: var(--text-muted);
+  }
+
+  .check-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background: transparent;
+    color: var(--accent-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-weight: bold;
+  }
+  .habit-item.done .check-circle {
+    background: var(--accent);
+  }
+
+  .counter-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .step-btn {
+    background: var(--accent);
+    color: var(--accent-text);
+    border: none;
+    border-radius: 10px;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .step-btn.minus {
+    background: var(--bg-card);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  /* GÜNLÜK ÖZ SORULAR VE ENERJİ */
+  .mood-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .mood-chip {
+    flex: 1;
+    min-width: 56px;
+    padding: 8px 4px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    color: var(--text-muted);
+    font-size: calc(0.75rem * var(--font-scale));
+    text-align: center;
+    cursor: pointer;
+  }
+  .mood-chip.selected {
+    background: var(--accent);
+    color: var(--accent-text);
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+
+  .question-block {
+    margin-bottom: calc(14px * var(--space-scale));
+  }
+  .question-block label {
+    display: block;
+    font-weight: 600;
+    font-size: calc(0.9rem * var(--font-scale));
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+  .pool-badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    padding: 2px 7px;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  textarea, input[type="text"], input[type="number"], input[type="date"], input[type="password"], select {
+    width: 100%;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 13px;
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: calc(0.9rem * var(--font-scale));
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  textarea:focus, input:focus, select:focus {
+    border-color: var(--accent);
+  }
+  textarea {
+    resize: vertical;
+    min-height: 62px;
+  }
+
+  /* 2. KADEME: AYLIK / DÖNGÜ HEDEFLERİ (ORTA ŞERİT) */
+  .horizontal-scroll {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+  .horizontal-scroll::-webkit-scrollbar { display: none; }
+
+  .cycle-card {
+    min-width: 215px;
+    max-width: 240px;
+    flex-shrink: 0;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 12px;
+  }
+  .cycle-tag {
+    font-size: 0.7rem;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .cycle-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin: 4px 0 8px;
+  }
+  .progress-track {
+    width: 100%;
+    height: 7px;
+    background: var(--bg-card);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 10px;
+    transition: width 0.35s ease;
+  }
+
+  /* 3. KADEME: UZUN VADELİ PUSULA (ALT İNCE ŞERİT) */
+  .compass-strip {
+    padding: 12px 14px;
+    border-radius: 18px;
+    background: var(--bg-card);
+    border: 1px dashed var(--accent);
+  }
+  .compass-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .compass-row:last-child { margin-bottom: 0; }
+
+  /* BUTONLAR VE FORM ELEMANLARI */
+  .btn-primary {
+    background: var(--accent);
+    color: var(--accent-text);
+    border: none;
+    padding: 11px 16px;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    cursor: pointer;
+    width: 100%;
+  }
+  .btn-secondary {
+    background: var(--bg-elevated);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 9px 14px;
+    border-radius: 13px;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  .form-group { margin-bottom: 12px; }
+  .form-group label {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* ISI HARİTASI (HEATMAP) */
+  .heatmap-grid {
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    gap: 4px;
+    margin-top: 8px;
+  }
+  .heat-cell {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+  }
+  .heat-1 { background: var(--accent-soft); }
+  .heat-2 { background: var(--accent); opacity: 0.65; }
+  .heat-3 { background: var(--accent); opacity: 1; }
+
+  /* SES STÜDYOSU IZGARASI */
+  .sound-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .sound-tile {
+    padding: 14px 12px;
+    border-radius: 16px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    text-align: left;
+    cursor: pointer;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .sound-tile.active {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* TOAST BİLDİRİM */
+  #toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--text);
+    color: var(--bg);
+    padding: 10px 18px;
+    border-radius: 20px;
+    font-size: 0.84rem;
+    z-index: 10000;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  #toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  .list-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 8px;
+  }
+  .list-row:last-child { border-bottom: none; }
+  .danger-txt { color: #c0564b; background: none; border: none; cursor: pointer; font-size: 0.85rem; }
+
+  /* TOGGLE ANAHTARI */
+  .switch-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
+  .chip-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .option-chip {
+    padding: 8px 13px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    color: var(--text);
+    font-size: 0.83rem;
+    cursor: pointer;
+  }
+  .option-chip.active {
+    background: var(--accent);
+    color: var(--accent-text);
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+</style>
+</head>
+<body data-theme="paper" data-accent="sage" data-pattern="ripples">
+
+<!-- İLK AÇILIŞ PIN KİLİDİ -->
+<div id="lockScreen">
+  <div class="lock-emblem">🧭</div>
+  <h1 class="lock-title">Öz'görü</h1>
+  <p class="lock-sub" id="lockPrompt">Devam etmek için 4 haneli erişim kodunu girin</p>
+  <div class="pin-dots" id="pinDots">
+    <span class="pin-dot"></span>
+    <span class="pin-dot"></span>
+    <span class="pin-dot"></span>
+    <span class="pin-dot"></span>
+  </div>
+  <div class="keypad">
+    <button class="key-btn" onclick="pressPin('1')">1</button>
+    <button class="key-btn" onclick="pressPin('2')">2</button>
+    <button class="key-btn" onclick="pressPin('3')">3</button>
+    <button class="key-btn" onclick="pressPin('4')">4</button>
+    <button class="key-btn" onclick="pressPin('5')">5</button>
+    <button class="key-btn" onclick="pressPin('6')">6</button>
+    <button class="key-btn" onclick="pressPin('7')">7</button>
+    <button class="key-btn" onclick="pressPin('8')">8</button>
+    <button class="key-btn" onclick="pressPin('9')">9</button>
+    <button class="key-btn action-key" onclick="clearPin()">Temizle</button>
+    <button class="key-btn" onclick="pressPin('0')">0</button>
+    <button class="key-btn action-key" onclick="backspacePin()">⌫</button>
+  </div>
+</div>
+
+<div id="bg-pattern"></div>
+
+<header>
+  <div class="header-left">
+    <button class="icon-btn" onclick="toggleDrawer()" aria-label="Menü">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="17" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div>
+      <span class="brand-title">Öz'görü</span>
+      <span class="brand-date" id="headerDate"></span>
+    </div>
+  </div>
+  <button class="sound-pill" id="headerSoundBtn" onclick="switchView('sounds')">
+    <span class="wave-bars"><span></span><span></span><span></span></span>
+    <span id="headerSoundLabel">Ambiyans</span>
+  </button>
+</header>
+
+<!-- SOLDAN AÇILIR MENÜ -->
+<div class="drawer-backdrop" id="drawerBackdrop" onclick="toggleDrawer()"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-header">
+    <h2>Öz'görü</h2>
+    <p>Pusula, Ritim ve Yansıma</p>
+  </div>
+  <nav class="nav-list">
+    <button class="nav-item active" data-view="today" onclick="switchView('today')">🧭 Bugün & Pusula</button>
+    <button class="nav-item" data-view="goals" onclick="switchView('goals')">🎯 Hedef & Döngü Stüdyosu</button>
+    <button class="nav-item" data-view="pool" onclick="switchView('pool')">🌿 Soru & Söz Havuzu</button>
+    <button class="nav-item" data-view="feedback" onclick="switchView('feedback')">🪞 Öz Feedback & Kapsül</button>
+    <button class="nav-item" data-view="sounds" onclick="switchView('sounds')">🎧 Ambiyans & Sesler</button>
+    <button class="nav-item" data-view="settings" onclick="switchView('settings')">🎨 Görünüm & Veri</button>
+  </nav>
+</aside>
+
+<main>
+  <!-- 1. GÖRÜNÜM: ANA EKRAN (BUGÜN) -->
+  <section id="view-today" class="view active">
+    <!-- GÜNÜN SÖZÜ / ŞÜKRAN KARTI -->
+    <div class="card quote-card">
+      <div class="section-label">
+        <span>✨ Günün Farkındalık Notu</span>
+        <button class="mini-btn" onclick="nextQuote()">↻ Değiştir</button>
+      </div>
+      <p class="quote-text" id="dailyQuoteText"></p>
+      <div class="quote-footer">
+        <span id="dailyQuoteTag">Şükür & Denge</span>
+        <span id="dailyProgressBadge">Bugün: %0</span>
+      </div>
+    </div>
+
+    <!-- 1. KADEME (BÜYÜK ALAN): GÜNLÜK ODAK -->
+    <div class="card">
+      <div class="section-label">
+        <span>🌱 Günlük Ritimler</span>
+        <button class="mini-btn" onclick="switchView('goals')">+ Ekle</button>
+      </div>
+      <div id="dailyHabitsList"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">
+        <span>✍️ Günlük Öz Yansıma</span>
+        <span style="font-weight:400; text-transform:none;" id="saveStatus">Otomatik kaydedilir</span>
+      </div>
+
+      <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">Bugünkü Zihin & Enerji Halim:</div>
+      <div class="mood-row" id="moodRow">
+        <button class="mood-chip" data-mood="Dingin" onclick="selectMood('Dingin')">🌊 Dingin</button>
+        <button class="mood-chip" data-mood="Odaklı" onclick="selectMood('Odaklı')">🎯 Odaklı</button>
+        <button class="mood-chip" data-mood="Şükür Dolu" onclick="selectMood('Şükür Dolu')">☀️ Şükür</button>
+        <button class="mood-chip" data-mood="Yorgun" onclick="selectMood('Yorgun')">🍂 Yorgun</button>
+        <button class="mood-chip" data-mood="Dağınık" onclick="selectMood('Dağınık')">🌫️ Dağınık</button>
+      </div>
+
+      <div id="dailyQuestionsContainer"></div>
+    </div>
+
+    <!-- 2. KADEME (ORTA ŞERİT): AYLIK / ÖZEL DÖNGÜ HEDEFLERİ -->
+    <div class="card" style="padding-bottom:12px;">
+      <div class="section-label">
+        <span>🗓️ Aylık & Döngü Hedefleri</span>
+        <button class="mini-btn" onclick="switchView('goals')">Yönet</button>
+      </div>
+      <div class="horizontal-scroll" id="cycleGoalsStrip"></div>
+    </div>
+
+    <!-- 3. KADEME (ALT İNCE ŞERİT): UZUN VADELİ PUSULA -->
+    <div class="compass-strip">
+      <div class="section-label" style="margin-bottom:6px;">
+        <span>🧭 Uzun Vadeli Pusula</span>
+        <span style="font-size:0.7rem; font-weight:400;">Dokunarak ilerlet</span>
+      </div>
+      <div id="longTermStrip"></div>
+    </div>
+  </section>
+
+  <!-- 2. GÖRÜNÜM: HEDEF & DÖNGÜ STÜDYOSU -->
+  <section id="view-goals" class="view">
+    <div class="card">
+      <div class="section-label"><span>➕ Yeni Hedef veya Ritim Oluştur</span></div>
+      <div class="form-group">
+        <label>Hedef Başlığı</label>
+        <input type="text" id="gTitle" placeholder="Örn: Sabah 20 sayfa okuma, Haftada 4 gün yürüyüş...">
+      </div>
+      <div class="row-2">
+        <div class="form-group">
+          <label>Zaman Ufku / Periyot</label>
+          <select id="gHorizon" onchange="toggleDeadlineField()">
+            <option value="daily">Günlük Ritim</option>
+            <option value="monthly">Aylık Hedef</option>
+            <option value="sprint">12 Haftalık Döngü (Sprint)</option>
+            <option value="custom">Özel Tarih / Geri Sayım</option>
+            <option value="yearly">Yıllık / Uzun Vade Pusula</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Ölçüm Türü</label>
+          <select id="gType" onchange="toggleTargetFields()">
+            <option value="check">Süreklilik (Tik / Frekans)</option>
+            <option value="numeric">Birikimli / Sayısal Değer</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="numericFields" style="display:none;">
+        <div class="row-2">
+          <div class="form-group">
+            <label>Hedef Miktar</label>
+            <input type="number" id="gTarget" value="100" min="1">
+          </div>
+          <div class="form-group">
+            <label>Birim (sayfa, dk, km, gün)</label>
+            <input type="text" id="gUnit" value="sayfa">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Tek Dokunuş Artış Adımı (+ kaç eklensin?)</label>
+          <input type="number" id="gStep" value="10" min="1">
+        </div>
+      </div>
+
+      <div id="frequencyField" class="form-group">
+        <label>Hedeflenen Sıklık Notu (İsteğe bağlı)</label>
+        <input type="text" id="gFreqNote" placeholder="Örn: Haftada 5 gün veya Her sabah">
+      </div>
+
+      <div id="deadlineField" class="form-group" style="display:none;">
+        <label>Bitiş Tarihi (Geri Sayım İçin)</label>
+        <input type="date" id="gDeadline">
+      </div>
+
+      <button class="btn-primary" onclick="addGoal()">Hedefi Ekle</button>
+    </div>
+
+    <div class="card">
+      <div class="section-label"><span>📋 Aktif Hedeflerim</span></div>
+      <div id="allGoalsList"></div>
+    </div>
+  </section>
+
+  <!-- 3. GÖRÜNÜM: SORU & SÖZ HAVUZU -->
+  <section id="view-pool" class="view">
+    <div class="card">
+      <div class="section-label"><span>📌 Sabit Günlük Öz Sorular</span></div>
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0;">Her gün ana ekranda sabit olarak karşınıza çıkacak temel sorularınız:</p>
+      <div id="fixedQuestionsEditList"></div>
+      <div style="display:flex; gap:8px; margin-top:10px;">
+        <input type="text" id="newFixedQ" placeholder="Yeni sabit soru ekle...">
+        <button class="btn-secondary" onclick="addFixedQuestion()">Ekle</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label"><span>🎲 Havuzdan Sürpriz Derinlik Sorusu</span></div>
+      <div class="switch-row">
+        <span>Ana ekranda havuzdan 1 rastgele soru göster</span>
+        <input type="checkbox" id="randomQToggle" onchange="toggleRandomQ()" style="width:20px; height:20px; accent-color:var(--accent);">
+      </div>
+      <div style="display:flex; gap:8px; margin:10px 0;">
+        <input type="text" id="newPoolQ" placeholder="Soru havuzuna yeni soru ekle...">
+        <button class="btn-secondary" onclick="addPoolQuestion()">Ekle</button>
+      </div>
+      <div id="poolQuestionsList" style="max-height:220px; overflow-y:auto;"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-label"><span>✨ Günün Sözü & Şükran Havuzu</span></div>
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0;">Pesimizmden uzaklaştıran, şükür ve iç denge odaklı kendi sözlerinizi ekleyebilirsiniz:</p>
+      <div style="display:flex; gap:8px; margin-bottom:10px;">
+        <input type="text" id="newQuoteInput" placeholder="Yeni ilham/şükran sözü yazın...">
+        <button class="btn-secondary" onclick="addCustomQuote()">Ekle</button>
+      </div>
+      <div id="quotesList" style="max-height:220px; overflow-y:auto;"></div>
+    </div>
+  </section>
+
+  <!-- 4. GÖRÜNÜM: ÖZ FEEDBACK & ZAMAN KAPSÜLÜ -->
+  <section id="view-feedback" class="view">
+    <div class="card">
+      <div class="section-label"><span>📊 Son 28 Gün Ritim Isı Haritası</span></div>
+      <div class="heatmap-grid" id="heatmapGrid"></div>
+      <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-muted); margin-top:8px;">
+        <span>Daha az</span>
+        <span>Tam uyum</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label"><span>🪞 Kendi Kendine Ayna (Öz Feedback)</span></div>
+      <div id="mirrorSummary" style="font-size:0.9rem; line-height:1.6;"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-label"><span>⏳ Geçmişten Yankı & Günlük Arşivi</span></div>
+      <div id="pastReflectionsList"></div>
+    </div>
+  </section>
+
+  <!-- 5. GÖRÜNÜM: AMBİYANS & SESLER -->
+  <section id="view-sounds" class="view">
+    <div class="card">
+      <div class="section-label">
+        <span>🎧 Doğa & Dinginlik Sesleri</span>
+        <button class="mini-btn" onclick="stopAllSounds()">⏹ Durdur</button>
+      </div>
+      <div class="sound-grid" id="soundGrid"></div>
+
+      <div class="form-group">
+        <label>Ses Seviyesi: <span id="volLabel">%60</span></label>
+        <input type="range" id="volumeSlider" min="0" max="100" value="60" oninput="changeVolume(this.value)" style="width:100%; accent-color:var(--accent);">
+      </div>
+
+      <div class="form-group">
+        <label>Zamanlayıcı (Otomatik Kapanma)</label>
+        <div class="chip-group">
+          <button class="option-chip active" id="timer-0" onclick="setSleepTimer(0)">Süresiz</button>
+          <button class="option-chip" id="timer-15" onclick="setSleepTimer(15)">15 dk</button>
+          <button class="option-chip" id="timer-30" onclick="setSleepTimer(30)">30 dk</button>
+        </div>
+        <div id="timerStatus" style="font-size:0.78rem; color:var(--accent); margin-top:6px;"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label"><span>➕ Kendi Ses Bağlantını Ekle</span></div>
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0;">İnternetteki herhangi bir doğrudan .mp3 veya ses bağlantısını koleksiyonunuza ekleyebilirsiniz.</p>
+      <div class="form-group">
+        <input type="text" id="customSoundName" placeholder="Ses Adı (Örn: Gece Cırcır Böcekleri)">
+      </div>
+      <div class="form-group">
+        <input type="text" id="customSoundUrl" placeholder="https://... (Doğrudan ses linki)">
+      </div>
+      <button class="btn-secondary" style="width:100%;" onclick="addCustomSound()">Koleksiyona Ekle</button>
+    </div>
+  </section>
+
+  <!-- 6. GÖRÜNÜM: GÖRÜNÜM & VERİ AYARLARI -->
+  <section id="view-settings" class="view">
+    <div class="card">
+      <div class="section-label"><span>🎨 Arka Plan Teması</span></div>
+      <div class="chip-group" id="themeChips">
+        <button class="option-chip" data-val="paper" onclick="setPref('theme','paper')">📜 Kağıt (Sepya)</button>
+        <button class="option-chip" data-val="day" onclick="setPref('theme','day')">☀️ Gündüz</button>
+        <button class="option-chip" data-val="night" onclick="setPref('theme','night')">🌙 Gece</button>
+        <button class="option-chip" data-val="oled" onclick="setPref('theme','oled')">🖤 OLED Siyah</button>
+      </div>
+
+      <div class="section-label" style="margin-top:16px;"><span>🌿 Vurgu Rengi</span></div>
+      <div class="chip-group" id="accentChips">
+        <button class="option-chip" data-val="sage" onclick="setPref('accent','sage')">Adaçayı Yeşili</button>
+        <button class="option-chip" data-val="terracotta" onclick="setPref('accent','terracotta')">Sıcak Terracotta</button>
+        <button class="option-chip" data-val="slate" onclick="setPref('accent','slate')">Puslu Mavi</button>
+        <button class="option-chip" data-val="amber" onclick="setPref('accent','amber')">Yumuşak Kehribar</button>
+      </div>
+
+      <div class="section-label" style="margin-top:16px;"><span>〰️ Arka Plan Organik Deseni</span></div>
+      <div class="chip-group" id="patternChips">
+        <button class="option-chip" data-val="ripples" onclick="setPref('pattern','ripples')">Su Halkaları</button>
+        <button class="option-chip" data-val="topo" onclick="setPref('pattern','topo')">Topografik Çizgiler</button>
+        <button class="option-chip" data-val="geometry" onclick="setPref('pattern','geometry')">Kutsal Geometri</button>
+        <button class="option-chip" data-val="grain" onclick="setPref('pattern','grain')">Kağıt Dokusu</button>
+        <button class="option-chip" data-val="none" onclick="setPref('pattern','none')">Desensiz Sade</button>
+      </div>
+
+      <div class="section-label" style="margin-top:16px;"><span>🔠 Metin Boyutu ve Kart Ferahlığı</span></div>
+      <div class="form-group">
+        <label>Metin Ölçeği: <span id="fontScaleLabel">%100</span></label>
+        <input type="range" min="85" max="125" value="100" id="fontScaleRange" oninput="setScale('fontScale', this.value)">
+      </div>
+      <div class="form-group">
+        <label>Alan / Boşluk Ferahlığı: <span id="spaceScaleLabel">%100</span></label>
+        <input type="range" min="80" max="130" value="100" id="spaceScaleRange" oninput="setScale('spaceScale', this.value)">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label"><span>🔐 Giriş Kilidi Yönetimi</span></div>
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0;">Yeni cihazlarda ilk açılışta sorulan 4 haneli erişim kodunu güncelleyebilir veya bu cihazı kilitleyebilirsiniz.</p>
+      <div style="display:flex; gap:8px; margin-bottom:10px;">
+        <input type="password" inputmode="numeric" maxlength="4" id="newPinInput" placeholder="Yeni 4 haneli PIN">
+        <button class="btn-secondary" onclick="updatePinCode()">Güncelle</button>
+      </div>
+      <button class="btn-secondary" style="width:100%;" onclick="lockDeviceNow()">🔒 Bu Cihazı Şimdi Kilitle</button>
+    </div>
+
+    <div class="card">
+      <div class="section-label"><span>💾 Veri Yedekleme & Taşıma</span></div>
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0;">Tüm hedefleriniz, yanıtlarınız ve özel havuzlarınız cihazınızda güvenle saklanır. Dilediğiniz zaman yedek alabilirsiniz.</p>
+      <div class="row-2">
+        <button class="btn-secondary" onclick="exportData()">⬇️ Yedek İndir (.json)</button>
+        <button class="btn-secondary" onclick="document.getElementById('importFile').click()">⬆️ Yedek Yükle</button>
+        <input type="file" id="importFile" accept=".json" style="display:none;" onchange="importData(event)">
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="toast"></div>
+
+<script>
+/* --- KİLİT EKRANI VE PIN YÖNETİMİ --- */
+const DEFAULT_PIN = "1988";
+let enteredPin = "";
+
+function checkInitialLock() {
+  const unlocked = localStorage.getItem("ozgoru_unlocked_v1");
+  if (unlocked === "true") {
+    document.getElementById("lockScreen").classList.add("hidden");
+  } else {
+    document.getElementById("lockScreen").classList.remove("hidden");
+  }
+}
+
+function updatePinDots() {
+  const dots = document.querySelectorAll("#pinDots .pin-dot");
+  dots.forEach((d, idx) => {
+    d.classList.toggle("filled", idx < enteredPin.length);
+  });
+}
+
+function pressPin(digit) {
+  if (enteredPin.length >= 4) return;
+  enteredPin += digit;
+  updatePinDots();
+
+  if (enteredPin.length === 4) {
+    const activePin = (state.prefs && state.prefs.pinCode) ? state.prefs.pinCode : DEFAULT_PIN;
+    if (enteredPin === activePin) {
+      localStorage.setItem("ozgoru_unlocked_v1", "true");
+      setTimeout(() => {
+        document.getElementById("lockScreen").classList.add("hidden");
+        enteredPin = "";
+        updatePinDots();
+      }, 150);
+    } else {
+      const dotsEl = document.getElementById("pinDots");
+      dotsEl.classList.add("shake");
+      document.getElementById("lockPrompt").textContent = "Hatalı kod, tekrar deneyin";
+      setTimeout(() => {
+        dotsEl.classList.remove("shake");
+        enteredPin = "";
+        updatePinDots();
+      }, 420);
+    }
+  }
+}
+
+function backspacePin() {
+  enteredPin = enteredPin.slice(0, -1);
+  updatePinDots();
+}
+
+function clearPin() {
+  enteredPin = "";
+  updatePinDots();
+}
+
+function updatePinCode() {
+  const val = document.getElementById("newPinInput").value.trim();
+  if (!/^\d{4}$/.test(val)) {
+    showToast("Lütfen 4 rakamdan oluşan bir kod girin");
+    return;
+  }
+  state.prefs.pinCode = val;
+  saveState();
+  document.getElementById("newPinInput").value = "";
+  showToast("Erişim kodu güncellendi");
+}
+
+function lockDeviceNow() {
+  localStorage.removeItem("ozgoru_unlocked_v1");
+  enteredPin = "";
+  updatePinDots();
+  document.getElementById("lockPrompt").textContent = "Devam etmek için 4 haneli erişim kodunu girin";
+  document.getElementById("lockScreen").classList.remove("hidden");
+}
+
+/* --- ZENGİN BAŞLANGIÇ VERİ HAVUZLARI --- */
+const DEFAULT_QUOTES = [
+  "Bugün sahip olduğun ve bir zamanlar sadece hayalini kurduğun en az üç şey var; onları fark ederek başla.",
+  "Zihin karanlık senaryolar üretmeye meyillidir; ama gerçeklik çoğu zaman sadece şu an aldığın nefesten ibarettir.",
+  "Büyük dönüşümler gürültülü kararlarla değil, kimsenin görmediği günlerde atılan küçük ve sadık adımlarla gerçekleşir.",
+  "Her şeyi bugün çözmek zorunda değilsin; bugün sadece kendi payına düşen küçük ışığı yakman yeterli.",
+  "Eksik olana odaklandığında yoksullaşır, elindekinin kıymetini bildiğinde çoğalırsın.",
+  "Fırtınanın dinmesini beklemek yerine, yağmurun altında dingin kalabilmeyi öğrenmek gerçek güçtür.",
+  "Dün geçti, yarın henüz gelmedi; elindeki tek gerçek malzeme bugünün sabahıdır.",
+  "Kendine karşı nazik ol; büyümekte olan hiçbir ağaç köklerini her gün söküp ne kadar uzadığına bakmaz.",
+  "Bazen hiçbir şeyin ters gitmemesi bile başlı başına sessiz bir mucizedir; günün sessiz iyiliklerini gör.",
+  "Karanlık düşünceler sadece zihninden geçen bulutlardır; sen bulutlar değil, onların ardındaki gökyüzüsün.",
+  "Küçük bir ilerleme, kusursuz ama hiç başlanmamış bir plandan her zaman daha değerlidir.",
+  "Şükür, hayatındaki sorunları yok saymak değil; sorunların yanında hâlâ var olan güzelliklere yer açmaktır.",
+  "Bugün kendine bir iyilik yap ve kontrol edemediğin şeylerin yükünü omuzlarından yavaşça yere bırak.",
+  "İnsanın kendi iç sesini yatıştırabilmesi, dış dünyadaki tüm gürültülere karşı en sağlam sığınaktır.",
+  "Yavaş gitmek durmak değildir; yönün doğruysa her adım seni varmak istediğin yere yaklaştırır.",
+  "Günün sonunda geriye dönüp baktığında, 'bugün elimden gelenin en iyisini sakince yaptım' diyebilmek yeterlidir.",
+  "Hayat bir yarış pisti değil, yürüdükçe manzarası değişen uzun bir patikadır; etrafına bakmayı unutma.",
+  "Zihnini geleceğin kaygısıyla yormak, bugünün huzurundan çalmaktır.",
+  "Her yeni gün, kendine yeniden başlama izni verebileceğin temiz bir sayfadır.",
+  "İçindeki huzuru dışarıdaki şartlara bağlama; dinginlik içeriden dışarıya doğru yayılan bir seçimdir."
+];
+
+const DEFAULT_FIXED_QUESTIONS = [
+  "Bugün şükrettiğim veya bana iyi geldiğini fark ettiğim küçük bir an neydi?",
+  "Bugün zihnimi bulandıran bir düşünce olduysa, ona daha yapıcı nasıl bakabilirim?",
+  "Bugün kendime ve hedeflerime sadık kaldığım hangi adımı attım?"
+];
+
+const DEFAULT_POOL_QUESTIONS = [
+  "Bugün enerjimi en çok ne yükseltti, ne tüketti?",
+  "Şu an hayatımda 'iyi ki var' dediğim üç temel dayanak nedir?",
+  "Bugün ertelediğim bir şey varsa, bunun arkasındaki gerçek duygu (korku, yorgunluk, belirsizlik) neydi?",
+  "1 yıl sonraki halim bugünkü bana baksaydı, hangi konuda 'endişelenme, geçecek' derdi?",
+  "Bugün kontrolüm dışında olan hangi konuyu zihnimde gereksiz yere büyüttüm?",
+  "Bugün bir başkasına veya kendime gösterdiğim en güzel nezaket neydi?",
+  "Haftanın geri kalanını daha dingin geçirmek için hangi alışkanlığımı biraz sadeleştirebilirim?",
+  "Bugün öğrendiğim, okuduğum veya fark ettiğim ufak bir bilgi neydi?",
+  "Zihnim pesimizme kaydığında beni tekrar dengeye getiren en güvenilir sığınağım nedir?",
+  "Bugün bedenime ve ruhuma dinlenmesi için gerçekten izin verebildim mi?",
+  "Son bir ayda sessizce geliştiğimi hissettiğim alan hangisi?",
+  "Bugün 'hayır' diyerek kendime alan açtığım bir durum oldu mu?",
+  "Eğer bugün hayatımdan sadece bir gereksiz yükü çıkarabilseydim, bu ne olurdu?",
+  "Şu anki halimle 5 yıl önceki halimin hayal ettiği hangi noktadayım?",
+  "Bugün doğada, gökyüzünde veya çevremde fark ettiğim dingin bir detay neydi?"
+];
+
+const DEFAULT_SOUNDS = [
+  { id: "synth_rain", name: "Hafif Yağmur", icon: "🌧️", type: "synth", preset: "rain" },
+  { id: "synth_forest", name: "Derin Orman Uğultusu", icon: "🌲", type: "synth", preset: "brown" },
+  { id: "synth_wind", name: "Gece Rüzgarı", icon: "🍃", type: "synth", preset: "wind" },
+  { id: "url_birds", name: "Sabah Kuşları", icon: "🐦", type: "url", url: "https://actions.google.com/sounds/v1/ambiences/morning_birds.ogg" },
+  { id: "url_fire", name: "Kamp Ateşi", icon: "🔥", type: "url", url: "https://actions.google.com/sounds/v1/ambiences/fire.ogg" },
+  { id: "url_stream", name: "Dere Şırıltısı", icon: "🏞️", type: "url", url: "https://actions.google.com/sounds/v1/water/small_stream_flowing.ogg" }
+];
+
+/* --- UYGULAMA DURUMU (STATE) --- */
+let state = {
+  prefs: {
+    theme: "paper",
+    accent: "sage",
+    pattern: "ripples",
+    fontScale: 100,
+    spaceScale: 100,
+    enableRandomQ: true,
+    pinCode: DEFAULT_PIN
+  },
+  goals: [
+    { id: "g1", title: "20 Sayfa Kitap Okuma", horizon: "daily", type: "numeric", current: 0, target: 20, unit: "sayfa", step: 10 },
+    { id: "g2", title: "15 Dk Zihinsel Dinginlik & Nefes", horizon: "daily", type: "check", freqNote: "Her gün" },
+    { id: "g3", title: "Bu Ay 12 Gün Doğa Yürüyüşü", horizon: "monthly", type: "numeric", current: 4, target: 12, unit: "gün", step: 1 },
+    { id: "g4", title: "12 Haftalık Derinleşme Döngüsü", horizon: "sprint", type: "numeric", current: 25, target: 100, unit: "%", step: 5 },
+    { id: "g5", title: "Yıllık Okuma & Gelişim Pusulası", horizon: "yearly", type: "numeric", current: 18, target: 40, unit: "kitap", step: 1 }
+  ],
+  fixedQuestions: [...DEFAULT_FIXED_QUESTIONS],
+  poolQuestions: [...DEFAULT_POOL_QUESTIONS],
+  quotes: [...DEFAULT_QUOTES],
+  customSounds: [],
+  logs: {}
+};
+
+let currentQuoteIndex = 0;
+
+/* --- TARİH YARDIMCILARI --- */
+function getTodayKey() {
+  const d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+
+function formatDateTR(dateObj) {
+  const days = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
+  const months = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+  return `${dateObj.getDate()} ${months[dateObj.getMonth()]} ${dateObj.getFullYear()}, ${days[dateObj.getDay()]}`;
+}
+
+function ensureTodayLog() {
+  const key = getTodayKey();
+  if (!state.logs[key]) {
+    const daySeed = new Date().getDate() + new Date().getMonth() * 31;
+    state.logs[key] = {
+      completedIds: [],
+      numericDaily: {},
+      answers: {},
+      mood: "",
+      poolQIndex: daySeed % Math.max(1, state.poolQuestions.length)
+    };
+  }
+  return state.logs[key];
+}
+
+/* --- DEPOLAMA --- */
+function loadState() {
+  try {
+    const saved = localStorage.getItem("ozgoru_state_v1");
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      state = { ...state, ...parsed, prefs: { ...state.prefs, ...(parsed.prefs || {}) } };
+    }
+  } catch (e) { console.error(e); }
+  const daySeed = Math.floor(Date.now() / 86400000);
+  currentQuoteIndex = daySeed % state.quotes.length;
+}
+
+function saveState() {
+  try {
+    localStorage.setItem("ozgoru_state_v1", JSON.stringify(state));
+  } catch (e) { console.error(e); }
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2200);
+}
+
+/* --- NAVİGASYON & DRAWER --- */
+function toggleDrawer() {
+  document.getElementById("drawer").classList.toggle("open");
+  document.getElementById("drawerBackdrop").classList.toggle("open");
+}
+
+function switchView(viewName) {
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+  document.getElementById("view-" + viewName).classList.add("active");
+
+  document.querySelectorAll(".nav-item").forEach(n => {
+    n.classList.toggle("active", n.dataset.view === viewName);
+  });
+
+  if (document.getElementById("drawer").classList.contains("open")) {
+    toggleDrawer();
+  }
+
+  if (viewName === "today") renderToday();
+  if (viewName === "goals") renderGoalsStudio();
+  if (viewName === "pool") renderPoolManager();
+  if (viewName === "feedback") renderFeedbackView();
+  if (viewName === "sounds") renderSoundsGrid();
+  if (viewName === "settings") renderSettingsView();
+}
+
+/* --- GÖRÜNÜM & TEMA AYARLARI --- */
+function applyPrefs() {
+  const p = state.prefs;
+  document.body.setAttribute("data-theme", p.theme);
+  document.body.setAttribute("data-accent", p.accent);
+  document.body.setAttribute("data-pattern", p.pattern);
+  document.documentElement.style.setProperty("--font-scale", (p.fontScale / 100).toFixed(2));
+  document.documentElement.style.setProperty("--space-scale", (p.spaceScale / 100).toFixed(2));
+
+  const themeColors = { paper: "#f5f0e6", day: "#f8f9fa", night: "#181b1e", oled: "#000000" };
+  document.querySelector('meta[name="theme-color"]').setAttribute("content", themeColors[p.theme] || "#f5f0e6");
+}
+
+function setPref(key, val) {
+  state.prefs[key] = val;
+  applyPrefs();
+  saveState();
+  renderSettingsView();
+}
+
+function setScale(key, val) {
+  state.prefs[key] = Number(val);
+  applyPrefs();
+  saveState();
+  document.getElementById(key + "Label").textContent = "%" + val;
+}
+
+function renderSettingsView() {
+  ["theme", "accent", "pattern"].forEach(k => {
+    document.querySelectorAll(`#${k}Chips .option-chip`).forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.val === state.prefs[k]);
+    });
+  });
+  document.getElementById("fontScaleRange").value = state.prefs.fontScale;
+  document.getElementById("fontScaleLabel").textContent = "%" + state.prefs.fontScale;
+  document.getElementById("spaceScaleRange").value = state.prefs.spaceScale;
+  document.getElementById("spaceScaleLabel").textContent = "%" + state.prefs.spaceScale;
+}
+
+/* --- ANA EKRAN (BUGÜN) RENDER --- */
+function nextQuote() {
+  currentQuoteIndex = (currentQuoteIndex + 1) % state.quotes.length;
+  document.getElementById("dailyQuoteText").textContent = "“" + state.quotes[currentQuoteIndex] + "”";
+}
+
+function renderToday() {
+  document.getElementById("headerDate").textContent = formatDateTR(new Date());
+  document.getElementById("dailyQuoteText").textContent = "“" + (state.quotes[currentQuoteIndex] || DEFAULT_QUOTES[0]) + "”";
+
+  const log = ensureTodayLog();
+  const dailyGoals = state.goals.filter(g => g.horizon === "daily");
+  const habitsContainer = document.getElementById("dailyHabitsList");
+  habitsContainer.innerHTML = "";
+
+  let doneCount = 0;
+  if (dailyGoals.length === 0) {
+    habitsContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.86rem;">Henüz günlük ritim eklenmemiş. Sağ üstten ekleyebilirsiniz.</p>`;
+  } else {
+    dailyGoals.forEach(g => {
+      const isDone = g.type === "check"
+        ? log.completedIds.includes(g.id)
+        : (log.numericDaily[g.id] || 0) >= g.target;
+      if (isDone) doneCount++;
+
+      const div = document.createElement("div");
+      div.className = "habit-item" + (isDone ? " done" : "");
+
+      if (g.type === "check") {
+        div.innerHTML = `
+          <div class="habit-info">
+            <span class="habit-title">${g.title}</span>
+            <span class="habit-meta">${g.freqNote || "Günlük Ritim"}</span>
+          </div>
+          <button class="check-circle" onclick="toggleDailyCheck('${g.id}')">${isDone ? "✓" : ""}</button>
+        `;
+      } else {
+        const cur = log.numericDaily[g.id] || 0;
+        div.innerHTML = `
+          <div class="habit-info">
+            <span class="habit-title">${g.title}</span>
+            <span class="habit-meta">${cur} / ${g.target} ${g.unit}</span>
+          </div>
+          <div class="counter-controls">
+            <button class="step-btn minus" onclick="stepDailyNumeric('${g.id}', -${g.step})">-${g.step}</button>
+            <button class="step-btn" onclick="stepDailyNumeric('${g.id}', ${g.step})">+${g.step}</button>
+          </div>
+        `;
+      }
+      habitsContainer.appendChild(div);
+    });
+  }
+
+  const pct = dailyGoals.length ? Math.round((doneCount / dailyGoals.length) * 100) : 0;
+  document.getElementById("dailyProgressBadge").textContent = `Bugün: %${pct}`;
+
+  document.querySelectorAll(".mood-chip").forEach(btn => {
+    btn.classList.toggle("selected", btn.dataset.mood === log.mood);
+  });
+
+  const qContainer = document.getElementById("dailyQuestionsContainer");
+  qContainer.innerHTML = "";
+  state.fixedQuestions.forEach((q, idx) => {
+    const key = "fixed_" + idx;
+    const block = document.createElement("div");
+    block.className = "question-block";
+    block.innerHTML = `
+      <label>${q}</label>
+      <textarea placeholder="Düşünceni buraya bırak..." oninput="saveAnswer('${key}', this.value)">${log.answers[key] || ""}</textarea>
+    `;
+    qContainer.appendChild(block);
+  });
+
+  if (state.prefs.enableRandomQ && state.poolQuestions.length > 0) {
+    const pqIdx = log.poolQIndex % state.poolQuestions.length;
+    const pq = state.poolQuestions[pqIdx];
+    const block = document.createElement("div");
+    block.className = "question-block";
+    block.innerHTML = `
+      <label>${pq} <span class="pool-badge">Günün Derinlik Sorusu</span></label>
+      <textarea placeholder="İç sesini dinle..." oninput="saveAnswer('pool_q', this.value)">${log.answers["pool_q"] || ""}</textarea>
+    `;
+    qContainer.appendChild(block);
+  }
+
+  const cycleGoals = state.goals.filter(g => ["monthly", "sprint", "custom"].includes(g.horizon));
+  const cycleStrip = document.getElementById("cycleGoalsStrip");
+  cycleStrip.innerHTML = "";
+  if (cycleGoals.length === 0) {
+    cycleStrip.innerHTML = `<span style="font-size:0.83rem; color:var(--text-muted);">Aylık veya 12 haftalık döngü hedefi eklemek için "Yönet"e dokunun.</span>`;
+  } else {
+    cycleGoals.forEach(g => {
+      const labelMap = { monthly: "Aylık Odak", sprint: "12 Haftalık Döngü", custom: "Özel Periyot" };
+      let extraTag = labelMap[g.horizon];
+      if (g.horizon === "custom" && g.deadline) {
+        const diff = Math.ceil((new Date(g.deadline) - new Date()) / 86400000);
+        extraTag = diff >= 0 ? `Son ${diff} gün` : "Süre doldu";
+      }
+      const ratio = g.type === "numeric" ? Math.min(100, Math.round(((g.current || 0) / g.target) * 100)) : (g.done ? 100 : 0);
+      const card = document.createElement("div");
+      card.className = "cycle-card";
+      card.innerHTML = `
+        <div class="cycle-tag">${extraTag}</div>
+        <div class="cycle-title">${g.title}</div>
+        <div class="progress-track"><div class="progress-fill" style="width:${ratio}%"></div></div>
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; color:var(--text-muted);">
+          <span>${g.type === "numeric" ? `${g.current || 0}/${g.target} ${g.unit}` : `%${ratio}`}</span>
+          <button class="mini-btn" onclick="advanceCycleGoal('${g.id}')">+ İlerlet</button>
+        </div>
+      `;
+      cycleStrip.appendChild(card);
+    });
+  }
+
+  const longGoals = state.goals.filter(g => g.horizon === "yearly");
+  const longStrip = document.getElementById("longTermStrip");
+  longStrip.innerHTML = "";
+  if (longGoals.length === 0) {
+    longStrip.innerHTML = `<span style="font-size:0.8rem; color:var(--text-muted);">Uzun vadeli yıllık pusula hedefi ekleyebilirsiniz.</span>`;
+  } else {
+    longGoals.forEach(g => {
+      const ratio = g.type === "numeric" ? Math.min(100, Math.round(((g.current || 0) / g.target) * 100)) : (g.done ? 100 : 0);
+      const row = document.createElement("div");
+      row.className = "compass-row";
+      row.onclick = () => advanceCycleGoal(g.id);
+      row.style.cursor = "pointer";
+      row.innerHTML = `
+        <div style="flex:1;">
+          <div style="display:flex; justify-content:space-between; font-size:0.83rem; font-weight:600; margin-bottom:4px;">
+            <span>${g.title}</span>
+            <span style="color:var(--accent);">${g.type === "numeric" ? `${g.current || 0}/${g.target} ${g.unit}` : `%${ratio}`}</span>
+          </div>
+          <div class="progress-track" style="margin-bottom:0;"><div class="progress-fill" style="width:${ratio}%"></div></div>
+        </div>
+      `;
+      longStrip.appendChild(row);
+    });
+  }
+}
+
+function toggleDailyCheck(id) {
+  const log = ensureTodayLog();
+  const idx = log.completedIds.indexOf(id);
+  if (idx > -1) log.completedIds.splice(idx, 1);
+  else log.completedIds.push(id);
+  saveState();
+  renderToday();
+}
+
+function stepDailyNumeric(id, delta) {
+  const log = ensureTodayLog();
+  const cur = log.numericDaily[id] || 0;
+  log.numericDaily[id] = Math.max(0, cur + delta);
+  saveState();
+  renderToday();
+}
+
+function advanceCycleGoal(id) {
+  const g = state.goals.find(x => x.id === id);
+  if (!g) return;
+  if (g.type === "numeric") {
+    g.current = Math.min(g.target, (g.current || 0) + (g.step || 1));
+  } else {
+    g.done = !g.done;
+  }
+  saveState();
+  renderToday();
+  showToast("İlerleme güncellendi");
+}
+
+function selectMood(mood) {
+  const log = ensureTodayLog();
+  log.mood = mood;
+  saveState();
+  renderToday();
+}
+
+function saveAnswer(key, val) {
+  const log = ensureTodayLog();
+  log.answers[key] = val;
+  saveState();
+  document.getElementById("saveStatus").textContent = "Kaydedildi ✓";
+}
+
+/* --- HEDEF & DÖNGÜ STÜDYOSU --- */
+function toggleTargetFields() {
+  const t = document.getElementById("gType").value;
+  document.getElementById("numericFields").style.display = t === "numeric" ? "block" : "none";
+  document.getElementById("frequencyField").style.display = t === "check" ? "block" : "none";
+}
+
+function toggleDeadlineField() {
+  const h = document.getElementById("gHorizon").value;
+  document.getElementById("deadlineField").style.display = h === "custom" ? "block" : "none";
+}
+
+function addGoal() {
+  const title = document.getElementById("gTitle").value.trim();
+  if (!title) return showToast("Lütfen hedef başlığı yazın");
+
+  const horizon = document.getElementById("gHorizon").value;
+  const type = document.getElementById("gType").value;
+  const newGoal = {
+    id: "g_" + Date.now(),
+    title,
+    horizon,
+    type,
+    current: 0,
+    target: Number(document.getElementById("gTarget").value) || 100,
+    unit: document.getElementById("gUnit").value.trim() || "birim",
+    step: Number(document.getElementById("gStep").value) || 1,
+    freqNote: document.getElementById("gFreqNote").value.trim(),
+    deadline: document.getElementById("gDeadline").value
+  };
+
+  state.goals.push(newGoal);
+  saveState();
+  document.getElementById("gTitle").value = "";
+  renderGoalsStudio();
+  showToast("Hedef oluşturuldu");
+}
+
+function deleteGoal(id) {
+  state.goals = state.goals.filter(g => g.id !== id);
+  saveState();
+  renderGoalsStudio();
+}
+
+function renderGoalsStudio() {
+  const list = document.getElementById("allGoalsList");
+  list.innerHTML = "";
+  const names = { daily: "Günlük", monthly: "Aylık", sprint: "12 Haftalık Döngü", custom: "Özel Tarih", yearly: "Uzun Vade" };
+  state.goals.forEach(g => {
+    const row = document.createElement("div");
+    row.className = "list-row";
+    row.innerHTML = `
+      <div>
+        <strong style="font-size:0.92rem;">${g.title}</strong>
+        <div style="font-size:0.76rem; color:var(--text-muted);">${names[g.horizon]} • ${g.type === "numeric" ? `${g.target} ${g.unit}` : "Süreklilik"}</div>
+      </div>
+      <button class="danger-txt" onclick="deleteGoal('${g.id}')">Sil</button>
+    `;
+    list.appendChild(row);
+  });
+}
+
+/* --- SORU & SÖZ HAVUZU YÖNETİMİ --- */
+function renderPoolManager() {
+  const fixedList = document.getElementById("fixedQuestionsEditList");
+  fixedList.innerHTML = "";
+  state.fixedQuestions.forEach((q, idx) => {
+    const div = document.createElement("div");
+    div.style.display = "flex";
+    div.style.gap = "6px";
+    div.style.marginBottom = "8px";
+    div.innerHTML = `
+      <input type="text" value="${q.replace(/"/g, '&quot;')}" onchange="updateFixedQ(${idx}, this.value)">
+      <button class="danger-txt" onclick="removeFixedQ(${idx})">✕</button>
+    `;
+    fixedList.appendChild(div);
+  });
+
+  document.getElementById("randomQToggle").checked = state.prefs.enableRandomQ;
+
+  const poolList = document.getElementById("poolQuestionsList");
+  poolList.innerHTML = "";
+  state.poolQuestions.forEach((q, idx) => {
+    const row = document.createElement("div");
+    row.className = "list-row";
+    row.innerHTML = `<span style="font-size:0.84rem;">${q}</span><button class="danger-txt" onclick="removePoolQ(${idx})">Sil</button>`;
+    poolList.appendChild(row);
+  });
+
+  const qList = document.getElementById("quotesList");
+  qList.innerHTML = "";
+  state.quotes.forEach((q, idx) => {
+    const row = document.createElement("div");
+    row.className = "list-row";
+    row.innerHTML = `<span style="font-size:0.83rem; font-style:italic;">“${q}”</span><button class="danger-txt" onclick="removeQuote(${idx})">Sil</button>`;
+    qList.appendChild(row);
+  });
+}
+
+function updateFixedQ(idx, val) {
+  if (val.trim()) { state.fixedQuestions[idx] = val.trim(); saveState(); }
+}
+function addFixedQuestion() {
+  const v = document.getElementById("newFixedQ").value.trim();
+  if (!v) return;
+  state.fixedQuestions.push(v);
+  document.getElementById("newFixedQ").value = "";
+  saveState();
+  renderPoolManager();
+}
+function removeFixedQ(idx) {
+  state.fixedQuestions.splice(idx, 1);
+  saveState();
+  renderPoolManager();
+}
+function toggleRandomQ() {
+  state.prefs.enableRandomQ = document.getElementById("randomQToggle").checked;
+  saveState();
+}
+function addPoolQuestion() {
+  const v = document.getElementById("newPoolQ").value.trim();
+  if (!v) return;
+  state.poolQuestions.unshift(v);
+  document.getElementById("newPoolQ").value = "";
+  saveState();
+  renderPoolManager();
+}
+function removePoolQ(idx) {
+  state.poolQuestions.splice(idx, 1);
+  saveState();
+  renderPoolManager();
+}
+function addCustomQuote() {
+  const v = document.getElementById("newQuoteInput").value.trim();
+  if (!v) return;
+  state.quotes.unshift(v);
+  currentQuoteIndex = 0;
+  document.getElementById("newQuoteInput").value = "";
+  saveState();
+  renderPoolManager();
+  showToast("Söz havuzuna eklendi");
+}
+function removeQuote(idx) {
+  state.quotes.splice(idx, 1);
+  saveState();
+  renderPoolManager();
+}
+
+/* --- ÖZ FEEDBACK & ZAMAN KAPSÜLÜ --- */
+function renderFeedbackView() {
+  const grid = document.getElementById("heatmapGrid");
+  grid.innerHTML = "";
+  const dailyGoals = state.goals.filter(g => g.horizon === "daily");
+  let activeDays = 0;
+  const moodCounts = {};
+
+  for (let i = 27; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const key = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+    const log = state.logs[key];
+    let level = 0;
+    if (log) {
+      if (log.mood) moodCounts[log.mood] = (moodCounts[log.mood] || 0) + 1;
+      const done = (log.completedIds || []).length + Object.values(log.numericDaily || {}).filter(v => v > 0).length;
+      if (done > 0 || Object.keys(log.answers || {}).length > 0) activeDays++;
+      if (dailyGoals.length > 0) {
+        const ratio = done / dailyGoals.length;
+        if (ratio >= 0.8) level = 3;
+        else if (ratio >= 0.4) level = 2;
+        else if (done > 0) level = 1;
+      }
+    }
+    const cell = document.createElement("div");
+    cell.className = "heat-cell" + (level ? ` heat-${level}` : "");
+    cell.title = key;
+    grid.appendChild(cell);
+  }
+
+  const topMood = Object.entries(moodCounts).sort((a, b) => b[1] - a[1])[0];
+  document.getElementById("mirrorSummary").innerHTML = `
+    <p style="margin-top:0;">Son 28 günde <strong>${activeDays} gün</strong> kendinle temas kurdun ve ritimlerine özen gösterdin.</p>
+    <p style="margin-bottom:0;">${topMood ? `Bu dönemde en sık kaydettiğin zihin hali: <strong>${topMood[0]}</strong> (${topMood[1]} gün).` : "Zihin halini işaretledikçe burada sana özel desenler belirecek."}</p>
+  `;
+
+  const archive = document.getElementById("pastReflectionsList");
+  archive.innerHTML = "";
+  const keys = Object.keys(state.logs).sort().reverse();
+  let shown = 0;
+  keys.forEach(k => {
+    const l = state.logs[k];
+    const ansList = Object.values(l.answers || {}).filter(x => x && x.trim());
+    if (ansList.length > 0 && shown < 10) {
+      shown++;
+      const div = document.createElement("div");
+      div.style.padding = "10px 0";
+      div.style.borderBottom = "1px solid var(--border)";
+      div.innerHTML = `
+        <div style="font-size:0.78rem; color:var(--accent); font-weight:600;">${k} ${l.mood ? "• " + l.mood : ""}</div>
+        <div style="font-size:0.86rem; margin-top:4px;">${ansList[0]}</div>
+      `;
+      archive.appendChild(div);
+    }
+  });
+  if (shown === 0) {
+    archive.innerHTML = `<p style="font-size:0.84rem; color:var(--text-muted);">Ana ekrandaki öz sorulara yanıt yazdıkça geçmiş notların burada zaman kapsülü olarak birikecek.</p>`;
+  }
+}
+
+/* --- HİBRİT AMBİYANS SES MOTORU --- */
+let audioCtx = null;
+let synthNode = null;
+let synthGain = null;
+let htmlAudio = new Audio();
+htmlAudio.loop = true;
+htmlAudio.crossOrigin = "anonymous";
+let activeSoundId = null;
+let currentVolume = 0.6;
+let sleepTimerId = null;
+
+function getAllSounds() {
+  return [...DEFAULT_SOUNDS, ...state.customSounds];
+}
+
+function renderSoundsGrid() {
+  const grid = document.getElementById("soundGrid");
+  grid.innerHTML = "";
+  getAllSounds().forEach(s => {
+    const btn = document.createElement("button");
+    btn.className = "sound-tile" + (activeSoundId === s.id ? " active" : "");
+    btn.onclick = () => toggleSound(s.id);
+    btn.innerHTML = `
+      <span style="font-size:1.3rem;">${s.icon || "🎵"}</span>
+      <span style="font-size:0.88rem;">${s.name}</span>
+    `;
+    grid.appendChild(btn);
+  });
+}
+
+function startSynth(preset) {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === "suspended") audioCtx.resume();
+
+  const bufferSize = 2 * audioCtx.sampleRate;
+  const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+  const data = buffer.getChannelData(0);
+
+  let lastOut = 0.0;
+  for (let i = 0; i < bufferSize; i++) {
+    const white = Math.random() * 2 - 1;
+    if (preset === "brown" || preset === "wind") {
+      data[i] = (lastOut + (0.02 * white)) / 1.02;
+      lastOut = data[i];
+      data[i] *= 3.2;
+    } else {
+      data[i] = (lastOut + (0.08 * white)) / 1.08;
+      lastOut = data[i];
+      data[i] *= 1.8;
+    }
+  }
+
+  const noise = audioCtx.createBufferSource();
+  noise.buffer = buffer;
+  noise.loop = true;
+
+  const filter = audioCtx.createBiquadFilter();
+  filter.type = "lowpass";
+  filter.frequency.value = preset === "wind" ? 340 : (preset === "brown" ? 260 : 950);
+
+  synthGain = audioCtx.createGain();
+  synthGain.gain.value = currentVolume * 0.45;
+
+  noise.connect(filter);
+  filter.connect(synthGain);
+  synthGain.connect(audioCtx.destination);
+  noise.start(0);
+  synthNode = noise;
+}
+
+function stopAllSounds() {
+  if (synthNode) {
+    try { synthNode.stop(); synthNode.disconnect(); } catch (e) {}
+    synthNode = null;
+  }
+  htmlAudio.pause();
+  htmlAudio.src = "";
+  activeSoundId = null;
+  updateSoundHeader();
+  renderSoundsGrid();
+}
+
+function toggleSound(id) {
+  if (activeSoundId === id) {
+    stopAllSounds();
+    return;
+  }
+  stopAllSounds();
+  const sound = getAllSounds().find(s => s.id === id);
+  if (!sound) return;
+
+  activeSoundId = id;
+  if (sound.type === "synth") {
+    startSynth(sound.preset);
+  } else {
+    htmlAudio.src = sound.url;
+    htmlAudio.volume = currentVolume;
+    htmlAudio.play().catch(() => {
+      showToast("Bağlantı açılamadı, dingin yağmur tonuna geçiliyor...");
+      startSynth("rain");
+    });
+  }
+  updateSoundHeader(sound.name);
+  renderSoundsGrid();
+}
+
+function updateSoundHeader(name) {
+  const pill = document.getElementById("headerSoundBtn");
+  const lbl = document.getElementById("headerSoundLabel");
+  if (activeSoundId && name) {
+    pill.classList.add("playing");
+    lbl.textContent = name;
+  } else {
+    pill.classList.remove("playing");
+    lbl.textContent = "Ambiyans";
+  }
+}
+
+function changeVolume(val) {
+  currentVolume = Number(val) / 100;
+  document.getElementById("volLabel").textContent = "%" + val;
+  if (synthGain) synthGain.gain.value = currentVolume * 0.45;
+  htmlAudio.volume = currentVolume;
+}
+
+function setSleepTimer(mins) {
+  if (sleepTimerId) clearTimeout(sleepTimerId);
+  document.querySelectorAll("[id^='timer-']").forEach(b => b.classList.remove("active"));
+  document.getElementById("timer-" + mins).classList.add("active");
+
+  const st = document.getElementById("timerStatus");
+  if (mins === 0) {
+    st.textContent = "";
+    return;
+  }
+  st.textContent = `${mins} dakika sonra ses yavaşça kapanacak.`;
+  sleepTimerId = setTimeout(() => {
+    stopAllSounds();
+    st.textContent = "Zamanlayıcı tamamlandı.";
+  }, mins * 60000);
+}
+
+function addCustomSound() {
+  const name = document.getElementById("customSoundName").value.trim();
+  const url = document.getElementById("customSoundUrl").value.trim();
+  if (!name || !url) return showToast("Lütfen ses adı ve bağlantısını girin");
+  state.customSounds.push({ id: "cs_" + Date.now(), name, icon: "🎶", type: "url", url });
+  saveState();
+  document.getElementById("customSoundName").value = "";
+  document.getElementById("customSoundUrl").value = "";
+  renderSoundsGrid();
+  showToast("Ses koleksiyona eklendi");
+}
+
+/* --- VERİ DIŞA / İÇE AKTARMA --- */
+function exportData() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `ozgoru-yedek-${getTodayKey()}.json`;
+  a.click();
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const imported = JSON.parse(e.target.result);
+      state = { ...state, ...imported };
+      saveState();
+      applyPrefs();
+      renderToday();
+      showToast("Yedek başarıyla yüklendi");
+    } catch (err) {
+      showToast("Geçersiz yedek dosyası");
+    }
+  };
+  reader.readAsText(file);
+}
+
+/* --- BAŞLATMA --- */
+loadState();
+applyPrefs();
+checkInitialLock();
+renderToday();
+</script>
+</body>
+</html>
