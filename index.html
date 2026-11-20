@@ -457,7 +457,7 @@
     font-weight: 600;
   }
 
-  /* SABİT ALT GEZİNME VE GERİ/İLERİ ÇUBUĞU */
+  /* SABİT ALT GEZİNME, YEDEK VE GERİ/İLERİ ÇUBUĞU */
   .bottom-dock {
     position: fixed;
     bottom: 0;
@@ -468,7 +468,7 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-top: 1px solid var(--border);
-    padding: 8px 14px calc(8px + env(safe-area-inset-bottom));
+    padding: 7px 10px calc(7px + env(safe-area-inset-bottom));
     display: flex;
     justify-content: center;
   }
@@ -478,28 +478,29 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 6px;
+    gap: 4px;
   }
   .dock-btn {
     background: transparent;
     border: 1px solid transparent;
     color: var(--text-muted);
-    border-radius: 14px;
-    padding: 7px 11px;
+    border-radius: 13px;
+    padding: 6px 6px;
     display: inline-flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 2px;
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
     flex: 1;
+    min-width: 0;
   }
   .dock-btn svg {
-    width: 20px;
-    height: 20px;
+    width: 19px;
+    height: 19px;
     stroke-width: 2;
     transition: transform 0.2s ease;
   }
@@ -509,9 +510,14 @@
     color: var(--accent);
     border-color: rgba(74, 107, 93, 0.22);
   }
+  .dock-btn.backup-dock-btn {
+    color: var(--accent);
+    background: var(--bg-elevated);
+    border-color: var(--border);
+  }
   .dock-btn.nav-arrow {
-    flex: 0 0 46px;
-    height: 44px;
+    flex: 0 0 38px;
+    height: 42px;
     padding: 0;
     background: var(--bg-elevated);
     border-color: var(--border);
@@ -558,6 +564,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 8px;
     font-size: calc(0.75rem * var(--font-scale));
     text-transform: uppercase;
     letter-spacing: 0.9px;
@@ -592,10 +599,18 @@
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     color: var(--text);
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: calc(0.75rem * var(--font-scale));
+    padding: 4px 9px;
+    border-radius: 11px;
+    font-size: calc(0.73rem * var(--font-scale));
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+  }
+  .mini-btn.danger-outline {
+    color: #c0564b;
+    border-color: rgba(192, 86, 75, 0.35);
   }
 
   /* 1. KADEME: GÜNLÜK ALIŞKANLIKLAR */
@@ -763,8 +778,8 @@
   .horizontal-scroll::-webkit-scrollbar { display: none; }
 
   .cycle-card {
-    min-width: 225px;
-    max-width: 255px;
+    min-width: 235px;
+    max-width: 265px;
     flex-shrink: 0;
     background: var(--bg-elevated);
     border: 1px solid var(--border);
@@ -795,6 +810,13 @@
     background: var(--accent);
     border-radius: 10px;
     transition: width 0.35s ease;
+  }
+
+  .tri-action-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    margin-top: 8px;
   }
 
   /* 3. KADEME: UZUN VADELİ PUSULA (4. PASTEL KATMAN) */
@@ -977,44 +999,38 @@
     margin-top: 2px;
   }
 
-  /* 5 KADEMELİ RENK PALETİ (GÖZ YORMAYAN DENGELİ TONLAR) */
+  /* 5 KADEMELİ RENK PALETİ */
   .cal-future {
     opacity: 0.42;
     background: var(--bg-elevated);
     color: var(--text-muted);
   }
   .cal-lvl-0 {
-    /* %0: Yumuşak Mercan / Kırmızı */
     background: rgba(214, 90, 82, 0.22);
     border-color: rgba(214, 90, 82, 0.45);
     color: var(--text);
   }
   .cal-lvl-1 {
-    /* %1 - %25: Sarı */
     background: rgba(234, 195, 68, 0.30);
     border-color: rgba(218, 174, 40, 0.55);
     color: var(--text);
   }
   .cal-lvl-2 {
-    /* %26 - %49: Turuncu */
     background: rgba(232, 138, 62, 0.32);
     border-color: rgba(220, 118, 38, 0.58);
     color: var(--text);
   }
   .cal-lvl-3 {
-    /* %50 - %74: Pusula Doğru Yönde (Amber-Turuncu + Pusula Yıldızı) */
     background: rgba(224, 152, 54, 0.42);
     border-color: rgba(206, 130, 30, 0.75);
     color: var(--text);
   }
   .cal-lvl-4 {
-    /* %75 - %99: Açık Yeşil + Pusula Yıldızı */
     background: rgba(114, 184, 126, 0.36);
     border-color: rgba(88, 162, 102, 0.65);
     color: var(--text);
   }
   .cal-lvl-5 {
-    /* %100: Tamamlandı + Altın Rozet */
     background: linear-gradient(135deg, rgba(84, 158, 106, 0.46), rgba(224, 182, 72, 0.38));
     border-color: rgba(202, 156, 42, 0.85);
     color: var(--text);
@@ -1048,6 +1064,33 @@
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     animation: smoothViewIn 0.22s ease;
+  }
+  .breakdown-row {
+    padding: 7px 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .breakdown-row:last-child { border-bottom: none; }
+
+  .pattern-pill-box {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 10px 12px;
+    margin-top: 8px;
+    font-size: 0.84rem;
+  }
+
+  .archive-item-box {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .archive-item-box:last-child { border-bottom: none; }
+  .archive-item-box.is-hidden-archived {
+    opacity: 0.72;
+    background: var(--accent-soft);
+    padding: 10px;
+    border-radius: 12px;
+    margin-bottom: 6px;
   }
 
   /* SES STÜDYOSU IZGARASI */
@@ -1382,13 +1425,13 @@
     </div>
 
     <div class="card">
-      <div class="section-label"><span>✨ Günün Sözü & Şükran Havuzu</span></div>
-      <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0;">Pesimizmden uzaklaştıran, şükür ve iç denge odaklı kendi sözlerinizi ekleyebilirsiniz:</p>
+      <div class="section-label"><span>✨ Günün Sözü & Şükran Havuzu (50 Söz)</span></div>
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0;">Pesimizmden uzaklaştıran, şükür ve iç denge odaklı kendi sözlerinizi de ekleyebilirsiniz:</p>
       <div style="display:flex; gap:8px; margin-bottom:10px;">
         <input type="text" id="newQuoteInput" placeholder="Yeni ilham/şükran sözü yazın...">
         <button class="btn-secondary" onclick="addCustomQuote()">Ekle</button>
       </div>
-      <div id="quotesList" style="max-height:220px; overflow-y:auto;"></div>
+      <div id="quotesList" style="max-height:240px; overflow-y:auto;"></div>
     </div>
   </section>
 
@@ -1404,7 +1447,7 @@
     <div class="card">
       <div class="section-label">
         <span>📅 Aylık Ritim Takvimi</span>
-        <span style="font-size:0.7rem; font-weight:400;">Güne dokunup dökümü açın</span>
+        <span style="font-size:0.7rem; font-weight:400;">Güne dokunup tek tek düzenle</span>
       </div>
       <div class="month-nav-row">
         <button class="mini-btn" onclick="shiftCalendarMonth(-1)">‹ Önceki Ay</button>
@@ -1422,23 +1465,48 @@
       <div id="selectedDayBreakdown"></div>
     </div>
 
+    <!-- ZENGİNLEŞTİRİLMİŞ KENDİ KENDİNE AYNA -->
     <div class="card">
-      <div class="section-label"><span>🪞 Kendi Kendine Ayna (Öz Feedback)</span></div>
+      <div class="section-label"><span>🪞 Kendi Kendine Ayna & Örüntüler</span></div>
       <div id="mirrorSummary" style="font-size:0.9rem; line-height:1.6;"></div>
     </div>
 
+    <!-- TAMAMLANAN / KAPATILAN PUSULA & DÖNGÜ HEDEFLERİ -->
     <div class="card">
-      <div class="section-label"><span>🏆 Tamamlanan / Kapatılan Pusula & Döngü Hedefleri</span></div>
+      <div class="section-label">
+        <span>🏆 Tamamlanan / Kapatılan Hedefler</span>
+        <div style="display:flex; gap:4px; flex-wrap:wrap;">
+          <button class="mini-btn" onclick="toggleShowHidden('closed')">👁️ <span id="lblShowHiddenClosed">Arşivi Göster</span></button>
+          <button class="mini-btn" onclick="archiveAllClosedGoals()">📦 Tümünü Arşivle</button>
+          <button class="mini-btn danger-outline" onclick="clearAllClosedGoals()">🗑️ Tümünü Sil</button>
+        </div>
+      </div>
       <div id="closedGoalsArchiveList"></div>
     </div>
 
+    <!-- HAFTALIK PLAN & NOT ARŞİVİ -->
     <div class="card">
-      <div class="section-label"><span>🗂️ Haftalık Plan & Not Arşivi</span></div>
+      <div class="section-label">
+        <span>🗂️ Haftalık Plan & Not Arşivi</span>
+        <div style="display:flex; gap:4px; flex-wrap:wrap;">
+          <button class="mini-btn" onclick="toggleShowHidden('weekly')">👁️ <span id="lblShowHiddenWeekly">Arşivi Göster</span></button>
+          <button class="mini-btn" onclick="archiveAllWeeklyRecords()">📦 Tümünü Arşivle</button>
+          <button class="mini-btn danger-outline" onclick="clearAllWeeklyRecords()">🗑️ Tümünü Sil</button>
+        </div>
+      </div>
       <div id="weeklyArchiveList"></div>
     </div>
 
+    <!-- GEÇMİŞTEN YANKI & GÜNLÜK YANSIMA ARŞİVİ -->
     <div class="card">
-      <div class="section-label"><span>⏳ Geçmişten Yankı & Günlük Arşivi</span></div>
+      <div class="section-label">
+        <span>⏳ Geçmişten Yankı & Yansımalar</span>
+        <div style="display:flex; gap:4px; flex-wrap:wrap;">
+          <button class="mini-btn" onclick="toggleShowHidden('reflections')">👁️ <span id="lblShowHiddenReflections">Arşivi Göster</span></button>
+          <button class="mini-btn" onclick="archiveAllReflections()">📦 Tümünü Arşivle</button>
+          <button class="mini-btn danger-outline" onclick="clearAllReflections()">🗑️ Tümünü Sil</button>
+        </div>
+      </div>
       <div id="pastReflectionsList"></div>
     </div>
   </section>
@@ -1542,7 +1610,7 @@
   </section>
 </main>
 
-<!-- SABİT ALT GEZİNME VE GERİ / İLERİ ÇUBUĞU -->
+<!-- SABİT ALT GEZİNME, TEK TIKLA YEDEKLEME VE GERİ / İLERİ ÇUBUĞU -->
 <nav class="bottom-dock" aria-label="Hızlı Gezinme">
   <div class="dock-inner">
     <button class="dock-btn nav-arrow" id="btnBack" onclick="goBack()" aria-label="Önceki Ekran" disabled>
@@ -1567,6 +1635,11 @@
     <button class="dock-btn" data-dock="sounds" onclick="switchView('sounds')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
       <span>Sesler</span>
+    </button>
+
+    <button class="dock-btn backup-dock-btn" onclick="exportData()" title="Verileri JSON Olarak Kaydet">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+      <span>Yedek</span>
     </button>
 
     <button class="dock-btn nav-arrow" id="btnForward" onclick="goForward()" aria-label="Sonraki Ekran" disabled>
@@ -1655,7 +1728,7 @@ function lockDeviceNow() {
   document.getElementById("lockScreen").classList.remove("hidden");
 }
 
-/* --- ZENGİN BAŞLANGIÇ VERİ HAVUZLARI --- */
+/* --- 50 ADET ŞÜKÜR, DİNGİNLİK VE İÇ DENGE FARKINDALIK SÖZÜ --- */
 const DEFAULT_QUOTES = [
   "Bugün sahip olduğun ve bir zamanlar sadece hayalini kurduğun en az üç şey var; onları fark ederek başla.",
   "Zihin karanlık senaryolar üretmeye meyillidir; ama gerçeklik çoğu zaman sadece şu an aldığın nefesten ibarettir.",
@@ -1676,7 +1749,37 @@ const DEFAULT_QUOTES = [
   "Hayat bir yarış pisti değil, yürüdükçe manzarası değişen uzun bir patikadır; etrafına bakmayı unutma.",
   "Zihnini geleceğin kaygısıyla yormak, bugünün huzurundan çalmaktır.",
   "Her yeni gün, kendine yeniden başlama izni verebileceğin temiz bir sayfadır.",
-  "İçindeki huzuru dışarıdaki şartlara bağlama; dinginlik içeriden dışarıya doğru yayılan bir seçimdir."
+  "İçindeki huzuru dışarıdaki şartlara bağlama; dinginlik içeriden dışarıya doğru yayılan bir seçimdir.",
+  "Bugün bedeninin senin için sessizce yaptığı binlerce iyiliğe teşekkür et; nefes alabilmek bile başlı başına bir armağandır.",
+  "Endişe, henüz ödenmemiş bir borcun faizini bugünden ödemeye çalışmaktır; zihnini şu ana geri çağır.",
+  "Bir ağacın gölgesi bir günde büyümez; ama her sabah sulanan tohum mutlaka toprağı yarar.",
+  "Başkalarının hızıyla kendi yolunu ölçme; her nehrin denize dökülme vakti ve kıvrımı farklıdır.",
+  "Bugün elinde olan sade bir fincan sıcaklık, huzurlu bir nefes ve sağlığın; dünyanın en büyük servetidir.",
+  "Her düğümü bir anda çözmeye çalışma; sadece ucundan tut ve sabırla gevşetmeye başla.",
+  "Geçmişin pişmanlığı da geleceğin kaygısı da sadece düşüncedir; hakikat ise şu an bastığın topraktır.",
+  "Kendi değerini verimlilikle değil, varoluşunun dinginliğiyle hatırla; dinlenmek de yolculuğun parçasıdır.",
+  "Karanlık bir odada karanlıkla savaşmak yerine, küçük bir mum yakmak yeterlidir.",
+  "Bugün karşına çıkan her zorluk, aynı zamanda içinde henüz keşfetmediğin bir sabrı uyandırır.",
+  "Az ama öz olanın bereketine güven; zihnini fazlalıklardan arındırdıkça pusulan daha net gösterir.",
+  "Hayatındaki her şey mükemmel olmak zorunda değil; kusurlarıyla birlikte sevebildiğin bir gün de çok güzeldir.",
+  "Rüzgârın yönünü değiştiremezsin ama yelkenini dinginlikle ayarlayabilirsin.",
+  "Bugün kendine 'yeterliyim ve elimden geleni yapıyorum' deme cömertliğini göster.",
+  "Şükrettiğin her küçük ayrıntı, zihnindeki karamsarlığın sesini biraz daha kısar.",
+  "Bazen en büyük bilgelik, hiçbir şeye yetişmeye çalışmadan sadece bulunduğun anın hakkını vermektir.",
+  "Toprağa atılan tohum karanlıkta kaldığında kaybolduğunu sanır; oysa kök salıyordur.",
+  "Dışarıdaki gürültü ne kadar yükselirse yükselsin, içindeki sessiz odaya çekilme hakkın her zaman saklıdır.",
+  "Bugün attığın en ufak adım bile, dün olduğun yerden daha ileride olduğunun kanıtıdır.",
+  "Hayatın sana sunduğu sessiz destekleri fark et; hiçbirimiz bu yolda tamamen yalnız yürümüyoruz.",
+  "Zihnini sürekli geleceği onarmaya zorlama; bugünün güneşini hissetmeye izin ver.",
+  "Sadelik zayıflık değil, gereksiz yüklerden kurtulmuş bir zihnin berraklığıdır.",
+  "Bugün bir şeyi eksik yaptıysan kendini yargılama; yarın yeniden deneme şansın olduğuna şükret.",
+  "İçindeki pusula her zaman doğru yönü bilir; sadece zihninin dalgaları durulduğunda ibresi görünür.",
+  "Küçük iyilikler, küçük şükürler ve küçük adımlar; bir ömrün en sağlam mimarisidir.",
+  "Bugün kalbini yoran ne varsa, onu çözme işini zamana ve sabra emanet et.",
+  "Varlığın başlı başına bir anlam taşır; bir şeyleri başarmadan önce de kıymetlisin.",
+  "Günün telaşı içinde durup derin bir nefes almak, kendine verdiğin en sessiz ve en güçlü sözdür.",
+  "Her mevsimin kendi rengi vardır; kışın sessizliği de baharın filizleri kadar gereklidir.",
+  "Gözlerini kapatıp bugün sahip olduğun üç güzel şeyi saydığında, dünyanın rengi hemen yumuşar."
 ];
 
 const DEFAULT_FIXED_QUESTIONS = [
@@ -1752,10 +1855,18 @@ let expandedTodayDailyId = null;
 let expandedTodayCycleId = null;
 let expandedTodayCompassId = null;
 
-// Aylık Takvim Durumu
+// Aylık Takvim ve Arşiv Görünüm Durumları
 let calViewYear = new Date().getFullYear();
 let calViewMonth = new Date().getMonth();
 let selectedCalDateKey = null;
+let editingBreakdownGoalId = null;
+let editingArchiveKey = null;
+
+let showHiddenArchives = {
+  closed: false,
+  weekly: false,
+  reflections: false
+};
 
 /* --- TARİH VE HAFTA ANAHTARI YARDIMCILARI --- */
 function toDateKey(dateObj) {
@@ -1825,23 +1936,22 @@ function evaluateDayCompletion(dateKey, dateObj) {
       itemPct = done ? 100 : 0;
       detailStr = done ? "Tamamlandı (%100)" : "Yapılmadı (%0)";
       if (done) hasActivity = true;
-      items.push({ title: g.title, pct: itemPct, detail: detailStr, note: wNote || noteText });
+      items.push({ id: g.id, type: g.type, title: g.title, pct: itemPct, rawVal: done ? 1 : 0, target: 1, unit: "", detail: detailStr, note: wNote || noteText });
 
     } else if (g.type === "check") {
       const done = (log.completedIds || []).includes(g.id);
       itemPct = done ? 100 : 0;
       detailStr = done ? "Tamamlandı (%100)" : "Yapılmadı (%0)";
       if (done) hasActivity = true;
-      items.push({ title: g.title, pct: itemPct, detail: detailStr, note: noteText });
+      items.push({ id: g.id, type: g.type, title: g.title, pct: itemPct, rawVal: done ? 1 : 0, target: 1, unit: "", detail: detailStr, note: noteText });
 
     } else {
-      // Sayısal hedef: orantılı yüzde hesabı (ör. 10/20 = %50)
       const val = (log.numericDaily && log.numericDaily[g.id]) ? Number(log.numericDaily[g.id]) : 0;
       const target = Math.max(1, Number(g.target) || 1);
       itemPct = Math.min(100, Math.round((val / target) * 100));
       detailStr = `${val} / ${target} ${g.unit} (%${itemPct})`;
       if (val > 0) hasActivity = true;
-      items.push({ title: g.title, pct: itemPct, detail: detailStr, note: noteText });
+      items.push({ id: g.id, type: g.type, title: g.title, pct: itemPct, rawVal: val, target, unit: g.unit, detail: detailStr, note: noteText });
     }
 
     totalPctSum += itemPct;
@@ -1870,8 +1980,10 @@ function runAutomatedProgressions() {
         const hasAnyNote = g.weekSlots.some(s => (s.note && s.note.trim()) || s.done);
         if (hasAnyNote) {
           g.weekArchive.unshift({
+            id: "warch_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6),
             weekKey: g.activeWeekKey,
             doneCount,
+            hiddenArchived: false,
             slots: JSON.parse(JSON.stringify(g.weekSlots))
           });
         }
@@ -1936,6 +2048,7 @@ function ensureTodayLog() {
       goalNotesDaily: {},
       answers: {},
       mood: "",
+      reflectionArchived: false,
       poolQIndex: daySeed % Math.max(1, state.poolQuestions.length)
     };
   }
@@ -1955,6 +2068,10 @@ function loadState() {
         prefs: { ...state.prefs, ...(parsed.prefs || {}) },
         closedGoalsArchive: parsed.closedGoalsArchive || []
       };
+      // Eski yedeklerde bulunmayan yeni sözleri havuza ekle
+      DEFAULT_QUOTES.forEach(q => {
+        if (!state.quotes.includes(q)) state.quotes.push(q);
+      });
     }
   } catch (e) { console.error(e); }
   const daySeed = Math.floor(Date.now() / 86400000);
@@ -2200,7 +2317,6 @@ function renderToday() {
     });
   }
 
-  // Ağırlıklı ortalama yüzdesini üst karta yazdır
   const todayEval = evaluateDayCompletion(todayKey, nowObj);
   document.getElementById("dailyProgressBadge").textContent = `Bugün: %${todayEval.percent}`;
 
@@ -2233,7 +2349,7 @@ function renderToday() {
     qContainer.appendChild(block);
   }
 
-  // 3. KADEME: AYLIK / SPRINT / ÖZEL DÖNGÜ HEDEFLERİ
+  // 3. KADEME: AYLIK / SPRINT / ÖZEL DÖNGÜ HEDEFLERİ (AYRI DÜZENLE / ARŞİVLE / SİL BUTONLARI)
   const cycleGoals = state.goals.filter(g => ["monthly", "sprint", "custom"].includes(g.horizon));
   const cycleStrip = document.getElementById("cycleGoalsStrip");
   cycleStrip.innerHTML = "";
@@ -2280,7 +2396,7 @@ function renderToday() {
           <span>${subText}</span>
           ${actionHtml}
         </div>
-        ${isOpen && g.type !== "weekly_plan" ? `
+        ${isOpen ? `
           <div class="inline-drawer">
             ${g.type === "numeric" ? `
               <span class="mini-label">Mevcut Değeri Elle Gir (${g.unit})</span>
@@ -2288,8 +2404,10 @@ function renderToday() {
             ` : ""}
             <span class="mini-label">Döngü Notu</span>
             <input type="text" class="compact-input" placeholder="Döngü notu..." value="${(g.note || "").replace(/"/g, '&quot;')}" oninput="updateGoalProp('${g.id}', 'note', this.value, false)">
-            <div style="margin-top:8px; display:flex; gap:6px;">
-              <button class="mini-btn" style="flex:1;" onclick="archiveAndResetGoal('${g.id}')">🔄 Arşivle & Sıfırla</button>
+            <div class="tri-action-bar">
+              <button class="mini-btn" onclick="openGoalDetail('${g.id}')">✏️ Düzenle</button>
+              <button class="mini-btn" onclick="archiveAndResetGoal('${g.id}')">📦 Arşivle</button>
+              <button class="mini-btn danger-outline" onclick="confirmDeleteGoal('${g.id}')">🗑️ Sil</button>
             </div>
           </div>
         ` : ""}
@@ -2298,7 +2416,7 @@ function renderToday() {
     });
   }
 
-  // 4. KADEME: UZUN VADELİ PUSULA
+  // 4. KADEME: UZUN VADELİ PUSULA (AYRI DÜZENLE / ARŞİVLE / SİL BUTONLARI)
   const longGoals = state.goals.filter(g => g.horizon === "yearly");
   const longStrip = document.getElementById("longTermStrip");
   longStrip.innerHTML = "";
@@ -2344,14 +2462,15 @@ function renderToday() {
                   <input type="number" class="compact-input" value="${g.target}" min="1" onchange="updateGoalProp('${g.id}', 'target', Number(this.value), true)">
                 </div>
               </div>
-            ` : `
+            ` : (g.type === "check" ? `
               <button class="mini-btn" style="width:100%; margin-bottom:6px;" onclick="advanceCycleGoal('${g.id}')">${g.done ? "Tamamlandı ✓ (Geri Al)" : "Tamamlandı Olarak İşaretle"}</button>
-            `}
+            ` : "")}
             <span class="mini-label">Pusula Notu</span>
             <input type="text" class="compact-input" placeholder="Bu pusula hedefine dair notunuz..." value="${(g.note || "").replace(/"/g, '&quot;')}" oninput="updateGoalProp('${g.id}', 'note', this.value, false)">
-            <div style="margin-top:8px; display:flex; gap:6px;">
-              <button class="mini-btn" style="flex:1;" onclick="archiveAndResetGoal('${g.id}')">🏆 Tamamlandı / Kapat & Sıfırla</button>
-              <button class="mini-btn" onclick="openGoalDetail('${g.id}')">Detay</button>
+            <div class="tri-action-bar">
+              <button class="mini-btn" onclick="openGoalDetail('${g.id}')">✏️ Düzenle</button>
+              <button class="mini-btn" onclick="archiveAndResetGoal('${g.id}')">📦 Arşivle</button>
+              <button class="mini-btn danger-outline" onclick="confirmDeleteGoal('${g.id}')">🗑️ Sil</button>
             </div>
           </div>
         ` : ""}
@@ -2451,7 +2570,8 @@ function archiveAndResetGoal(id) {
     horizonLabel: horizonNames[g.horizon] || "Hedef",
     closedDate: getTodayKey(),
     resultText: summaryValue,
-    note: g.note || ""
+    note: g.note || "",
+    hiddenArchived: false
   });
 
   if (g.type === "numeric") g.current = 0;
@@ -2466,7 +2586,21 @@ function archiveAndResetGoal(id) {
   saveState();
   if (document.getElementById("view-today").classList.contains("active")) renderToday();
   if (document.getElementById("view-goals").classList.contains("active")) renderGoalsStudio();
-  showToast("Tamamlanan/Kapatılan pusula kaydı arşive alındı ve sayaç sıfırlandı");
+  showToast("Tamamlanan/Kapatılan hedef arşive kaydedildi ve sayaç sıfırlandı");
+}
+
+function confirmDeleteGoal(id) {
+  const g = state.goals.find(x => x.id === id);
+  if (!g) return;
+  if (!confirm(`"${g.title}" hedefini kalıcı olarak silmek istediğinize emin misiniz?`)) return;
+  state.goals = state.goals.filter(x => x.id !== id);
+  if (expandedGoalId === id) expandedGoalId = null;
+  if (expandedTodayCycleId === id) expandedTodayCycleId = null;
+  if (expandedTodayCompassId === id) expandedTodayCompassId = null;
+  saveState();
+  if (document.getElementById("view-today").classList.contains("active")) renderToday();
+  if (document.getElementById("view-goals").classList.contains("active")) renderGoalsStudio();
+  showToast("Hedef silindi");
 }
 
 function selectMood(mood) {
@@ -2516,8 +2650,10 @@ function archiveCurrentWeekManually(goalId) {
 
   const doneCount = g.weekSlots.filter(s => s.done).length;
   g.weekArchive.unshift({
+    id: "warch_" + Date.now(),
     weekKey: (g.activeWeekKey || getCurrentWeekKey()) + " (Kayıt)",
     doneCount,
+    hiddenArchived: false,
     slots: JSON.parse(JSON.stringify(g.weekSlots))
   });
   g.weekSlots = g.weekSlots.map(s => ({
@@ -2609,13 +2745,6 @@ function addGoal() {
   document.getElementById("gTitle").value = "";
   renderGoalsStudio();
   showToast(type === "weekly_plan" ? "7 günlük plan hedefi oluşturuldu, günlere dokunarak düzenleyebilirsiniz" : "Hedef oluşturuldu");
-}
-
-function deleteGoal(id) {
-  state.goals = state.goals.filter(g => g.id !== id);
-  if (expandedGoalId === id) expandedGoalId = null;
-  saveState();
-  renderGoalsStudio();
 }
 
 function toggleExpandGoal(id) {
@@ -2743,7 +2872,7 @@ function renderGoalsStudio() {
 
             ${!isDaily ? `
               <div style="margin-top:10px;">
-                <button class="btn-secondary" style="width:100%;" onclick="archiveAndResetGoal('${g.id}')">🏆 Tamamlanan / Kapatılan Hedef Olarak Arşivle & Sıfırla</button>
+                <button class="btn-secondary" style="width:100%;" onclick="archiveAndResetGoal('${g.id}')">📦 Tamamlanan / Kapatılan Hedef Olarak Arşivle & Sıfırla</button>
               </div>
             ` : ""}
           </div>
@@ -2759,7 +2888,7 @@ function renderGoalsStudio() {
         </div>
         <div style="display:flex; align-items:center; gap:8px;">
           <button class="mini-btn" onclick="toggleExpandGoal('${g.id}')">${isExpanded ? "Kapat" : "Düzenle"}</button>
-          <button class="danger-txt" onclick="deleteGoal('${g.id}')">Sil</button>
+          <button class="danger-txt" onclick="confirmDeleteGoal('${g.id}')">Sil</button>
         </div>
       </div>
       ${drawerHtml}
@@ -2854,7 +2983,229 @@ function removeQuote(idx) {
   renderPoolManager();
 }
 
-/* --- ÖZ FEEDBACK, DAİRESEL PUSULA VE AYLIK TAKVİM ISI HARİTASI --- */
+/* --- TAKVİM GÜN DÖKÜMÜNDE TEKİL GÖREV DÜZENLEME VE SIFIRLAMA --- */
+function resetSingleGoalOnDate(dateKey, goalId) {
+  const g = state.goals.find(x => x.id === goalId);
+  const log = state.logs[dateKey];
+  if (log) {
+    if (log.completedIds) {
+      log.completedIds = log.completedIds.filter(id => id !== goalId);
+    }
+    if (log.numericDaily && log.numericDaily[goalId] !== undefined) {
+      delete log.numericDaily[goalId];
+    }
+    if (log.goalNotesDaily && log.goalNotesDaily[goalId] !== undefined) {
+      delete log.goalNotesDaily[goalId];
+    }
+  }
+  if (g && g.type === "weekly_plan" && dateKey === getTodayKey()) {
+    const wIdx = getTodayWeekdayIndex();
+    if (g.weekSlots && g.weekSlots[wIdx]) {
+      g.weekSlots[wIdx].done = false;
+      g.weekSlots[wIdx].note = "";
+    }
+  }
+  if (editingBreakdownGoalId === goalId) editingBreakdownGoalId = null;
+  saveState();
+  renderFeedbackView();
+  showToast("İlgili görev kaydı sıfırlandı ve oranlar güncellendi");
+}
+
+function saveBreakdownGoalEdit(dateKey, goalId, type, newVal, newNote) {
+  if (!state.logs[dateKey]) {
+    state.logs[dateKey] = { completedIds: [], numericDaily: {}, goalNotesDaily: {}, answers: {}, mood: "" };
+  }
+  const log = state.logs[dateKey];
+  if (!log.completedIds) log.completedIds = [];
+  if (!log.numericDaily) log.numericDaily = {};
+  if (!log.goalNotesDaily) log.goalNotesDaily = {};
+
+  if (type === "numeric") {
+    log.numericDaily[goalId] = Math.max(0, Number(newVal) || 0);
+  } else {
+    const checked = newVal === "1";
+    const pos = log.completedIds.indexOf(goalId);
+    if (checked && pos === -1) log.completedIds.push(goalId);
+    if (!checked && pos > -1) log.completedIds.splice(pos, 1);
+
+    const g = state.goals.find(x => x.id === goalId);
+    if (g && g.type === "weekly_plan" && dateKey === getTodayKey()) {
+      const wIdx = getTodayWeekdayIndex();
+      if (g.weekSlots && g.weekSlots[wIdx]) g.weekSlots[wIdx].done = checked;
+    }
+  }
+
+  log.goalNotesDaily[goalId] = newNote;
+  editingBreakdownGoalId = null;
+  saveState();
+  renderFeedbackView();
+  showToast("Gün kaydı güncellendi");
+}
+
+function resetEntireDayWithConfirm(dateKey) {
+  if (!confirm(`${dateKey} tarihine ait tüm günlük ritim ve yansıma kayıtlarını sıfırlamak istediğinize emin misiniz?`)) return;
+  delete state.logs[dateKey];
+  if (dateKey === getTodayKey()) {
+    const wIdx = getTodayWeekdayIndex();
+    state.goals.forEach(g => {
+      if (g.type === "weekly_plan" && g.weekSlots && g.weekSlots[wIdx]) {
+        g.weekSlots[wIdx].done = false;
+        g.weekSlots[wIdx].note = "";
+      }
+    });
+  }
+  saveState();
+  renderFeedbackView();
+  showToast("Seçili günün tüm kayıtları temizlendi");
+}
+
+/* --- ARŞİV YÖNETİMİ (GİZLE/GÖSTER, DÜZENLE, SİL, TOPLU ARŞİVLE) --- */
+function toggleShowHidden(section) {
+  showHiddenArchives[section] = !showHiddenArchives[section];
+  renderFeedbackView();
+}
+
+function toggleHideClosedGoal(archId) {
+  const item = (state.closedGoalsArchive || []).find(x => x.id === archId);
+  if (item) {
+    item.hiddenArchived = !item.hiddenArchived;
+    saveState();
+    renderFeedbackView();
+    showToast(item.hiddenArchived ? "Derin arşive kaldırıldı" : "Görünür listeye geri alındı");
+  }
+}
+
+function deleteSingleClosedGoal(archId) {
+  if (!confirm("Bu tamamlanan hedef kaydını kalıcı olarak silmek istediğinize emin misiniz?")) return;
+  state.closedGoalsArchive = (state.closedGoalsArchive || []).filter(x => x.id !== archId);
+  saveState();
+  renderFeedbackView();
+  showToast("Kayıt silindi");
+}
+
+function updateClosedGoalNote(archId, newNote) {
+  const item = (state.closedGoalsArchive || []).find(x => x.id === archId);
+  if (item) {
+    item.note = newNote;
+    editingArchiveKey = null;
+    saveState();
+    renderFeedbackView();
+    showToast("Not güncellendi");
+  }
+}
+
+function archiveAllClosedGoals() {
+  (state.closedGoalsArchive || []).forEach(x => x.hiddenArchived = true);
+  saveState();
+  renderFeedbackView();
+  showToast("Tüm tamamlanan hedefler arşive kaldırıldı");
+}
+
+function clearAllClosedGoals() {
+  if (!confirm("Tamamlanan/Kapatılan tüm hedef arşivini kalıcı olarak silmek istediğinize emin misiniz?")) return;
+  state.closedGoalsArchive = [];
+  saveState();
+  renderFeedbackView();
+  showToast("Tamamlanan hedefler listesi temizlendi");
+}
+
+function toggleHideWeeklyArchive(goalId, archId) {
+  const g = state.goals.find(x => x.id === goalId);
+  if (!g || !g.weekArchive) return;
+  const item = g.weekArchive.find(x => x.id === archId);
+  if (item) {
+    item.hiddenArchived = !item.hiddenArchived;
+    saveState();
+    renderFeedbackView();
+    showToast(item.hiddenArchived ? "Haftalık kayıt arşive kaldırıldı" : "Görünür listeye geri alındı");
+  }
+}
+
+function deleteSingleWeeklyArchive(goalId, archId) {
+  if (!confirm("Bu haftalık plan kaydını kalıcı olarak silmek istediğinize emin misiniz?")) return;
+  const g = state.goals.find(x => x.id === goalId);
+  if (g && g.weekArchive) {
+    g.weekArchive = g.weekArchive.filter(x => x.id !== archId);
+    saveState();
+    renderFeedbackView();
+    showToast("Haftalık kayıt silindi");
+  }
+}
+
+function archiveAllWeeklyRecords() {
+  state.goals.forEach(g => {
+    (g.weekArchive || []).forEach(a => a.hiddenArchived = true);
+  });
+  saveState();
+  renderFeedbackView();
+  showToast("Tüm haftalık kayıtlar arşive kaldırıldı");
+}
+
+function clearAllWeeklyRecords() {
+  if (!confirm("Tüm haftalık plan arşivini kalıcı olarak silmek istediğinize emin misiniz?")) return;
+  state.goals.forEach(g => {
+    if (g.weekArchive) g.weekArchive = [];
+  });
+  saveState();
+  renderFeedbackView();
+  showToast("Haftalık plan arşivi temizlendi");
+}
+
+function toggleHideReflection(dateKey) {
+  const l = state.logs[dateKey];
+  if (l) {
+    l.reflectionArchived = !l.reflectionArchived;
+    saveState();
+    renderFeedbackView();
+    showToast(l.reflectionArchived ? "Yansıma arşive kaldırıldı" : "Görünür listeye geri alındı");
+  }
+}
+
+function updateReflectionText(dateKey, newText) {
+  const l = state.logs[dateKey];
+  if (l && l.answers) {
+    const firstKey = Object.keys(l.answers).find(k => l.answers[k] && l.answers[k].trim()) || "fixed_0";
+    l.answers[firstKey] = newText;
+    editingArchiveKey = null;
+    saveState();
+    renderFeedbackView();
+    showToast("Yansıma notu güncellendi");
+  }
+}
+
+function deleteSingleReflection(dateKey) {
+  if (!confirm(`${dateKey} tarihli günlük yansıma notlarını silmek istediğinize emin misiniz?`)) return;
+  const l = state.logs[dateKey];
+  if (l) {
+    l.answers = {};
+    saveState();
+    renderFeedbackView();
+    showToast("Yansıma silindi");
+  }
+}
+
+function archiveAllReflections() {
+  Object.values(state.logs).forEach(l => {
+    if (Object.values(l.answers || {}).some(x => x && x.trim())) {
+      l.reflectionArchived = true;
+    }
+  });
+  saveState();
+  renderFeedbackView();
+  showToast("Tüm günlük yansımalar arşive kaldırıldı");
+}
+
+function clearAllReflections() {
+  if (!confirm("Tüm geçmiş günlük yansıma metinlerini kalıcı olarak silmek istediğinize emin misiniz?")) return;
+  Object.values(state.logs).forEach(l => {
+    l.answers = {};
+  });
+  saveState();
+  renderFeedbackView();
+  showToast("Tüm yansıma kayıtları temizlendi");
+}
+
+/* --- ÖZ FEEDBACK, DAİRESEL PUSULA, AYLIK TAKVİM VE ÖRÜNTÜ ANALİZİ --- */
 function shiftCalendarMonth(delta) {
   calViewMonth += delta;
   if (calViewMonth < 0) {
@@ -2865,11 +3216,13 @@ function shiftCalendarMonth(delta) {
     calViewYear++;
   }
   selectedCalDateKey = `${calViewYear}-${String(calViewMonth + 1).padStart(2, "0")}-01`;
+  editingBreakdownGoalId = null;
   renderFeedbackView();
 }
 
 function selectCalendarDay(dateKey) {
   selectedCalDateKey = dateKey;
+  editingBreakdownGoalId = null;
   renderFeedbackView();
 }
 
@@ -2878,7 +3231,6 @@ function renderFeedbackView() {
   const todayKey = getTodayKey();
   const todayEval = evaluateDayCompletion(todayKey, nowObj);
 
-  // 1) Aylık Takvim Verilerini ve Ay Ortalamasını Hesapla (1'den ayın son gününe kadar düz sıra)
   const daysInMonth = new Date(calViewYear, calViewMonth + 1, 0).getDate();
   document.getElementById("calMonthTitle").textContent = `${MONTHS_TR[calViewMonth]} ${calViewYear}`;
 
@@ -2888,7 +3240,12 @@ function renderFeedbackView() {
   let elapsedDaysCount = 0;
   let monthPercentSum = 0;
   let activeDaysInMonth = 0;
+  let goldBadgeCount = 0;
+  let compassStarCount = 0;
+
   const moodCounts = {};
+  const moodPctStats = {};
+  const weekdayStats = Array.from({ length: 7 }, () => ({ sum: 0, count: 0 }));
 
   for (let dayNum = 1; dayNum <= daysInMonth; dayNum++) {
     const cellDate = new Date(calViewYear, calViewMonth, dayNum);
@@ -2909,7 +3266,18 @@ function renderFeedbackView() {
       elapsedDaysCount++;
       monthPercentSum += ev.percent;
       if (ev.hasActivity || ev.percent > 0) activeDaysInMonth++;
-      if (ev.log && ev.log.mood) moodCounts[ev.log.mood] = (moodCounts[ev.log.mood] || 0) + 1;
+
+      const wIdx = getWeekdayIndexFromDate(cellDate);
+      weekdayStats[wIdx].sum += ev.percent;
+      weekdayStats[wIdx].count += 1;
+
+      if (ev.log && ev.log.mood) {
+        const m = ev.log.mood;
+        moodCounts[m] = (moodCounts[m] || 0) + 1;
+        if (!moodPctStats[m]) moodPctStats[m] = { sum: 0, count: 0 };
+        moodPctStats[m].sum += ev.percent;
+        moodPctStats[m].count += 1;
+      }
 
       const pct = ev.percent;
       let levelClass = "cal-lvl-0";
@@ -2917,13 +3285,16 @@ function renderFeedbackView() {
 
       if (pct >= 100) {
         levelClass = "cal-lvl-5";
-        badgeIcon = "🏅"; // %100 Altın Rozet
+        badgeIcon = "🏅";
+        goldBadgeCount++;
       } else if (pct >= 75) {
         levelClass = "cal-lvl-4";
-        badgeIcon = "✦"; // %75+ Pusula Yıldızı
+        badgeIcon = "✦";
+        compassStarCount++;
       } else if (pct >= 50) {
         levelClass = "cal-lvl-3";
-        badgeIcon = "✦"; // %50+ Pusula Doğru Yönde Yıldızı
+        badgeIcon = "✦";
+        compassStarCount++;
       } else if (pct >= 26) {
         levelClass = "cal-lvl-2";
       } else if (pct >= 1) {
@@ -2941,7 +3312,7 @@ function renderFeedbackView() {
 
   const monthAvgPct = elapsedDaysCount > 0 ? Math.round(monthPercentSum / elapsedDaysCount) : 0;
 
-  // 2) Çift Halkalı Dairesel Pusula Göstergesini Çiz
+  // Dairesel Pusula Halkası
   const outerR = 48;
   const outerC = 2 * Math.PI * outerR;
   const outerOffset = outerC - (monthAvgPct / 100) * outerC;
@@ -2957,15 +3328,12 @@ function renderFeedbackView() {
 
   document.getElementById("compassDialContainer").innerHTML = `
     <svg class="compass-dial-svg" viewBox="0 0 116 116">
-      <!-- Dış Halka (Ay Ortalaması) -->
       <circle cx="58" cy="58" r="${outerR}" fill="none" stroke="var(--border)" stroke-width="7"/>
       <circle cx="58" cy="58" r="${outerR}" fill="none" stroke="var(--accent)" stroke-width="7" stroke-opacity="0.45"
         stroke-dasharray="${outerC}" stroke-dashoffset="${outerOffset}" stroke-linecap="round" transform="rotate(-90 58 58)"/>
-      <!-- İç Halka (Bugün) -->
       <circle cx="58" cy="58" r="${innerR}" fill="none" stroke="var(--border)" stroke-width="7"/>
       <circle cx="58" cy="58" r="${innerR}" fill="none" stroke="var(--accent)" stroke-width="7"
         stroke-dasharray="${innerC}" stroke-dashoffset="${innerOffset}" stroke-linecap="round" transform="rotate(-90 58 58)"/>
-      <!-- Merkez Pusula Yıldızı ve Yüzde -->
       <text x="58" y="54" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">%${todayEval.percent}</text>
       <text x="58" y="70" text-anchor="middle" font-size="11" fill="var(--accent)">${todayEval.percent >= 100 ? "🏅" : (todayEval.percent >= 50 ? "✦" : "🧭")}</text>
     </svg>
@@ -2975,7 +3343,7 @@ function renderFeedbackView() {
     </div>
   `;
 
-  // 3) Dokunulan Günün Detay Dökümü Kartı
+  // Dokunulan Günün Detay Dökümü (Her Görev Ayrı Düzenlenebilir & Sıfırlanabilir)
   const breakdownBox = document.getElementById("selectedDayBreakdown");
   const activeSelKey = selectedCalDateKey || todayKey;
   const selDateObj = new Date(activeSelKey + "T00:00:00");
@@ -2990,12 +3358,41 @@ function renderFeedbackView() {
     `;
   } else {
     const selEval = evaluateDayCompletion(activeSelKey, selDateObj);
-    const itemsHtml = selEval.items.map(it => `
-      <div style="display:flex; justify-content:space-between; font-size:0.82rem; padding:4px 0; border-bottom:1px dashed var(--border);">
-        <span>${it.pct >= 100 ? "✓ " : "• "}${it.title}${it.note ? `<br><em style="color:var(--text-muted); font-size:0.76rem;">Not: ${it.note}</em>` : ""}</span>
-        <strong style="color:var(--accent); margin-left:8px; flex-shrink:0;">${it.detail}</strong>
-      </div>
-    `).join("");
+    const itemsHtml = selEval.items.map(it => {
+      const isEditingThis = editingBreakdownGoalId === it.id;
+      return `
+        <div class="breakdown-row">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+            <div style="flex:1; font-size:0.82rem;">
+              <span>${it.pct >= 100 ? "✓ " : "• "}<strong>${it.title}</strong></span>
+              <div style="font-size:0.75rem; color:var(--accent);">${it.detail}</div>
+              ${it.note ? `<div style="font-size:0.75rem; color:var(--text-muted); font-style:italic;">Not: ${it.note}</div>` : ""}
+            </div>
+            <div style="display:flex; gap:4px; flex-shrink:0;">
+              <button class="mini-btn" onclick="editingBreakdownGoalId = '${isEditingThis ? "" : it.id}'; renderFeedbackView();">${isEditingThis ? "Kapat" : "✏️"}</button>
+              <button class="mini-btn danger-outline" onclick="resetSingleGoalOnDate('${activeSelKey}', '${it.id}')" title="Sadece Bu Görevi Sıfırla">Sıfırla</button>
+            </div>
+          </div>
+          ${isEditingThis ? `
+            <div style="margin-top:8px; padding-top:8px; border-top:1px dashed var(--border);">
+              ${it.type === "numeric" ? `
+                <span class="mini-label">Değer (${it.unit})</span>
+                <input type="number" id="bd_val_${it.id}" class="compact-input" value="${it.rawVal}" min="0">
+              ` : `
+                <span class="mini-label">Durum</span>
+                <select id="bd_val_${it.id}" class="compact-input">
+                  <option value="1" ${it.rawVal ? "selected" : ""}>Tamamlandı ✓</option>
+                  <option value="0" ${!it.rawVal ? "selected" : ""}>Yapılmadı</option>
+                </select>
+              `}
+              <span class="mini-label">Güne Özel Not</span>
+              <input type="text" id="bd_note_${it.id}" class="compact-input" value="${(it.note || "").replace(/"/g, '&quot;')}">
+              <button class="btn-primary" style="margin-top:8px; padding:7px;" onclick="saveBreakdownGoalEdit('${activeSelKey}', '${it.id}', '${it.type}', document.getElementById('bd_val_${it.id}').value, document.getElementById('bd_note_${it.id}').value)">Kaydet</button>
+            </div>
+          ` : ""}
+        </div>
+      `;
+    }).join("");
 
     const answersHtml = Object.values((selEval.log && selEval.log.answers) || {})
       .filter(x => x && x.trim())
@@ -3011,84 +3408,168 @@ function renderFeedbackView() {
         ${selEval.log && selEval.log.mood ? `<div style="font-size:0.78rem; color:var(--text-muted); margin-bottom:6px;">Zihin Hali: <strong>${selEval.log.mood}</strong></div>` : ""}
         ${itemsHtml || `<div style="font-size:0.8rem; color:var(--text-muted);">Bu gün için tanımlı günlük ritim yok.</div>`}
         ${answersHtml}
+        <div style="margin-top:10px; text-align:right;">
+          <button class="mini-btn danger-outline" onclick="resetEntireDayWithConfirm('${activeSelKey}')">🗑️ Tüm Günü Temizle</button>
+        </div>
       </div>
     `;
   }
 
-  // 4) Kendi Kendine Ayna Özeti
+  // Zenginleştirilmiş Kendi Kendine Ayna & Örüntü Analizi
   const topMood = Object.entries(moodCounts).sort((a, b) => b[1] - a[1])[0];
+
+  let bestWeekdayText = "";
+  let bestDayIdx = -1;
+  let bestDayAvg = -1;
+  weekdayStats.forEach((st, idx) => {
+    if (st.count > 0) {
+      const avg = Math.round(st.sum / st.count);
+      if (avg > bestDayAvg) {
+        bestDayAvg = avg;
+        bestDayIdx = idx;
+      }
+    }
+  });
+  if (bestDayIdx > -1 && bestDayAvg > 0) {
+    bestWeekdayText = `📅 <strong>En Verimli Günün:</strong> ${WEEK_DAYS_TR[bestDayIdx]} (Ortalama <strong>%${bestDayAvg}</strong> ritim uyumu).`;
+  }
+
+  let bestMoodCorrelationText = "";
+  let bestMoodName = "";
+  let bestMoodAvg = -1;
+  Object.entries(moodPctStats).forEach(([mName, st]) => {
+    if (st.count > 0) {
+      const avg = Math.round(st.sum / st.count);
+      if (avg > bestMoodAvg) {
+        bestMoodAvg = avg;
+        bestMoodName = mName;
+      }
+    }
+  });
+  if (bestMoodName && bestMoodAvg > 0) {
+    bestMoodCorrelationText = `✨ <strong>İlham & Akış Örüntüsü:</strong> Kendini <strong>${bestMoodName}</strong> hissettiğin günlerde hedeflerine ortalama <strong>%${bestMoodAvg}</strong> oranında sadık kalıyorsun.`;
+  }
+
+  const milestonesText = `🏅 Bu ay <strong>${goldBadgeCount} gün</strong> %100 Altın Rozet, <strong>${compassStarCount} gün</strong> %50+ Pusula Yıldızı kazandın.`;
+
   document.getElementById("mirrorSummary").innerHTML = `
     <p style="margin-top:0;"><strong>${MONTHS_TR[calViewMonth]} ${calViewYear}</strong> ayında geçen ${elapsedDaysCount} günün <strong>${activeDaysInMonth} gününde</strong> ritimlerinle temas kurdun (Aylık ortalama: <strong>%${monthAvgPct}</strong>).</p>
-    <p style="margin-bottom:0;">${topMood ? `Bu ayda en sık kaydettiğin zihin hali: <strong>${topMood[0]}</strong> (${topMood[1]} gün).` : "Zihin halini işaretledikçe burada sana özel desenler belirecek."}</p>
+    <p style="margin-bottom:6px;">${topMood ? `En sık kaydettiğin zihin hali: <strong>${topMood[0]}</strong> (${topMood[1]} gün).` : "Ana ekranda zihin halini işaretledikçe duygu-ritim örüntülerin burada belirecek."}</p>
+    <div class="pattern-pill-box">${milestonesText}</div>
+    ${bestWeekdayText ? `<div class="pattern-pill-box">${bestWeekdayText}</div>` : ""}
+    ${bestMoodCorrelationText ? `<div class="pattern-pill-box">${bestMoodCorrelationText}</div>` : ""}
   `;
 
-  // 5) Tamamlanan / Kapatılan Pusula & Döngü Hedefleri Arşivi
+  // Tamamlanan / Kapatılan Pusula & Döngü Hedefleri Listesi
+  document.getElementById("lblShowHiddenClosed").textContent = showHiddenArchives.closed ? "Arşivi Gizle" : "Arşivi Göster";
   const closedContainer = document.getElementById("closedGoalsArchiveList");
   closedContainer.innerHTML = "";
-  const closedList = state.closedGoalsArchive || [];
+  const closedList = (state.closedGoalsArchive || []).filter(x => showHiddenArchives.closed || !x.hiddenArchived);
   if (closedList.length === 0) {
-    closedContainer.innerHTML = `<p style="font-size:0.83rem; color:var(--text-muted); margin:0;">Uzun vadeli pusula veya döngü hedeflerinizi sıfırladığınızda tamamlanan/kapatılan kayıtlar burada arşivlenir.</p>`;
+    closedContainer.innerHTML = `<p style="font-size:0.83rem; color:var(--text-muted); margin:0;">Görünür tamamlanan/kapatılan hedef kaydı yok.</p>`;
   } else {
     closedList.forEach(item => {
+      const isEditing = editingArchiveKey === "closed_" + item.id;
       const div = document.createElement("div");
-      div.style.padding = "9px 0";
-      div.style.borderBottom = "1px solid var(--border)";
+      div.className = "archive-item-box" + (item.hiddenArchived ? " is-hidden-archived" : "");
       div.innerHTML = `
-        <div style="font-size:0.82rem; color:var(--accent); font-weight:700;">${item.title} (${item.horizonLabel})</div>
-        <div style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">Kapanış: ${item.closedDate} • Sonuç: <strong>${item.resultText}</strong></div>
-        ${item.note ? `<div style="font-size:0.82rem; margin-top:3px;">Not: ${item.note}</div>` : ""}
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
+          <div style="flex:1;">
+            <div style="font-size:0.82rem; color:var(--accent); font-weight:700;">${item.title} (${item.horizonLabel}) ${item.hiddenArchived ? "• [Arşivde]" : ""}</div>
+            <div style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">Kapanış: ${item.closedDate} • Sonuç: <strong>${item.resultText}</strong></div>
+            ${item.note ? `<div style="font-size:0.82rem; margin-top:3px;">Not: ${item.note}</div>` : ""}
+          </div>
+          <div style="display:flex; gap:4px; flex-shrink:0;">
+            <button class="mini-btn" onclick="editingArchiveKey = '${isEditing ? "" : "closed_" + item.id}'; renderFeedbackView();">✏️</button>
+            <button class="mini-btn" onclick="toggleHideClosedGoal('${item.id}')" title="Arşive Kaldır / Çıkar">📦</button>
+            <button class="mini-btn danger-outline" onclick="deleteSingleClosedGoal('${item.id}')">✕</button>
+          </div>
+        </div>
+        ${isEditing ? `
+          <div style="margin-top:8px;">
+            <input type="text" id="edit_closed_${item.id}" class="compact-input" value="${(item.note || "").replace(/"/g, '&quot;')}" placeholder="Notu düzenle...">
+            <button class="btn-primary" style="margin-top:6px; padding:7px;" onclick="updateClosedGoalNote('${item.id}', document.getElementById('edit_closed_${item.id}').value)">Kaydet</button>
+          </div>
+        ` : ""}
       `;
       closedContainer.appendChild(div);
     });
   }
 
-  // 6) Haftalık Plan Arşivi
+  // Haftalık Plan Arşivi Listesi
+  document.getElementById("lblShowHiddenWeekly").textContent = showHiddenArchives.weekly ? "Arşivi Gizle" : "Arşivi Göster";
   const weeklyArchContainer = document.getElementById("weeklyArchiveList");
   weeklyArchContainer.innerHTML = "";
   let archCount = 0;
   state.goals.filter(g => g.type === "weekly_plan").forEach(g => {
-    (g.weekArchive || []).forEach(arch => {
+    (g.weekArchive || []).forEach((arch, idx) => {
+      if (!arch.id) arch.id = "warch_" + g.id + "_" + idx;
+      if (!showHiddenArchives.weekly && arch.hiddenArchived) return;
       archCount++;
       const notesSummary = arch.slots
-        .map((s, idx) => (s.note && s.note.trim()) ? `<strong>${WEEK_DAYS_TR[idx].slice(0,3)}:</strong> ${s.note}` : "")
+        .map((s, sIdx) => (s.note && s.note.trim()) ? `<strong>${WEEK_DAYS_TR[sIdx].slice(0,3)}:</strong> ${s.note}` : "")
         .filter(Boolean)
         .join(" • ");
       const item = document.createElement("div");
-      item.style.padding = "9px 0";
-      item.style.borderBottom = "1px solid var(--border)";
+      item.className = "archive-item-box" + (arch.hiddenArchived ? " is-hidden-archived" : "");
       item.innerHTML = `
-        <div style="font-size:0.8rem; color:var(--accent); font-weight:700;">${g.title} — ${arch.weekKey} (${arch.doneCount}/7 gün)</div>
-        <div style="font-size:0.82rem; color:var(--text-muted); margin-top:3px;">${notesSummary || "Bu haftada ek not girilmemiş."}</div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
+          <div style="flex:1;">
+            <div style="font-size:0.8rem; color:var(--accent); font-weight:700;">${g.title} — ${arch.weekKey} (${arch.doneCount}/7 gün) ${arch.hiddenArchived ? "• [Arşivde]" : ""}</div>
+            <div style="font-size:0.82rem; color:var(--text-muted); margin-top:3px;">${notesSummary || "Bu haftada ek not girilmemiş."}</div>
+          </div>
+          <div style="display:flex; gap:4px; flex-shrink:0;">
+            <button class="mini-btn" onclick="toggleHideWeeklyArchive('${g.id}', '${arch.id}')" title="Arşive Kaldır / Çıkar">📦</button>
+            <button class="mini-btn danger-outline" onclick="deleteSingleWeeklyArchive('${g.id}', '${arch.id}')">✕</button>
+          </div>
+        </div>
       `;
       weeklyArchContainer.appendChild(item);
     });
   });
   if (archCount === 0) {
-    weeklyArchContainer.innerHTML = `<p style="font-size:0.83rem; color:var(--text-muted); margin:0;">Haftalık planlı hedeflerinizde hafta tamamlandığında veya arşivlediğinizde geçmiş haftaların notları burada toplanır.</p>`;
+    weeklyArchContainer.innerHTML = `<p style="font-size:0.83rem; color:var(--text-muted); margin:0;">Görünür haftalık plan kaydı yok.</p>`;
   }
 
-  // 7) Günlük Öz Yansıma Arşivi
+  // Geçmişten Yankı & Günlük Yansıma Arşivi
+  document.getElementById("lblShowHiddenReflections").textContent = showHiddenArchives.reflections ? "Arşivi Gizle" : "Arşivi Göster";
   const archive = document.getElementById("pastReflectionsList");
   archive.innerHTML = "";
   const keys = Object.keys(state.logs).sort().reverse();
   let shown = 0;
   keys.forEach(k => {
     const l = state.logs[k];
+    if (!showHiddenArchives.reflections && l.reflectionArchived) return;
     const ansList = Object.values(l.answers || {}).filter(x => x && x.trim());
-    if (ansList.length > 0 && shown < 10) {
+    if (ansList.length > 0 && shown < 15) {
       shown++;
+      const isEditing = editingArchiveKey === "ref_" + k;
       const div = document.createElement("div");
-      div.style.padding = "10px 0";
-      div.style.borderBottom = "1px solid var(--border)";
+      div.className = "archive-item-box" + (l.reflectionArchived ? " is-hidden-archived" : "");
       div.innerHTML = `
-        <div style="font-size:0.78rem; color:var(--accent); font-weight:600;">${k} ${l.mood ? "• " + l.mood : ""}</div>
-        <div style="font-size:0.86rem; margin-top:4px;">${ansList[0]}</div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
+          <div style="flex:1;">
+            <div style="font-size:0.78rem; color:var(--accent); font-weight:600;">${k} ${l.mood ? "• " + l.mood : ""} ${l.reflectionArchived ? "• [Arşivde]" : ""}</div>
+            <div style="font-size:0.86rem; margin-top:4px;">${ansList.join(" / ")}</div>
+          </div>
+          <div style="display:flex; gap:4px; flex-shrink:0;">
+            <button class="mini-btn" onclick="editingArchiveKey = '${isEditing ? "" : "ref_" + k}'; renderFeedbackView();">✏️</button>
+            <button class="mini-btn" onclick="toggleHideReflection('${k}')" title="Arşive Kaldır / Çıkar">📦</button>
+            <button class="mini-btn danger-outline" onclick="deleteSingleReflection('${k}')">✕</button>
+          </div>
+        </div>
+        ${isEditing ? `
+          <div style="margin-top:8px;">
+            <textarea id="edit_ref_${k}" style="min-height:54px;">${ansList[0]}</textarea>
+            <button class="btn-primary" style="margin-top:6px; padding:7px;" onclick="updateReflectionText('${k}', document.getElementById('edit_ref_${k}').value)">Kaydet</button>
+          </div>
+        ` : ""}
       `;
       archive.appendChild(div);
     }
   });
   if (shown === 0) {
-    archive.innerHTML = `<p style="font-size:0.84rem; color:var(--text-muted); margin:0;">Ana ekrandaki öz sorulara yanıt yazdıkça geçmiş notların burada zaman kapsülü olarak birikecek.</p>`;
+    archive.innerHTML = `<p style="font-size:0.84rem; color:var(--text-muted); margin:0;">Görünür geçmiş günlük yansıma kaydı yok.</p>`;
   }
 }
 
@@ -3535,6 +4016,7 @@ function exportData() {
   a.href = URL.createObjectURL(blob);
   a.download = `ozgoru-yedek-${getTodayKey()}.json`;
   a.click();
+  showToast("Yedek dosyası (.json) indirildi");
 }
 
 function importData(event) {
