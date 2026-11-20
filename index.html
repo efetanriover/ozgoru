@@ -13,8 +13,8 @@
 <style>
   :root {
     --bg: #f5f0e6;
-    --bg-card: rgba(255, 252, 245, 0.78);
-    --bg-elevated: rgba(237, 229, 213, 0.85);
+    --bg-card: rgba(255, 252, 245, 0.80);
+    --bg-elevated: rgba(237, 229, 213, 0.86);
     --text: #2c2620;
     --text-muted: #6e6357;
     --border: rgba(44, 38, 32, 0.12);
@@ -26,48 +26,71 @@
     --space-scale: 1;
     --radius: 22px;
     --pattern-opacity: 0.13;
+    --pattern-img: none;
+
+    /* 4 KADEMELİ PASTEL TONLAR (KAĞIT TEMASI) */
+    --tier-1-bg: rgba(253, 251, 246, 0.86);
+    --tier-2-bg: rgba(246, 242, 232, 0.86);
+    --tier-3-bg: rgba(238, 235, 224, 0.88);
+    --tier-4-bg: rgba(230, 229, 217, 0.90);
   }
 
   /* TEMALAR */
   [data-theme="paper"] {
     --bg: #f5f0e6;
-    --bg-card: rgba(255, 252, 245, 0.78);
+    --bg-card: rgba(255, 252, 245, 0.80);
     --bg-elevated: rgba(235, 226, 209, 0.86);
     --text: #2c2620;
     --text-muted: #6e6357;
     --border: rgba(44, 38, 32, 0.12);
     --shadow: 0 8px 24px rgba(44, 38, 32, 0.06);
     --pattern-opacity: 0.13;
+    --tier-1-bg: rgba(253, 251, 246, 0.86);
+    --tier-2-bg: rgba(246, 242, 232, 0.86);
+    --tier-3-bg: rgba(238, 235, 224, 0.88);
+    --tier-4-bg: rgba(230, 229, 217, 0.90);
   }
   [data-theme="day"] {
-    --bg: #f8f9fa;
-    --bg-card: rgba(255, 255, 255, 0.82);
-    --bg-elevated: rgba(238, 241, 244, 0.88);
+    --bg: #f4f6f8;
+    --bg-card: rgba(255, 255, 255, 0.84);
+    --bg-elevated: rgba(236, 240, 244, 0.88);
     --text: #1c2127;
     --text-muted: #5c6672;
     --border: rgba(28, 33, 39, 0.1);
     --shadow: 0 8px 24px rgba(28, 33, 39, 0.05);
     --pattern-opacity: 0.11;
+    --tier-1-bg: rgba(255, 255, 255, 0.88);
+    --tier-2-bg: rgba(245, 248, 247, 0.88);
+    --tier-3-bg: rgba(236, 242, 241, 0.90);
+    --tier-4-bg: rgba(227, 235, 235, 0.92);
   }
   [data-theme="night"] {
     --bg: #181b1e;
-    --bg-card: rgba(30, 34, 39, 0.80);
+    --bg-card: rgba(30, 34, 39, 0.82);
     --bg-elevated: rgba(38, 43, 49, 0.88);
     --text: #e6e3de;
     --text-muted: #989e9a;
     --border: rgba(255, 255, 255, 0.09);
     --shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
     --pattern-opacity: 0.09;
+    --tier-1-bg: rgba(33, 38, 43, 0.84);
+    --tier-2-bg: rgba(29, 34, 39, 0.86);
+    --tier-3-bg: rgba(26, 31, 36, 0.88);
+    --tier-4-bg: rgba(23, 28, 33, 0.90);
   }
   [data-theme="oled"] {
     --bg: #000000;
-    --bg-card: rgba(18, 19, 21, 0.84);
+    --bg-card: rgba(18, 19, 21, 0.86);
     --bg-elevated: rgba(28, 30, 34, 0.90);
     --text: #ece9e2;
     --text-muted: #8e9398;
     --border: rgba(255, 255, 255, 0.11);
     --shadow: none;
     --pattern-opacity: 0.08;
+    --tier-1-bg: rgba(22, 24, 27, 0.88);
+    --tier-2-bg: rgba(18, 20, 23, 0.90);
+    --tier-3-bg: rgba(15, 17, 20, 0.92);
+    --tier-4-bg: rgba(12, 14, 17, 0.94);
   }
 
   /* SAKİNLEŞTİRİCİ VURGU RENKLERİ */
@@ -86,6 +109,21 @@
   [data-accent="amber"] {
     --accent: #a87638;
     --accent-soft: rgba(168, 118, 56, 0.16);
+  }
+
+  /* ORGANİK DESEN TANIMLARI */
+  [data-pattern="none"] { --pattern-img: none; }
+  [data-pattern="ripples"] {
+    --pattern-img: url("data:image/svg+xml,%3Csvg width='150' height='150' viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='75' cy='75' r='20' fill='none' stroke='%236f7d72' stroke-width='1.6'/%3E%3Ccircle cx='75' cy='75' r='42' fill='none' stroke='%236f7d72' stroke-width='1.3'/%3E%3Ccircle cx='75' cy='75' r='66' fill='none' stroke='%236f7d72' stroke-width='1'/%3E%3C/svg%3E");
+  }
+  [data-pattern="topo"] {
+    --pattern-img: url("data:image/svg+xml,%3Csvg width='180' height='180' viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 36 Q 45 8, 90 36 T 180 36 M0 82 Q 55 52, 100 82 T 180 82 M0 128 Q 40 158, 85 128 T 180 128 M0 168 Q 50 140, 95 168 T 180 168' fill='none' stroke='%236f7d72' stroke-width='1.5'/%3E%3C/svg%3E");
+  }
+  [data-pattern="geometry"] {
+    --pattern-img: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='60' cy='60' r='30' fill='none' stroke='%236f7d72' stroke-width='1.3'/%3E%3Ccircle cx='60' cy='30' r='30' fill='none' stroke='%236f7d72' stroke-width='1.1'/%3E%3Ccircle cx='60' cy='90' r='30' fill='none' stroke='%236f7d72' stroke-width='1.1'/%3E%3Ccircle cx='30' cy='60' r='30' fill='none' stroke='%236f7d72' stroke-width='1.1'/%3E%3Ccircle cx='90' cy='60' r='30' fill='none' stroke='%236f7d72' stroke-width='1.1'/%3E%3C/svg%3E");
+  }
+  [data-pattern="grain"] {
+    --pattern-img: url("data:image/svg+xml,%3Csvg width='90' height='90' viewBox='0 0 90 90' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='18' r='1.3' fill='%236f7d72'/%3E%3Ccircle cx='45' cy='32' r='1.1' fill='%236f7d72'/%3E%3Ccircle cx='78' cy='14' r='1.4' fill='%236f7d72'/%3E%3Ccircle cx='24' cy='67' r='1.2' fill='%236f7d72'/%3E%3Ccircle cx='66' cy='74' r='1.1' fill='%236f7d72'/%3E%3Ccircle cx='82' cy='55' r='1.3' fill='%236f7d72'/%3E%3Ccircle cx='38' cy='82' r='1.2' fill='%236f7d72'/%3E%3C/svg%3E");
   }
 
   * {
@@ -202,28 +240,16 @@
     border-color: transparent;
   }
 
-  /* ORGANİK ARKA PLAN DESENLERİ */
+  /* ORGANİK ARKA PLAN DESENİ */
   #bg-pattern {
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 0;
     opacity: var(--pattern-opacity);
+    background-image: var(--pattern-img);
     background-repeat: repeat;
     transition: opacity 0.4s ease;
-  }
-  [data-pattern="none"] #bg-pattern { background-image: none; }
-  [data-pattern="ripples"] #bg-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='150' height='150' viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='75' cy='75' r='20' fill='none' stroke='%236f7d72' stroke-width='1.6'/%3E%3Ccircle cx='75' cy='75' r='42' fill='none' stroke='%236f7d72' stroke-width='1.3'/%3E%3Ccircle cx='75' cy='75' r='66' fill='none' stroke='%236f7d72' stroke-width='1'/%3E%3C/svg%3E");
-  }
-  [data-pattern="topo"] #bg-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='180' height='180' viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 36 Q 45 8, 90 36 T 180 36 M0 82 Q 55 52, 100 82 T 180 82 M0 128 Q 40 158, 85 128 T 180 128 M0 168 Q 50 140, 95 168 T 180 168' fill='none' stroke='%236f7d72' stroke-width='1.5'/%3E%3C/svg%3E");
-  }
-  [data-pattern="geometry"] #bg-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='60' cy='60' r='30' fill='none' stroke='%236f7d72' stroke-width='1.3'/%3E%3Ccircle cx='60' cy='30' r='30' fill='none' stroke='%236f7d72' stroke-width='1.1'/%3E%3Ccircle cx='60' cy='90' r='30' fill='none' stroke='%236f7d72' stroke-width='1.1'/%3E%3Ccircle cx='30' cy='60' r='30' fill='none' stroke='%236f7d72' stroke-width='1.1'/%3E%3Ccircle cx='90' cy='60' r='30' fill='none' stroke='%236f7d72' stroke-width='1.1'/%3E%3C/svg%3E");
-  }
-  [data-pattern="grain"] #bg-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='90' height='90' viewBox='0 0 90 90' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='18' r='1.3' fill='%236f7d72'/%3E%3Ccircle cx='45' cy='32' r='1.1' fill='%236f7d72'/%3E%3Ccircle cx='78' cy='14' r='1.4' fill='%236f7d72'/%3E%3Ccircle cx='24' cy='67' r='1.2' fill='%236f7d72'/%3E%3Ccircle cx='66' cy='74' r='1.1' fill='%236f7d72'/%3E%3Ccircle cx='82' cy='55' r='1.3' fill='%236f7d72'/%3E%3Ccircle cx='38' cy='82' r='1.2' fill='%236f7d72'/%3E%3C/svg%3E");
   }
 
   /* ÜST BAR */
@@ -276,6 +302,11 @@
     margin-top: -2px;
   }
 
+  .sound-control-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
   .sound-pill {
     display: inline-flex;
     align-items: center;
@@ -294,6 +325,27 @@
     color: var(--accent);
     font-weight: 600;
   }
+  .quick-play-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    color: var(--text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+  .quick-play-btn.playing {
+    background: var(--accent);
+    color: var(--accent-text);
+    border-color: var(--accent);
+  }
+  .quick-play-btn:active { transform: scale(0.92); }
+
   .wave-bars {
     display: inline-flex;
     align-items: flex-end;
@@ -314,7 +366,7 @@
     50% { height: 12px; }
   }
 
-  /* SOLDAN AÇILIR MENÜ (DRAWER) */
+  /* SOLDAN AÇILIR MENÜ (DRAWER) + ORGANİK ARKA PLAN DESENİ */
   .drawer-backdrop {
     position: fixed;
     inset: 0;
@@ -344,9 +396,24 @@
     display: flex;
     flex-direction: column;
     padding: calc(20px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom));
+    overflow: hidden;
+  }
+  .drawer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: var(--pattern-opacity);
+    background-image: var(--pattern-img);
+    background-repeat: repeat;
   }
   .drawer.open { transform: translateX(0); }
 
+  .drawer-header, .nav-list {
+    position: relative;
+    z-index: 1;
+  }
   .drawer-header {
     padding: 4px 8px 18px;
     border-bottom: 1px solid var(--border);
@@ -471,7 +538,7 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* KARTLAR VE KADEMELER */
+  /* KARTLAR VE 4 KADEMELİ PASTEL TONLAMA */
   .card {
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -481,7 +548,11 @@
     box-shadow: var(--shadow);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    transition: background-color 0.3s ease;
   }
+  .tier-card-1 { background: var(--tier-1-bg); }
+  .tier-card-2 { background: var(--tier-2-bg); }
+  .tier-card-3 { background: var(--tier-3-bg); }
 
   .section-label {
     display: flex;
@@ -551,6 +622,7 @@
   .habit-info {
     flex: 1;
     padding-right: 10px;
+    cursor: pointer;
   }
   .habit-title {
     font-weight: 600;
@@ -561,9 +633,9 @@
     font-size: calc(0.76rem * var(--font-scale));
     color: var(--text-muted);
   }
-  .daily-plan-inline {
-    margin-top: 8px;
-    padding-top: 8px;
+  .daily-plan-inline, .inline-drawer {
+    margin-top: 9px;
+    padding-top: 9px;
     border-top: 1px dashed var(--border);
     width: 100%;
   }
@@ -691,8 +763,8 @@
   .horizontal-scroll::-webkit-scrollbar { display: none; }
 
   .cycle-card {
-    min-width: 215px;
-    max-width: 240px;
+    min-width: 225px;
+    max-width: 255px;
     flex-shrink: 0;
     background: var(--bg-elevated);
     border: 1px solid var(--border);
@@ -708,6 +780,7 @@
     font-weight: 600;
     font-size: 0.9rem;
     margin: 4px 0 8px;
+    cursor: pointer;
   }
   .progress-track {
     width: 100%;
@@ -724,24 +797,27 @@
     transition: width 0.35s ease;
   }
 
-  /* 3. KADEME: UZUN VADELİ PUSULA (ALT İNCE ŞERİT) */
+  /* 3. KADEME: UZUN VADELİ PUSULA (4. PASTEL KATMAN) */
   .compass-strip {
-    padding: 12px 14px;
-    border-radius: 18px;
-    background: var(--bg-card);
+    padding: 14px 15px;
+    border-radius: var(--radius);
+    background: var(--tier-4-bg);
     border: 1px dashed var(--accent);
+    box-shadow: var(--shadow);
   }
   .compass-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
   }
-  .compass-row:last-child { margin-bottom: 0; }
+  .compass-row:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
 
-  /* HAFTALIK 7 GÜNLÜK PLAN AKORDEONU */
-  .weekly-accordion {
+  /* AKORDEON & DÜZENLEME ÇEKMECELERİ */
+  .weekly-accordion, .goal-edit-drawer {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: 16px;
@@ -775,7 +851,14 @@
     padding: 7px 10px !important;
     font-size: 0.82rem !important;
     margin-top: 5px;
-    background: var(--bg-elevated) !important;
+    background: var(--bg-card) !important;
+  }
+  .mini-label {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    display: block;
+    margin-top: 6px;
   }
 
   /* BUTONLAR VE FORM ELEMANLARI */
@@ -960,10 +1043,15 @@
       <span class="brand-date" id="headerDate"></span>
     </div>
   </div>
-  <button class="sound-pill" id="headerSoundBtn" onclick="switchView('sounds')">
-    <span class="wave-bars"><span></span><span></span><span></span></span>
-    <span id="headerSoundLabel">Ambiyans</span>
-  </button>
+  <div class="sound-control-group">
+    <button class="sound-pill" id="headerSoundBtn" onclick="switchView('sounds')">
+      <span class="wave-bars"><span></span><span></span><span></span></span>
+      <span id="headerSoundLabel">Ambiyans</span>
+    </button>
+    <button class="quick-play-btn" id="quickPlayBtn" onclick="quickToggleAmbiance()" aria-label="Ambiyansı Başlat veya Durdur" title="Hızlı Oynat / Durdur">
+      <svg id="quickPlayIcon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+    </button>
+  </div>
 </header>
 
 <!-- SOLDAN AÇILIR MENÜ -->
@@ -998,8 +1086,8 @@
       </div>
     </div>
 
-    <!-- 1. KADEME: GÜNLÜK ODAK -->
-    <div class="card">
+    <!-- 1. KADEME (PASTEL 1): GÜNLÜK ODAK -->
+    <div class="card tier-card-1">
       <div class="section-label">
         <span>🌱 Günlük Ritimler</span>
         <button class="mini-btn" onclick="switchView('goals')">+ Ekle</button>
@@ -1007,7 +1095,8 @@
       <div id="dailyHabitsList"></div>
     </div>
 
-    <div class="card">
+    <!-- 2. KADEME (PASTEL 2): GÜNLÜK ÖZ YANSIMA -->
+    <div class="card tier-card-2">
       <div class="section-label">
         <span>✍️ Günlük Öz Yansıma</span>
         <span style="font-weight:400; text-transform:none;" id="saveStatus">Otomatik kaydedilir</span>
@@ -1025,8 +1114,8 @@
       <div id="dailyQuestionsContainer"></div>
     </div>
 
-    <!-- 2. KADEME: AYLIK / ÖZEL DÖNGÜ HEDEFLERİ -->
-    <div class="card" style="padding-bottom:12px;">
+    <!-- 3. KADEME (PASTEL 3): AYLIK / ÖZEL DÖNGÜ HEDEFLERİ -->
+    <div class="card tier-card-3" style="padding-bottom:12px;">
       <div class="section-label">
         <span>🗓️ Aylık & Döngü Hedefleri</span>
         <button class="mini-btn" onclick="switchView('goals')">Yönet</button>
@@ -1034,11 +1123,11 @@
       <div class="horizontal-scroll" id="cycleGoalsStrip"></div>
     </div>
 
-    <!-- 3. KADEME: UZUN VADELİ PUSULA -->
+    <!-- 4. KADEME (PASTEL 4): UZUN VADELİ PUSULA -->
     <div class="compass-strip">
-      <div class="section-label" style="margin-bottom:6px;">
+      <div class="section-label" style="margin-bottom:8px;">
         <span>🧭 Uzun Vadeli Pusula</span>
-        <span style="font-size:0.7rem; font-weight:400;">Dokunarak ilerlet</span>
+        <button class="mini-btn" onclick="switchView('goals')">Yönet</button>
       </div>
       <div id="longTermStrip"></div>
     </div>
@@ -1050,7 +1139,7 @@
       <div class="section-label"><span>➕ Yeni Hedef veya Ritim Oluştur</span></div>
       <div class="form-group">
         <label>Hedef Başlığı</label>
-        <input type="text" id="gTitle" placeholder="Örn: Haftalık Beslenme Planı, Sabah Okuması...">
+        <input type="text" id="gTitle" placeholder="Örn: Haftalık Beslenme Planı, Yıllık Okuma...">
       </div>
       <div class="row-2">
         <div class="form-group">
@@ -1071,6 +1160,21 @@
             <option value="weekly_plan">📅 Haftalık 7 Günlük Plan & Not</option>
           </select>
         </div>
+      </div>
+
+      <!-- İLERLEME MANTIĞI SEÇİMİ -->
+      <div class="form-group" id="progressionModeGroup">
+        <label>İlerleme Şekli</label>
+        <select id="gProgressMode" onchange="toggleLinkedGoalField()">
+          <option value="manual">Manuel (Ben dokundukça / girdikçe ilerlesin)</option>
+          <option value="linked">Günlük Ritme Bağlı (Seçtiğim ritimle otomatik ilerlesin)</option>
+          <option value="auto_daily">Gün Geçtikçe Otomatik (Her yeni günde +1 ilerlesin)</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="linkedGoalField" style="display:none;">
+        <label>Hangi Günlük Ritme Bağlansın?</label>
+        <select id="gLinkedGoalId"></select>
       </div>
 
       <div id="weeklyPlanHint" style="display:none; font-size:0.8rem; color:var(--accent); background:var(--accent-soft); padding:9px 12px; border-radius:12px; margin-bottom:12px;">
@@ -1110,7 +1214,7 @@
     <div class="card">
       <div class="section-label">
         <span>📋 Aktif Hedeflerim</span>
-        <span style="font-size:0.7rem; font-weight:400;">Planlı hedeflere dokunup açın</span>
+        <span style="font-size:0.7rem; font-weight:400;">Düzenlemek için üzerine dokunun</span>
       </div>
       <div id="allGoalsList"></div>
     </div>
@@ -1166,6 +1270,11 @@
     <div class="card">
       <div class="section-label"><span>🪞 Kendi Kendine Ayna (Öz Feedback)</span></div>
       <div id="mirrorSummary" style="font-size:0.9rem; line-height:1.6;"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-label"><span>🏆 Tamamlanan / Kapatılan Pusula & Döngü Hedefleri</span></div>
+      <div id="closedGoalsArchiveList"></div>
     </div>
 
     <div class="card">
@@ -1444,7 +1553,7 @@ const DEFAULT_SOUNDS = [
   { id: "s_ocean", name: "Okyanus Dalgaları", icon: "🌊", type: "synth", preset: "ocean" },
   { id: "s_breeze", name: "Dalgalı Gece Esintisi", icon: "🍃", type: "synth", preset: "breeze" },
   { id: "s_birds", name: "Sabah Kuşları", icon: "🐦", type: "synth", preset: "birds" },
-  { id: "s_fire", name: "Kamp Ateşi", icon: "🔥", type: "synth", preset: "fire" },
+  { id: "url_fire", name: "Kamp Ateşi", icon: "🔥", type: "url", url: "https://actions.google.com/sounds/v1/ambiences/fire.ogg", fallbackPreset: "fire" },
   { id: "s_stream", name: "Dere Şırıltısı", icon: "🏞️", type: "synth", preset: "stream" },
   { id: "s_crickets", name: "Yaz Gecesi Cırcırları", icon: "🦗", type: "synth", preset: "crickets" },
   { id: "s_chimes", name: "Bambu Rüzgar Çanı", icon: "🎐", type: "synth", preset: "chimes" },
@@ -1463,15 +1572,17 @@ let state = {
     fontScale: 100,
     spaceScale: 100,
     enableRandomQ: true,
-    pinCode: DEFAULT_PIN
+    pinCode: DEFAULT_PIN,
+    lastSoundId: "s_drizzle"
   },
   goals: [
-    { id: "g1", title: "20 Sayfa Kitap Okuma", horizon: "daily", type: "numeric", current: 0, target: 20, unit: "sayfa", step: 10 },
-    { id: "g2", title: "15 Dk Zihinsel Dinginlik & Nefes", horizon: "daily", type: "check", freqNote: "Her gün" },
-    { id: "g3", title: "Bu Ay 12 Gün Doğa Yürüyüşü", horizon: "monthly", type: "numeric", current: 4, target: 12, unit: "gün", step: 1 },
-    { id: "g4", title: "12 Haftalık Derinleşme Döngüsü", horizon: "sprint", type: "numeric", current: 25, target: 100, unit: "%", step: 5 },
-    { id: "g5", title: "Yıllık Okuma & Gelişim Pusulası", horizon: "yearly", type: "numeric", current: 18, target: 40, unit: "kitap", step: 1 }
+    { id: "g1", title: "20 Sayfa Kitap Okuma", horizon: "daily", type: "numeric", current: 0, target: 20, unit: "sayfa", step: 10, progressMode: "manual", note: "" },
+    { id: "g2", title: "15 Dk Zihinsel Dinginlik & Nefes", horizon: "daily", type: "check", freqNote: "Her gün", progressMode: "manual", note: "" },
+    { id: "g3", title: "Bu Ay 12 Gün Doğa Yürüyüşü", horizon: "monthly", type: "numeric", current: 4, target: 12, unit: "gün", step: 1, progressMode: "manual", note: "" },
+    { id: "g4", title: "12 Haftalık Derinleşme Döngüsü", horizon: "sprint", type: "numeric", current: 25, target: 100, unit: "%", step: 5, progressMode: "manual", note: "" },
+    { id: "g5", title: "Yıllık Okuma & Gelişim Pusulası", horizon: "yearly", type: "numeric", current: 18, target: 40, unit: "kitap", step: 1, progressMode: "manual", note: "" }
   ],
+  closedGoalsArchive: [],
   fixedQuestions: [...DEFAULT_FIXED_QUESTIONS],
   poolQuestions: [...DEFAULT_POOL_QUESTIONS],
   quotes: [...DEFAULT_QUOTES],
@@ -1481,6 +1592,9 @@ let state = {
 
 let currentQuoteIndex = 0;
 let expandedGoalId = null;
+let expandedTodayDailyId = null;
+let expandedTodayCycleId = null;
+let expandedTodayCompassId = null;
 
 /* --- TARİH VE HAFTA ANAHTARI YARDIMCILARI --- */
 function getTodayKey() {
@@ -1489,7 +1603,6 @@ function getTodayKey() {
 }
 
 function getTodayWeekdayIndex() {
-  // Pazartesi: 0 ... Pazar: 6
   const day = new Date().getDay();
   return day === 0 ? 6 : day - 1;
 }
@@ -1513,41 +1626,82 @@ function createEmptyWeekSlots() {
   return Array.from({ length: 7 }, () => ({ plan: "", note: "", done: false }));
 }
 
-/* YENİ HAFTAYA GEÇİLDİĞİNDE ESKİ HAFTAYI ARŞİVLE VE TİKLERİ SIFIRLA (ŞABLONU KORU) */
-function checkWeeklyRollover() {
+/* OTOMATİK GÜN GEÇİŞİ VE HAFTALIK YENİLEME KONTROLLERİ */
+function runAutomatedProgressions() {
+  const todayKey = getTodayKey();
   const currentWeek = getCurrentWeekKey();
   let changed = false;
 
   state.goals.forEach(g => {
-    if (g.type !== "weekly_plan") return;
-    if (!g.weekSlots) g.weekSlots = createEmptyWeekSlots();
-    if (!g.weekArchive) g.weekArchive = [];
+    // 1) Haftalık 7 günlük plan devir kontrolü
+    if (g.type === "weekly_plan") {
+      if (!g.weekSlots) g.weekSlots = createEmptyWeekSlots();
+      if (!g.weekArchive) g.weekArchive = [];
 
-    if (!g.activeWeekKey) {
-      g.activeWeekKey = currentWeek;
-      changed = true;
-    } else if (g.activeWeekKey !== currentWeek) {
-      const doneCount = g.weekSlots.filter(s => s.done).length;
-      const hasAnyNote = g.weekSlots.some(s => (s.note && s.note.trim()) || s.done);
-      if (hasAnyNote) {
-        g.weekArchive.unshift({
-          weekKey: g.activeWeekKey,
-          doneCount,
-          slots: JSON.parse(JSON.stringify(g.weekSlots))
-        });
+      if (!g.activeWeekKey) {
+        g.activeWeekKey = currentWeek;
+        changed = true;
+      } else if (g.activeWeekKey !== currentWeek) {
+        const doneCount = g.weekSlots.filter(s => s.done).length;
+        const hasAnyNote = g.weekSlots.some(s => (s.note && s.note.trim()) || s.done);
+        if (hasAnyNote) {
+          g.weekArchive.unshift({
+            weekKey: g.activeWeekKey,
+            doneCount,
+            slots: JSON.parse(JSON.stringify(g.weekSlots))
+          });
+        }
+        g.weekSlots = g.weekSlots.map(s => ({
+          plan: s.plan || "",
+          note: "",
+          done: false
+        }));
+        g.activeWeekKey = currentWeek;
+        changed = true;
       }
-      // Sabit plan şablonu korunur, tikler ve haftalık anlık notlar yeni hafta için yenilenir
-      g.weekSlots = g.weekSlots.map(s => ({
-        plan: s.plan || "",
-        note: "",
-        done: false
-      }));
-      g.activeWeekKey = currentWeek;
-      changed = true;
+    }
+
+    // 2) Gün Geçtikçe Otomatik (+1) İlerleme Modu
+    if (g.progressMode === "auto_daily") {
+      if (!g.lastAutoDate) {
+        g.lastAutoDate = todayKey;
+        changed = true;
+      } else if (g.lastAutoDate !== todayKey) {
+        const prev = new Date(g.lastAutoDate + "T00:00:00");
+        const curr = new Date(todayKey + "T00:00:00");
+        const diffDays = Math.max(0, Math.round((curr - prev) / 86400000));
+        if (diffDays > 0) {
+          if (g.type === "numeric") {
+            g.current = Math.min(g.target, (g.current || 0) + diffDays);
+          } else if (g.type === "check") {
+            g.done = true;
+          }
+          g.lastAutoDate = todayKey;
+          changed = true;
+        }
+      }
     }
   });
 
   if (changed) saveState();
+}
+
+/* GÜNLÜK RİTME BAĞLI OTOMATİK ZİNCİR İLERLEMESİ */
+function triggerLinkedGoals(dailyGoalId, deltaAmount) {
+  if (!deltaAmount) return;
+  let updatedAny = false;
+  state.goals.forEach(g => {
+    if (g.progressMode === "linked" && g.linkedGoalId === dailyGoalId) {
+      if (g.type === "numeric") {
+        g.current = Math.max(0, Math.min(g.target, (g.current || 0) + deltaAmount));
+        updatedAny = true;
+      } else if (g.type === "check" && deltaAmount > 0) {
+        g.done = true;
+        updatedAny = true;
+      }
+    }
+  });
+  if (updatedAny) saveState();
 }
 
 function ensureTodayLog() {
@@ -1557,11 +1711,13 @@ function ensureTodayLog() {
     state.logs[key] = {
       completedIds: [],
       numericDaily: {},
+      goalNotesDaily: {},
       answers: {},
       mood: "",
       poolQIndex: daySeed % Math.max(1, state.poolQuestions.length)
     };
   }
+  if (!state.logs[key].goalNotesDaily) state.logs[key].goalNotesDaily = {};
   return state.logs[key];
 }
 
@@ -1571,12 +1727,17 @@ function loadState() {
     const saved = localStorage.getItem("ozgoru_state_v1");
     if (saved) {
       const parsed = JSON.parse(saved);
-      state = { ...state, ...parsed, prefs: { ...state.prefs, ...(parsed.prefs || {}) } };
+      state = {
+        ...state,
+        ...parsed,
+        prefs: { ...state.prefs, ...(parsed.prefs || {}) },
+        closedGoalsArchive: parsed.closedGoalsArchive || []
+      };
     }
   } catch (e) { console.error(e); }
   const daySeed = Math.floor(Date.now() / 86400000);
   currentQuoteIndex = daySeed % state.quotes.length;
-  checkWeeklyRollover();
+  runAutomatedProgressions();
 }
 
 function saveState() {
@@ -1589,7 +1750,7 @@ function showToast(msg) {
   const t = document.getElementById("toast");
   t.textContent = msg;
   t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 2200);
+  setTimeout(() => t.classList.remove("show"), 2300);
 }
 
 /* --- NAVİGASYON, DRAWER VE GERİ/İLERİ GEÇMİŞİ --- */
@@ -1665,7 +1826,7 @@ function applyPrefs() {
   document.documentElement.style.setProperty("--font-scale", (p.fontScale / 100).toFixed(2));
   document.documentElement.style.setProperty("--space-scale", (p.spaceScale / 100).toFixed(2));
 
-  const themeColors = { paper: "#f5f0e6", day: "#f8f9fa", night: "#181b1e", oled: "#000000" };
+  const themeColors = { paper: "#f5f0e6", day: "#f4f6f8", night: "#181b1e", oled: "#000000" };
   document.querySelector('meta[name="theme-color"]').setAttribute("content", themeColors[p.theme] || "#f5f0e6");
 }
 
@@ -1701,8 +1862,23 @@ function nextQuote() {
   document.getElementById("dailyQuoteText").textContent = "“" + state.quotes[currentQuoteIndex] + "”";
 }
 
+function toggleTodayDailyExpand(id) {
+  expandedTodayDailyId = expandedTodayDailyId === id ? null : id;
+  renderToday();
+}
+
+function toggleTodayCycleExpand(id) {
+  expandedTodayCycleId = expandedTodayCycleId === id ? null : id;
+  renderToday();
+}
+
+function toggleTodayCompassExpand(id) {
+  expandedTodayCompassId = expandedTodayCompassId === id ? null : id;
+  renderToday();
+}
+
 function renderToday() {
-  checkWeeklyRollover();
+  runAutomatedProgressions();
   document.getElementById("headerDate").textContent = formatDateTR(new Date());
   document.getElementById("dailyQuoteText").textContent = "“" + (state.quotes[currentQuoteIndex] || DEFAULT_QUOTES[0]) + "”";
 
@@ -1710,7 +1886,7 @@ function renderToday() {
   const todayIdx = getTodayWeekdayIndex();
   const todayDayName = WEEK_DAYS_TR[todayIdx];
 
-  // Günlük ritimler + haftalık 7 günlük planlı hedefler ana ekranda birlikte yer alır
+  // 1. KADEME: GÜNLÜK RİTİMLER (HEPSİ DOKUNULUP AÇILABİLİR)
   const dailyGoals = state.goals.filter(g => g.horizon === "daily" || g.type === "weekly_plan");
   const habitsContainer = document.getElementById("dailyHabitsList");
   habitsContainer.innerHTML = "";
@@ -1730,6 +1906,8 @@ function renderToday() {
       }
       if (isDone) doneCount++;
 
+      const isOpen = expandedTodayDailyId === g.id;
+      const dailyNote = log.goalNotesDaily[g.id] || "";
       const div = document.createElement("div");
       div.className = "habit-item" + (isDone ? " done" : "");
 
@@ -1738,40 +1916,62 @@ function renderToday() {
         const weekDone = g.weekSlots.filter(s => s.done).length;
         div.innerHTML = `
           <div class="habit-top-row">
-            <div class="habit-info">
-              <span class="habit-title">${g.title}</span>
+            <div class="habit-info" onclick="toggleTodayDailyExpand('${g.id}')">
+              <span class="habit-title">${isOpen ? "▾ " : "▸ "}${g.title}</span>
               <span class="habit-meta">📅 ${todayDayName} • Haftalık: ${weekDone}/7 gün</span>
             </div>
             <button class="check-circle" onclick="toggleWeeklySlotDone('${g.id}', ${todayIdx}, true)">${isDone ? "✓" : ""}</button>
           </div>
           <div class="daily-plan-inline">
-            ${slot.plan ? `<span class="daily-plan-tag">Plan: ${slot.plan}</span>` : `<span class="daily-plan-tag" style="opacity:0.75;">Bugünün planı için Hedefler'den şablon yazabilir veya aşağıya not alabilirsiniz</span>`}
+            ${slot.plan ? `<span class="daily-plan-tag">Plan: ${slot.plan}</span>` : ""}
             <input type="text" class="compact-input" placeholder="${todayDayName} gününe özel not / değişiklik..." value="${(slot.note || "").replace(/"/g, '&quot;')}" oninput="updateWeeklySlotField('${g.id}', ${todayIdx}, 'note', this.value, false)">
+            ${isOpen ? `<div style="margin-top:6px; text-align:right;"><button class="mini-btn" onclick="openGoalDetail('${g.id}')">Tüm 7 Günü Düzenle →</button></div>` : ""}
           </div>
         `;
       } else if (g.type === "check") {
         div.innerHTML = `
           <div class="habit-top-row">
-            <div class="habit-info">
-              <span class="habit-title">${g.title}</span>
-              <span class="habit-meta">${g.freqNote || "Günlük Ritim"}</span>
+            <div class="habit-info" onclick="toggleTodayDailyExpand('${g.id}')">
+              <span class="habit-title">${isOpen ? "▾ " : "▸ "}${g.title}</span>
+              <span class="habit-meta">${g.freqNote || "Günlük Ritim"}${dailyNote ? " • 📝 Not var" : ""}</span>
             </div>
             <button class="check-circle" onclick="toggleDailyCheck('${g.id}')">${isDone ? "✓" : ""}</button>
           </div>
+          ${isOpen ? `
+            <div class="inline-drawer">
+              <input type="text" class="compact-input" placeholder="Bugüne özel ritim notu yaz..." value="${dailyNote.replace(/"/g, '&quot;')}" oninput="saveDailyGoalNote('${g.id}', this.value)">
+            </div>
+          ` : ""}
         `;
       } else {
         const cur = log.numericDaily[g.id] || 0;
         div.innerHTML = `
           <div class="habit-top-row">
-            <div class="habit-info">
-              <span class="habit-title">${g.title}</span>
-              <span class="habit-meta">${cur} / ${g.target} ${g.unit}</span>
+            <div class="habit-info" onclick="toggleTodayDailyExpand('${g.id}')">
+              <span class="habit-title">${isOpen ? "▾ " : "▸ "}${g.title}</span>
+              <span class="habit-meta">${cur} / ${g.target} ${g.unit}${dailyNote ? " • 📝 Not var" : ""}</span>
             </div>
             <div class="counter-controls">
               <button class="step-btn minus" onclick="stepDailyNumeric('${g.id}', -${g.step})">-${g.step}</button>
               <button class="step-btn" onclick="stepDailyNumeric('${g.id}', ${g.step})">+${g.step}</button>
             </div>
           </div>
+          ${isOpen ? `
+            <div class="inline-drawer">
+              <div class="row-2">
+                <div>
+                  <span class="mini-label">Bugünkü Değeri Elle Gir (${g.unit})</span>
+                  <input type="number" class="compact-input" value="${cur}" min="0" onchange="setDailyNumericExact('${g.id}', this.value)">
+                </div>
+                <div>
+                  <span class="mini-label">Hedef Miktar (${g.unit})</span>
+                  <input type="number" class="compact-input" value="${g.target}" min="1" onchange="updateGoalProp('${g.id}', 'target', Number(this.value), true)">
+                </div>
+              </div>
+              <span class="mini-label">Bugüne Özel Not</span>
+              <input type="text" class="compact-input" placeholder="Örn: Kitabın 45. sayfasına geldim..." value="${dailyNote.replace(/"/g, '&quot;')}" oninput="saveDailyGoalNote('${g.id}', this.value)">
+            </div>
+          ` : ""}
         `;
       }
       habitsContainer.appendChild(div);
@@ -1810,7 +2010,7 @@ function renderToday() {
     qContainer.appendChild(block);
   }
 
-  // 2. Kademe: Aylık / Sprint / Özel Döngü Hedefleri
+  // 3. KADEME: AYLIK / SPRINT / ÖZEL DÖNGÜ HEDEFLERİ (DOKUNULUP AÇILABİLİR)
   const cycleGoals = state.goals.filter(g => ["monthly", "sprint", "custom"].includes(g.horizon));
   const cycleStrip = document.getElementById("cycleGoalsStrip");
   cycleStrip.innerHTML = "";
@@ -1824,7 +2024,10 @@ function renderToday() {
         const diff = Math.ceil((new Date(g.deadline) - new Date()) / 86400000);
         extraTag = diff >= 0 ? `Son ${diff} gün` : "Süre doldu";
       }
+      if (g.progressMode === "linked") extraTag += " • 🔗 Bağlı";
+      if (g.progressMode === "auto_daily") extraTag += " • ⏳ Oto";
 
+      const isOpen = expandedTodayCycleId === g.id;
       let ratio = 0;
       let subText = "";
       let actionHtml = "";
@@ -1848,18 +2051,31 @@ function renderToday() {
       card.className = "cycle-card";
       card.innerHTML = `
         <div class="cycle-tag">${extraTag}</div>
-        <div class="cycle-title">${g.title}</div>
+        <div class="cycle-title" onclick="toggleTodayCycleExpand('${g.id}')">${isOpen ? "▾ " : "▸ "}${g.title}</div>
         <div class="progress-track"><div class="progress-fill" style="width:${ratio}%"></div></div>
         <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.78rem; color:var(--text-muted);">
           <span>${subText}</span>
           ${actionHtml}
         </div>
+        ${isOpen && g.type !== "weekly_plan" ? `
+          <div class="inline-drawer">
+            ${g.type === "numeric" ? `
+              <span class="mini-label">Mevcut Değeri Elle Gir (${g.unit})</span>
+              <input type="number" class="compact-input" value="${g.current || 0}" min="0" onchange="updateGoalProp('${g.id}', 'current', Number(this.value), true)">
+            ` : ""}
+            <span class="mini-label">Döngü Notu</span>
+            <input type="text" class="compact-input" placeholder="Döngü notu..." value="${(g.note || "").replace(/"/g, '&quot;')}" oninput="updateGoalProp('${g.id}', 'note', this.value, false)">
+            <div style="margin-top:8px; display:flex; gap:6px;">
+              <button class="mini-btn" style="flex:1;" onclick="archiveAndResetGoal('${g.id}')">🔄 Arşivle & Sıfırla</button>
+            </div>
+          </div>
+        ` : ""}
       `;
       cycleStrip.appendChild(card);
     });
   }
 
-  // 3. Kademe: Uzun Vadeli Pusula
+  // 4. KADEME: UZUN VADELİ PUSULA (DOKUNULUP AÇILABİLİR + ARŞİVLE/SIFIRLA)
   const longGoals = state.goals.filter(g => g.horizon === "yearly");
   const longStrip = document.getElementById("longTermStrip");
   longStrip.innerHTML = "";
@@ -1867,6 +2083,7 @@ function renderToday() {
     longStrip.innerHTML = `<span style="font-size:0.8rem; color:var(--text-muted);">Uzun vadeli yıllık pusula hedefi ekleyebilirsiniz.</span>`;
   } else {
     longGoals.forEach(g => {
+      const isOpen = expandedTodayCompassId === g.id;
       let ratio = 0;
       let rightTxt = "";
       if (g.type === "weekly_plan") {
@@ -1880,18 +2097,41 @@ function renderToday() {
         ratio = g.done ? 100 : 0;
         rightTxt = `%${ratio}`;
       }
+
       const row = document.createElement("div");
       row.className = "compass-row";
-      row.onclick = () => g.type === "weekly_plan" ? openGoalDetail(g.id) : advanceCycleGoal(g.id);
-      row.style.cursor = "pointer";
       row.innerHTML = `
-        <div style="flex:1;">
-          <div style="display:flex; justify-content:space-between; font-size:0.83rem; font-weight:600; margin-bottom:4px;">
-            <span>${g.title}</span>
+        <div onclick="toggleTodayCompassExpand('${g.id}')" style="cursor:pointer;">
+          <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:600; margin-bottom:4px;">
+            <span>${isOpen ? "▾ " : "▸ "}${g.title}</span>
             <span style="color:var(--accent);">${rightTxt}</span>
           </div>
           <div class="progress-track" style="margin-bottom:0;"><div class="progress-fill" style="width:${ratio}%"></div></div>
         </div>
+        ${isOpen ? `
+          <div class="inline-drawer">
+            ${g.type === "numeric" ? `
+              <div class="row-2">
+                <div>
+                  <span class="mini-label">Mevcut Değer (${g.unit})</span>
+                  <input type="number" class="compact-input" value="${g.current || 0}" min="0" onchange="updateGoalProp('${g.id}', 'current', Number(this.value), true)">
+                </div>
+                <div>
+                  <span class="mini-label">Hedef (${g.unit})</span>
+                  <input type="number" class="compact-input" value="${g.target}" min="1" onchange="updateGoalProp('${g.id}', 'target', Number(this.value), true)">
+                </div>
+              </div>
+            ` : `
+              <button class="mini-btn" style="width:100%; margin-bottom:6px;" onclick="advanceCycleGoal('${g.id}')">${g.done ? "Tamamlandı ✓ (Geri Al)" : "Tamamlandı Olarak İşaretle"}</button>
+            `}
+            <span class="mini-label">Pusula Notu</span>
+            <input type="text" class="compact-input" placeholder="Bu pusula hedefine dair notunuz..." value="${(g.note || "").replace(/"/g, '&quot;')}" oninput="updateGoalProp('${g.id}', 'note', this.value, false)">
+            <div style="margin-top:8px; display:flex; gap:6px;">
+              <button class="mini-btn" style="flex:1;" onclick="archiveAndResetGoal('${g.id}')">🏆 Tamamlandı / Kapat & Sıfırla</button>
+              <button class="mini-btn" onclick="openGoalDetail('${g.id}')">Detay</button>
+            </div>
+          </div>
+        ` : ""}
       `;
       longStrip.appendChild(row);
     });
@@ -1903,21 +2143,59 @@ function openGoalDetail(goalId) {
   switchView("goals");
 }
 
+/* --- GÜNLÜK VE DÖNGÜSEL DEĞER GÜNCELLEME FONKSİYONLARI --- */
 function toggleDailyCheck(id) {
   const log = ensureTodayLog();
   const idx = log.completedIds.indexOf(id);
-  if (idx > -1) log.completedIds.splice(idx, 1);
-  else log.completedIds.push(id);
+  let delta = 0;
+  if (idx > -1) {
+    log.completedIds.splice(idx, 1);
+    delta = -1;
+  } else {
+    log.completedIds.push(id);
+    delta = 1;
+  }
+  triggerLinkedGoals(id, delta);
   saveState();
   renderToday();
 }
 
 function stepDailyNumeric(id, delta) {
   const log = ensureTodayLog();
-  const cur = log.numericDaily[id] || 0;
-  log.numericDaily[id] = Math.max(0, cur + delta);
+  const prev = log.numericDaily[id] || 0;
+  const next = Math.max(0, prev + delta);
+  log.numericDaily[id] = next;
+  triggerLinkedGoals(id, next - prev);
   saveState();
   renderToday();
+}
+
+function setDailyNumericExact(id, rawVal) {
+  const log = ensureTodayLog();
+  const prev = log.numericDaily[id] || 0;
+  const next = Math.max(0, Number(rawVal) || 0);
+  log.numericDaily[id] = next;
+  triggerLinkedGoals(id, next - prev);
+  saveState();
+  renderToday();
+  showToast("Günlük değer güncellendi");
+}
+
+function saveDailyGoalNote(id, val) {
+  const log = ensureTodayLog();
+  log.goalNotesDaily[id] = val;
+  saveState();
+}
+
+function updateGoalProp(id, prop, val, rerender = false) {
+  const g = state.goals.find(x => x.id === id);
+  if (!g) return;
+  g[prop] = val;
+  saveState();
+  if (rerender) {
+    if (document.getElementById("view-today").classList.contains("active")) renderToday();
+    if (document.getElementById("view-goals").classList.contains("active")) renderGoalsStudio();
+  }
 }
 
 function advanceCycleGoal(id) {
@@ -1931,6 +2209,43 @@ function advanceCycleGoal(id) {
   saveState();
   renderToday();
   showToast("İlerleme güncellendi");
+}
+
+/* TAMAMLANAN / KAPATILAN PUSULA VEYA DÖNGÜ HEDEFİNİ ARŞİVE TAŞIYIP SIFIRLAMA */
+function archiveAndResetGoal(id) {
+  const g = state.goals.find(x => x.id === id);
+  if (!g) return;
+  if (!state.closedGoalsArchive) state.closedGoalsArchive = [];
+
+  const horizonNames = { daily: "Günlük", monthly: "Aylık", sprint: "12 Haftalık Döngü", custom: "Özel Periyot", yearly: "Uzun Vadeli Pusula" };
+  let summaryValue = "";
+  if (g.type === "numeric") summaryValue = `${g.current || 0} / ${g.target} ${g.unit}`;
+  else if (g.type === "weekly_plan") summaryValue = `${(g.weekSlots || []).filter(s => s.done).length} / 7 gün`;
+  else summaryValue = g.done ? "Tamamlandı" : "Kapatıldı";
+
+  state.closedGoalsArchive.unshift({
+    id: "arch_" + Date.now(),
+    title: g.title,
+    horizonLabel: horizonNames[g.horizon] || "Hedef",
+    closedDate: getTodayKey(),
+    resultText: summaryValue,
+    note: g.note || ""
+  });
+
+  // Hedefi yeni dönem için sıfırla
+  if (g.type === "numeric") g.current = 0;
+  else if (g.type === "weekly_plan") {
+    g.weekSlots = g.weekSlots.map(s => ({ plan: s.plan || "", note: "", done: false }));
+  } else {
+    g.done = false;
+  }
+  g.note = "";
+  g.lastAutoDate = getTodayKey();
+
+  saveState();
+  if (document.getElementById("view-today").classList.contains("active")) renderToday();
+  if (document.getElementById("view-goals").classList.contains("active")) renderGoalsStudio();
+  showToast("Tamamlanan/Kapatılan pusula kaydı arşive alındı ve sayaç sıfırlandı");
 }
 
 function selectMood(mood) {
@@ -1953,7 +2268,6 @@ function toggleWeeklySlotDone(goalId, dayIdx, fromToday = false) {
   if (!g || !g.weekSlots) return;
   g.weekSlots[dayIdx].done = !g.weekSlots[dayIdx].done;
 
-  // Isı haritası senkronizasyonu: Eğer işaretlenen gün bugünse bugünün loguna da yansıt
   if (dayIdx === getTodayWeekdayIndex()) {
     const log = ensureTodayLog();
     const pos = log.completedIds.indexOf(goalId);
@@ -2001,11 +2315,39 @@ function toggleTargetFields() {
   document.getElementById("numericFields").style.display = t === "numeric" ? "block" : "none";
   document.getElementById("frequencyField").style.display = t === "check" ? "block" : "none";
   document.getElementById("weeklyPlanHint").style.display = t === "weekly_plan" ? "block" : "none";
+  document.getElementById("progressionModeGroup").style.display = t === "weekly_plan" ? "none" : "block";
 }
 
 function toggleDeadlineField() {
   const h = document.getElementById("gHorizon").value;
   document.getElementById("deadlineField").style.display = h === "custom" ? "block" : "none";
+}
+
+function toggleLinkedGoalField() {
+  const mode = document.getElementById("gProgressMode").value;
+  const field = document.getElementById("linkedGoalField");
+  if (mode === "linked") {
+    field.style.display = "block";
+    populateLinkedGoalSelect();
+  } else {
+    field.style.display = "none";
+  }
+}
+
+function populateLinkedGoalSelect() {
+  const sel = document.getElementById("gLinkedGoalId");
+  sel.innerHTML = "";
+  const dailies = state.goals.filter(g => g.horizon === "daily");
+  if (dailies.length === 0) {
+    sel.innerHTML = `<option value="">Önce günlük bir ritim oluşturun</option>`;
+  } else {
+    dailies.forEach(d => {
+      const opt = document.createElement("option");
+      opt.value = d.id;
+      opt.textContent = d.title;
+      sel.appendChild(opt);
+    });
+  }
 }
 
 function addGoal() {
@@ -2014,18 +2356,24 @@ function addGoal() {
 
   const horizon = document.getElementById("gHorizon").value;
   const type = document.getElementById("gType").value;
+  const progressMode = type === "weekly_plan" ? "manual" : document.getElementById("gProgressMode").value;
   const newId = "g_" + Date.now();
+
   const newGoal = {
     id: newId,
     title,
     horizon,
     type,
+    progressMode,
+    linkedGoalId: progressMode === "linked" ? document.getElementById("gLinkedGoalId").value : "",
+    lastAutoDate: getTodayKey(),
     current: 0,
     target: Number(document.getElementById("gTarget").value) || 100,
     unit: document.getElementById("gUnit").value.trim() || "birim",
     step: Number(document.getElementById("gStep").value) || 1,
     freqNote: document.getElementById("gFreqNote").value.trim(),
-    deadline: document.getElementById("gDeadline").value
+    deadline: document.getElementById("gDeadline").value,
+    note: ""
   };
 
   if (type === "weekly_plan") {
@@ -2055,11 +2403,14 @@ function toggleExpandGoal(id) {
 }
 
 function renderGoalsStudio() {
-  checkWeeklyRollover();
+  runAutomatedProgressions();
   const list = document.getElementById("allGoalsList");
   list.innerHTML = "";
-  const names = { daily: "Günlük", monthly: "Aylık", sprint: "12 Haftalık Döngü", custom: "Özel Tarih", yearly: "Uzun Vade" };
+  const names = { daily: "Günlük", monthly: "Aylık", sprint: "12 Haftalık Döngü", custom: "Özel Tarih", yearly: "Uzun Vade Pusula" };
+  const modeNames = { manual: "Manuel", linked: "Ritme Bağlı", auto_daily: "Gün Geçtikçe Oto" };
   const todayIdx = getTodayWeekdayIndex();
+  const log = ensureTodayLog();
+  const dailyOptions = state.goals.filter(x => x.horizon === "daily");
 
   state.goals.forEach(g => {
     const row = document.createElement("div");
@@ -2070,50 +2421,128 @@ function renderGoalsStudio() {
 
     let subDesc = `${names[g.horizon]} • `;
     if (isWeekly) subDesc += `7 Günlük Plan (${doneDays}/7 tamamlandı)`;
-    else if (g.type === "numeric") subDesc += `${g.target} ${g.unit}`;
-    else subDesc += "Süreklilik";
+    else if (g.type === "numeric") subDesc += `${g.horizon === "daily" ? (log.numericDaily[g.id] || 0) : (g.current || 0)}/${g.target} ${g.unit} • ${modeNames[g.progressMode || "manual"]}`;
+    else subDesc += `Süreklilik • ${modeNames[g.progressMode || "manual"]}`;
 
-    let accordionHtml = "";
-    if (isWeekly && isExpanded) {
-      let daysHtml = "";
-      WEEK_DAYS_TR.forEach((dayName, dIdx) => {
-        const slot = g.weekSlots[dIdx] || { plan: "", note: "", done: false };
-        const isTodaySlot = dIdx === todayIdx;
-        daysHtml += `
-          <div class="day-slot ${isTodaySlot ? "today-highlight" : ""}">
-            <div class="day-slot-header">
-              <span class="day-name-badge">${dayName} ${isTodaySlot ? "• Bugün" : ""}</span>
-              <button class="check-circle" style="width:28px; height:28px; ${slot.done ? "background:var(--accent);" : ""}" onclick="toggleWeeklySlotDone('${g.id}', ${dIdx}, false)">${slot.done ? "✓" : ""}</button>
+    let drawerHtml = "";
+    if (isExpanded) {
+      if (isWeekly) {
+        let daysHtml = "";
+        WEEK_DAYS_TR.forEach((dayName, dIdx) => {
+          const slot = g.weekSlots[dIdx] || { plan: "", note: "", done: false };
+          const isTodaySlot = dIdx === todayIdx;
+          daysHtml += `
+            <div class="day-slot ${isTodaySlot ? "today-highlight" : ""}">
+              <div class="day-slot-header">
+                <span class="day-name-badge">${dayName} ${isTodaySlot ? "• Bugün" : ""}</span>
+                <button class="check-circle" style="width:28px; height:28px; ${slot.done ? "background:var(--accent);" : ""}" onclick="toggleWeeklySlotDone('${g.id}', ${dIdx}, false)">${slot.done ? "✓" : ""}</button>
+              </div>
+              <input type="text" class="compact-input" placeholder="Sabit Plan Şablonu (Her hafta korunur)..." value="${(slot.plan || "").replace(/"/g, '&quot;')}" oninput="updateWeeklySlotField('${g.id}', ${dIdx}, 'plan', this.value)">
+              <input type="text" class="compact-input" placeholder="Bu haftaya özel değişiklik / not..." value="${(slot.note || "").replace(/"/g, '&quot;')}" oninput="updateWeeklySlotField('${g.id}', ${dIdx}, 'note', this.value)">
             </div>
-            <input type="text" class="compact-input" placeholder="Sabit Plan Şablonu (Her hafta korunur)..." value="${(slot.plan || "").replace(/"/g, '&quot;')}" oninput="updateWeeklySlotField('${g.id}', ${dIdx}, 'plan', this.value)">
-            <input type="text" class="compact-input" placeholder="Bu haftaya özel değişiklik / not..." value="${(slot.note || "").replace(/"/g, '&quot;')}" oninput="updateWeeklySlotField('${g.id}', ${dIdx}, 'note', this.value)">
+          `;
+        });
+
+        drawerHtml = `
+          <div class="weekly-accordion">
+            <div style="margin-bottom:10px;">
+              <span class="mini-label">Hedef Başlığı</span>
+              <input type="text" class="compact-input" value="${g.title.replace(/"/g, '&quot;')}" onchange="updateGoalProp('${g.id}', 'title', this.value, true)">
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span style="font-size:0.78rem; color:var(--text-muted); font-weight:600;">Aktif Dönem: ${g.activeWeekKey || getCurrentWeekKey()}</span>
+              <button class="mini-btn" onclick="archiveCurrentWeekManually('${g.id}')">📦 Haftayı Arşivle & Yeni Hafta</button>
+            </div>
+            ${daysHtml}
           </div>
         `;
-      });
+      } else {
+        // STANDART / SAYISAL / PUSULA HEDEFLERİ İÇİN EVRENSEL DÜZENLEME ÇEKMECESİ
+        const isDaily = g.horizon === "daily";
+        const currentVal = isDaily ? (log.numericDaily[g.id] || 0) : (g.current || 0);
+        const currentNote = isDaily ? (log.goalNotesDaily[g.id] || "") : (g.note || "");
 
-      accordionHtml = `
-        <div class="weekly-accordion">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <span style="font-size:0.78rem; color:var(--text-muted); font-weight:600;">Aktif Dönem: ${g.activeWeekKey || getCurrentWeekKey()}</span>
-            <button class="mini-btn" onclick="archiveCurrentWeekManually('${g.id}')">📦 Haftayı Arşivle & Yeni Hafta</button>
+        const linkedOptsHtml = dailyOptions.map(d => `<option value="${d.id}" ${g.linkedGoalId === d.id ? "selected" : ""}>${d.title}</option>`).join("");
+
+        drawerHtml = `
+          <div class="goal-edit-drawer">
+            <span class="mini-label">Hedef Başlığı</span>
+            <input type="text" class="compact-input" value="${g.title.replace(/"/g, '&quot;')}" onchange="updateGoalProp('${g.id}', 'title', this.value, true)">
+
+            ${g.type === "numeric" ? `
+              <div class="row-2" style="margin-top:6px;">
+                <div>
+                  <span class="mini-label">${isDaily ? "Bugünkü Değer" : "Mevcut İlerleme"} (${g.unit})</span>
+                  <input type="number" class="compact-input" value="${currentVal}" min="0" onchange="${isDaily ? `setDailyNumericExact('${g.id}', this.value)` : `updateGoalProp('${g.id}', 'current', Number(this.value), true)`}">
+                </div>
+                <div>
+                  <span class="mini-label">Hedef Miktar (${g.unit})</span>
+                  <input type="number" class="compact-input" value="${g.target}" min="1" onchange="updateGoalProp('${g.id}', 'target', Number(this.value), true)">
+                </div>
+              </div>
+              <div class="row-2" style="margin-top:4px;">
+                <div>
+                  <span class="mini-label">Artış Adımı (+)</span>
+                  <input type="number" class="compact-input" value="${g.step || 1}" min="1" onchange="updateGoalProp('${g.id}', 'step', Number(this.value), true)">
+                </div>
+                <div>
+                  <span class="mini-label">İlerleme Şekli</span>
+                  <select class="compact-input" onchange="updateGoalProp('${g.id}', 'progressMode', this.value, true)">
+                    <option value="manual" ${(g.progressMode || "manual") === "manual" ? "selected" : ""}>Manuel</option>
+                    <option value="linked" ${g.progressMode === "linked" ? "selected" : ""}>Ritme Bağlı</option>
+                    <option value="auto_daily" ${g.progressMode === "auto_daily" ? "selected" : ""}>Gün Geçtikçe Oto</option>
+                  </select>
+                </div>
+              </div>
+            ` : `
+              <div class="row-2" style="margin-top:6px;">
+                <div>
+                  <span class="mini-label">Sıklık Notu</span>
+                  <input type="text" class="compact-input" value="${(g.freqNote || "").replace(/"/g, '&quot;')}" onchange="updateGoalProp('${g.id}', 'freqNote', this.value, true)">
+                </div>
+                <div>
+                  <span class="mini-label">İlerleme Şekli</span>
+                  <select class="compact-input" onchange="updateGoalProp('${g.id}', 'progressMode', this.value, true)">
+                    <option value="manual" ${(g.progressMode || "manual") === "manual" ? "selected" : ""}>Manuel</option>
+                    <option value="linked" ${g.progressMode === "linked" ? "selected" : ""}>Ritme Bağlı</option>
+                    <option value="auto_daily" ${g.progressMode === "auto_daily" ? "selected" : ""}>Gün Geçtikçe Oto</option>
+                  </select>
+                </div>
+              </div>
+            `}
+
+            ${g.progressMode === "linked" ? `
+              <span class="mini-label">Bağlı Olduğu Günlük Ritim</span>
+              <select class="compact-input" onchange="updateGoalProp('${g.id}', 'linkedGoalId', this.value, true)">
+                ${linkedOptsHtml || `<option value="">Günlük ritim bulunamadı</option>`}
+              </select>
+            ` : ""}
+
+            <span class="mini-label">${isDaily ? "Bugüne Özel Not" : "Hedef / Pusula Notu"}</span>
+            <input type="text" class="compact-input" placeholder="Not ekleyin..." value="${currentNote.replace(/"/g, '&quot;')}" oninput="${isDaily ? `saveDailyGoalNote('${g.id}', this.value)` : `updateGoalProp('${g.id}', 'note', this.value, false)`}">
+
+            ${!isDaily ? `
+              <div style="margin-top:10px;">
+                <button class="btn-secondary" style="width:100%;" onclick="archiveAndResetGoal('${g.id}')">🏆 Tamamlanan / Kapatılan Hedef Olarak Arşivle & Sıfırla</button>
+              </div>
+            ` : ""}
           </div>
-          ${daysHtml}
-        </div>
-      `;
+        `;
+      }
     }
 
     row.innerHTML = `
       <div class="list-row-top">
-        <div style="flex:1; cursor:${isWeekly ? "pointer" : "default"};" ${isWeekly ? `onclick="toggleExpandGoal('${g.id}')"` : ""}>
-          <strong style="font-size:0.93rem;">${isWeekly ? (isExpanded ? "▾ " : "▸ ") : ""}${g.title}</strong>
+        <div style="flex:1; cursor:pointer;" onclick="toggleExpandGoal('${g.id}')">
+          <strong style="font-size:0.93rem;">${isExpanded ? "▾ " : "▸ "}${g.title}</strong>
           <div style="font-size:0.76rem; color:var(--text-muted);">${subDesc}</div>
         </div>
         <div style="display:flex; align-items:center; gap:8px;">
-          ${isWeekly ? `<button class="mini-btn" onclick="toggleExpandGoal('${g.id}')">${isExpanded ? "Kapat" : "Günler"}</button>` : ""}
+          <button class="mini-btn" onclick="toggleExpandGoal('${g.id}')">${isExpanded ? "Kapat" : "Düzenle"}</button>
           <button class="danger-txt" onclick="deleteGoal('${g.id}')">Sil</button>
         </div>
       </div>
-      ${accordionHtml}
+      ${drawerHtml}
     `;
     list.appendChild(row);
   });
@@ -2242,7 +2671,27 @@ function renderFeedbackView() {
     <p style="margin-bottom:0;">${topMood ? `Bu dönemde en sık kaydettiğin zihin hali: <strong>${topMood[0]}</strong> (${topMood[1]} gün).` : "Zihin halini işaretledikçe burada sana özel desenler belirecek."}</p>
   `;
 
-  // Haftalık Plan Arşivi Dökümü
+  // Tamamlanan / Kapatılan Pusula & Döngü Hedefleri Arşivi
+  const closedContainer = document.getElementById("closedGoalsArchiveList");
+  closedContainer.innerHTML = "";
+  const closedList = state.closedGoalsArchive || [];
+  if (closedList.length === 0) {
+    closedContainer.innerHTML = `<p style="font-size:0.83rem; color:var(--text-muted); margin:0;">Uzun vadeli pusula veya döngü hedeflerinizi sıfırladığınızda tamamlanan/kapatılan kayıtlar burada arşivlenir.</p>`;
+  } else {
+    closedList.forEach(item => {
+      const div = document.createElement("div");
+      div.style.padding = "9px 0";
+      div.style.borderBottom = "1px solid var(--border)";
+      div.innerHTML = `
+        <div style="font-size:0.82rem; color:var(--accent); font-weight:700;">${item.title} (${item.horizonLabel})</div>
+        <div style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">Kapanış: ${item.closedDate} • Sonuç: <strong>${item.resultText}</strong></div>
+        ${item.note ? `<div style="font-size:0.82rem; margin-top:3px;">Not: ${item.note}</div>` : ""}
+      `;
+      closedContainer.appendChild(div);
+    });
+  }
+
+  // Haftalık Plan Arşivi
   const weeklyArchContainer = document.getElementById("weeklyArchiveList");
   weeklyArchContainer.innerHTML = "";
   let archCount = 0;
@@ -2292,7 +2741,7 @@ function renderFeedbackView() {
   }
 }
 
-/* --- GELİŞMİŞ 10 KARAKTERLİ DAHİLİ DOĞA & DİNGİNLİK SES MOTORU --- */
+/* --- HİBRİT AMBİYANS SES MOTORU + ANA EKRAN HIZLI OYNAT/DURDUR --- */
 let audioCtx = null;
 let activeNodes = [];
 let activeTimers = [];
@@ -2499,7 +2948,7 @@ function startSynth(preset) {
     activeNodes.push(src);
 
     const crackleTimer = setInterval(() => {
-      if (!audioCtx || activeSoundId !== "s_fire") return;
+      if (!audioCtx || !activeSoundId) return;
       if (Math.random() > 0.45) return;
       const now = audioCtx.currentTime;
       const popSrc = audioCtx.createBufferSource();
@@ -2645,30 +3094,50 @@ function toggleSound(id) {
   if (!sound) return;
 
   activeSoundId = id;
+  state.prefs.lastSoundId = id;
+  saveState();
+
   if (sound.type === "synth") {
     startSynth(sound.preset);
   } else {
     htmlAudio.src = sound.url;
     htmlAudio.volume = currentVolume;
     htmlAudio.play().catch(() => {
-      showToast("Bağlantı açılamadı, hafif yağmur tonuna geçiliyor...");
-      activeSoundId = "s_drizzle";
-      startSynth("drizzle");
+      startSynth(sound.fallbackPreset || "drizzle");
     });
   }
   updateSoundHeader(sound.name);
   renderSoundsGrid();
 }
 
+function quickToggleAmbiance() {
+  if (activeSoundId) {
+    stopAllSounds();
+  } else {
+    const all = getAllSounds();
+    const targetId = (state.prefs.lastSoundId && all.some(s => s.id === state.prefs.lastSoundId))
+      ? state.prefs.lastSoundId
+      : all[0].id;
+    toggleSound(targetId);
+  }
+}
+
 function updateSoundHeader(name) {
   const pill = document.getElementById("headerSoundBtn");
   const lbl = document.getElementById("headerSoundLabel");
+  const qBtn = document.getElementById("quickPlayBtn");
+  const qIcon = document.getElementById("quickPlayIcon");
+
   if (activeSoundId && name) {
     pill.classList.add("playing");
     lbl.textContent = name.split(" ")[0];
+    qBtn.classList.add("playing");
+    qIcon.innerHTML = `<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>`;
   } else {
     pill.classList.remove("playing");
     lbl.textContent = "Ambiyans";
+    qBtn.classList.remove("playing");
+    qIcon.innerHTML = `<polygon points="6 4 20 12 6 20 6 4"/>`;
   }
 }
 
@@ -2724,8 +3193,8 @@ function importData(event) {
   reader.onload = e => {
     try {
       const imported = JSON.parse(e.target.result);
-      state = { ...state, ...imported };
-      checkWeeklyRollover();
+      state = { ...state, ...imported, closedGoalsArchive: imported.closedGoalsArchive || [] };
+      runAutomatedProgressions();
       saveState();
       applyPrefs();
       renderToday();
