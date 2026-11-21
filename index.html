@@ -241,7 +241,7 @@
     border-color: transparent;
   }
 
-  /* TAM EKRAN NOT EDİTÖRÜ (MODAL) */
+  /* TAM EKRAN NOT EDİTÖRÜ (MODAL) + SESLE DİKTE */
   #noteEditorModal {
     position: fixed;
     inset: 0;
@@ -259,10 +259,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: 8px;
     padding-bottom: 12px;
     border-bottom: 1px solid var(--border);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
   .note-modal-title {
     font-family: Georgia, serif;
@@ -270,11 +270,49 @@
     font-weight: 700;
     color: var(--accent);
     flex: 1;
+    min-width: 0;
   }
-  .note-modal-sub {
+  .voice-btn {
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 6px 12px;
+    border-radius: 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+  .voice-btn.recording {
+    background: #c0564b;
+    border-color: #c0564b;
+    color: #ffffff;
+    animation: pulseMic 1.2s infinite ease-in-out;
+  }
+  @keyframes pulseMic {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+  }
+  .voice-live-banner {
+    display: none;
     font-size: 0.78rem;
+    color: #c0564b;
+    background: rgba(192, 86, 75, 0.12);
+    border: 1px dashed rgba(192, 86, 75, 0.45);
+    padding: 7px 11px;
+    border-radius: 11px;
+    margin-bottom: 8px;
+  }
+  .voice-live-banner.active { display: block; }
+  .note-modal-sub {
+    font-size: 0.82rem;
     color: var(--text-muted);
     margin-bottom: 8px;
+    line-height: 1.4;
   }
   #noteEditorTextarea {
     flex: 1;
@@ -593,7 +631,7 @@
   .dock-btn.active {
     background: var(--accent-soft);
     color: var(--accent);
-    border-color: rgba(74, 107, 93, 0.22);
+    border-color: var(--border);
   }
   .dock-btn.backup-dock-btn {
     color: var(--accent);
@@ -739,13 +777,6 @@
     padding-top: 9px;
     border-top: 1px dashed var(--border);
     width: 100%;
-  }
-  .daily-plan-tag {
-    font-size: 0.76rem;
-    color: var(--accent);
-    font-weight: 600;
-    margin-bottom: 4px;
-    display: block;
   }
 
   .check-circle {
@@ -1329,14 +1360,16 @@
   </div>
 </div>
 
-<!-- TAM EKRAN NOT EDİTÖRÜ PENCERESİ -->
+<!-- TAM EKRAN NOT EDİTÖRÜ PENCERESİ + SESLE YAZMA -->
 <div id="noteEditorModal">
   <div class="note-modal-header">
     <span class="note-modal-title" id="noteModalTitle">Not Düzenle</span>
+    <button class="voice-btn" id="voiceDictateBtn" onclick="toggleVoiceDictation()">🎙️ Sesle Yaz</button>
     <button class="mini-btn" onclick="closeNoteModal(false)">İptal</button>
   </div>
-  <div class="note-modal-sub" id="noteModalSubtitle">Alt alta dilediğiniz kadar satır veya liste yazabilirsiniz.</div>
-  <textarea id="noteEditorTextarea" placeholder="Notunuzu buraya genişçe yazın..."></textarea>
+  <div class="note-modal-sub" id="noteModalSubtitle">Alt alta dilediğiniz kadar satır yazabilir veya mikrofonla konuşarak nota dönüştürebilirsiniz.</div>
+  <div class="voice-live-banner" id="voiceLiveBanner">🔴 Dinleniyor... Türkçe konuşun, söyledikleriniz doğrudan notunuza eklenecektir.</div>
+  <textarea id="noteEditorTextarea" placeholder="Notunuzu buraya genişçe yazın veya sağ üstten 'Sesle Yaz'a dokunun..."></textarea>
   <div class="note-modal-footer">
     <button class="btn-secondary" style="flex:1;" onclick="closeNoteModal(false)">Vazgeç</button>
     <button class="btn-primary" style="flex:2;" onclick="closeNoteModal(true)">✓ Kaydet & Kapat</button>
@@ -1489,7 +1522,7 @@
       </div>
 
       <div id="weeklyPlanHint" style="display:none; font-size:0.8rem; color:var(--accent); background:var(--accent-soft); padding:9px 12px; border-radius:12px; margin-bottom:12px;">
-        Hedefi oluşturduktan sonra aşağıdaki <strong>Aktif Hedeflerim</strong> listesinden üzerine dokunarak Pazartesi–Pazar günlerinin sabit planını ve günlük notlarını tam ekran pencereden yazabilirsiniz.
+        Hedefi oluşturduktan sonra aşağıdaki <strong>Aktif Hedeflerim</strong> listesinden üzerine dokunarak Pazartesi–Pazar günlerinin sabit planını ve günlük notlarını tam ekran pencereden yazabilir veya sesle dikte edebilirsiniz.
       </div>
 
       <div id="numericFields" style="display:none;">
@@ -1644,7 +1677,7 @@
         <span>🎧 Doğa, Yoga & Meditasyon Sesleri</span>
         <button class="mini-btn" onclick="stopAllSounds()">⏹ Durdur</button>
       </div>
-      <p style="font-size:0.78rem; color:var(--text-muted); margin-top:0;">Dahili 16 ses manzarası tamamen çevrimdışı çalışır; ekran kilitlendiğinde bile kesilmez.</p>
+      <p style="font-size:0.78rem; color:var(--text-muted); margin-top:0;">Dahili doğa ve meditasyon sesleri çevrimdışı çalışır; telefon ekranı kilitlendiğinde bile kesilmez.</p>
 
       <div class="sound-cat-label">🌿 Doğa & Huzur</div>
       <div class="sound-grid" id="natureSoundGrid"></div>
@@ -1874,21 +1907,131 @@ function lockDeviceNow() {
   document.getElementById("lockScreen").classList.remove("hidden");
 }
 
-/* --- TAM EKRAN NOT EDİTÖRÜ (MODAL) VE KATLANABİLİR ÖNİZLEME YÖNETİMİ --- */
+/* --- TAM EKRAN NOT EDİTÖRÜ (MODAL) + SESLE DİKTE (SPEECH TO TEXT) --- */
 let activeNoteCallback = null;
 let expandedNotePreviews = {};
+let speechRec = null;
+let isDictating = false;
+let voiceBaseText = "";
+
+function initSpeechRecognition() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) return null;
+
+  const rec = new SpeechRecognition();
+  rec.lang = "tr-TR";
+  rec.continuous = true;
+  rec.interimResults = true;
+
+  rec.onstart = () => {
+    isDictating = true;
+    const btn = document.getElementById("voiceDictateBtn");
+    const banner = document.getElementById("voiceLiveBanner");
+    if (btn) {
+      btn.classList.add("recording");
+      btn.textContent = "⏹ Durdur";
+    }
+    if (banner) banner.classList.add("active");
+  };
+
+  rec.onresult = (event) => {
+    const ta = document.getElementById("noteEditorTextarea");
+    if (!ta) return;
+
+    let sessionFinal = "";
+    let sessionInterim = "";
+    for (let i = 0; i < event.results.length; i++) {
+      const transcript = event.results[i][0].transcript;
+      if (event.results[i].isFinal) {
+        sessionFinal += transcript;
+      } else {
+        sessionInterim += transcript;
+      }
+    }
+
+    const spokenCombined = (sessionFinal + sessionInterim).trim();
+    if (!spokenCombined) return;
+
+    const needsSeparator = voiceBaseText.length > 0 && !/[\s\n]$/.test(voiceBaseText);
+    const separator = needsSeparator ? " " : "";
+    ta.value = voiceBaseText + separator + spokenCombined;
+    ta.scrollTop = ta.scrollHeight;
+  };
+
+  rec.onerror = (event) => {
+    stopVoiceDictation();
+    if (event.error === "not-allowed") {
+      showToast("Mikrofon izni verilmedi, tarayıcı ayarlarından izin verin");
+    } else if (event.error !== "aborted") {
+      showToast("Ses algılama durdu: " + event.error);
+    }
+  };
+
+  rec.onend = () => {
+    const ta = document.getElementById("noteEditorTextarea");
+    if (ta) voiceBaseText = ta.value;
+    isDictating = false;
+    const btn = document.getElementById("voiceDictateBtn");
+    const banner = document.getElementById("voiceLiveBanner");
+    if (btn) {
+      btn.classList.remove("recording");
+      btn.textContent = "🎙️ Sesle Yaz";
+    }
+    if (banner) banner.classList.remove("active");
+  };
+
+  return rec;
+}
+
+function toggleVoiceDictation() {
+  if (isDictating) {
+    stopVoiceDictation();
+    return;
+  }
+  if (!speechRec) {
+    speechRec = initSpeechRecognition();
+  }
+  if (!speechRec) {
+    showToast("Bu tarayıcı sesle dikteyi desteklemiyor");
+    return;
+  }
+  const ta = document.getElementById("noteEditorTextarea");
+  voiceBaseText = ta ? ta.value : "";
+  try {
+    speechRec.start();
+  } catch (e) {
+    stopVoiceDictation();
+  }
+}
+
+function stopVoiceDictation() {
+  if (speechRec && isDictating) {
+    try { speechRec.stop(); } catch (e) {}
+  }
+  isDictating = false;
+  const btn = document.getElementById("voiceDictateBtn");
+  const banner = document.getElementById("voiceLiveBanner");
+  if (btn) {
+    btn.classList.remove("recording");
+    btn.textContent = "🎙️ Sesle Yaz";
+  }
+  if (banner) banner.classList.remove("active");
+}
 
 function openFullNoteEditor(title, subtitle, currentText, onSaveCallback) {
+  stopVoiceDictation();
   document.getElementById("noteModalTitle").textContent = title || "Not Düzenle";
-  document.getElementById("noteModalSubtitle").textContent = subtitle || "Alt alta dilediğiniz kadar satır veya liste yazabilirsiniz.";
+  document.getElementById("noteModalSubtitle").textContent = subtitle || "Alt alta dilediğiniz kadar satır yazabilir veya mikrofonla konuşarak nota dönüştürebilirsiniz.";
   const ta = document.getElementById("noteEditorTextarea");
   ta.value = currentText || "";
+  voiceBaseText = ta.value;
   activeNoteCallback = onSaveCallback;
   document.getElementById("noteEditorModal").classList.add("open");
   setTimeout(() => ta.focus(), 60);
 }
 
 function closeNoteModal(shouldSave) {
+  stopVoiceDictation();
   const modal = document.getElementById("noteEditorModal");
   const val = document.getElementById("noteEditorTextarea").value;
   modal.classList.remove("open");
@@ -2009,12 +2152,14 @@ const DEFAULT_POOL_QUESTIONS = [
   "Bugün doğada, gökyüzünde veya çevremde fark ettiğim dingin bir detay neydi?"
 ];
 
-/* 10 DOĞA + 6 YOGA/MEDİTASYON SESİ (TAMAMEN ÇEVRİMDIŞI VE EKRAN KİLİTLİYKEN KESİLMEZ) */
+/* 12 DOĞA + 6 YOGA/MEDİTASYON SESİ */
 const DEFAULT_SOUNDS = [
-  // Doğa & Huzur (10)
+  // Doğa & Huzur (12)
   { id: "s_rain_thunder", name: "Yağmur & Gök Gürültüsü", icon: "⛈️", group: "nature", type: "synth", preset: "rain_thunder" },
   { id: "s_forest_birds", name: "Sabah Ormanı Kuşları", icon: "🐦", group: "nature", type: "synth", preset: "forest_birds" },
-  { id: "s_campfire", name: "Kamp Ateşi", icon: "🔥", group: "nature", type: "synth", preset: "campfire" },
+  { id: "s_deep_nature", name: "Derin Orman Senfonisi", icon: "🌲", group: "nature", type: "synth", preset: "deep_nature" },
+  { id: "url_fire", name: "Kamp Ateşi", icon: "🔥", group: "nature", type: "url", url: "https://actions.google.com/sounds/v1/ambiences/fire.ogg", fallbackPreset: "hearth_hum" },
+  { id: "s_hearth_hum", name: "Şömine Uğultusu", icon: "🪵", group: "nature", type: "synth", preset: "hearth_hum" },
   { id: "s_ocean", name: "Okyanus Dalgaları", icon: "🌊", group: "nature", type: "synth", preset: "ocean" },
   { id: "s_breeze", name: "Dalgalı Gece Esintisi", icon: "🍃", group: "nature", type: "synth", preset: "breeze" },
   { id: "s_stream", name: "Dere Şırıltısı", icon: "🏞️", group: "nature", type: "synth", preset: "stream" },
@@ -2073,7 +2218,6 @@ let calViewYear = new Date().getFullYear();
 let calViewMonth = new Date().getMonth();
 let selectedCalDateKey = null;
 let editingBreakdownGoalId = null;
-let editingArchiveKey = null;
 
 let showHiddenArchives = {
   closed: false,
@@ -2481,7 +2625,7 @@ function openGoalDailyNoteModal(goalId) {
   const log = ensureTodayLog();
   openFullNoteEditor(
     g ? g.title : "Günlük Ritim Notu",
-    "Bugüne ait notunuzu alt alta dilediğiniz gibi yazın:",
+    "Bugüne ait notunuzu alt alta dilediğiniz gibi yazın veya sesle dikte edin:",
     log.goalNotesDaily[goalId] || "",
     (newText) => {
       saveDailyGoalNote(goalId, newText);
@@ -2496,7 +2640,7 @@ function openWeeklySlotNoteModal(goalId, dayIdx, fromToday) {
   const dayName = WEEK_DAYS_TR[dayIdx];
   openFullNoteEditor(
     `${g.title} — ${dayName}`,
-    "Bu güne ait plan veya not listesini alt alta düzenleyin:",
+    "Bu güne ait plan veya not listesini alt alta düzenleyin veya sesle söyleyin:",
     g.weekSlots[dayIdx].note || "",
     (newText) => {
       updateWeeklySlotField(goalId, dayIdx, "note", newText, false);
@@ -2535,11 +2679,24 @@ function openGoalGeneralNoteModal(goalId, rerenderToday) {
   );
 }
 
-function openReflectionQuestionModal(qKey, questionTitle) {
+/* TIRNAK ÇAKIŞMASINI ÖNLEYEN GÜVENLİ ÖZ YANSIMA MODAL AÇICI */
+function openReflectionByIndex(qType, idx) {
   const log = ensureTodayLog();
+  let qKey = "";
+  let qSubtitle = "";
+
+  if (qType === "fixed") {
+    qKey = "fixed_" + idx;
+    qSubtitle = state.fixedQuestions[idx] || "Günlük Öz Yansıma";
+  } else {
+    qKey = "pool_q";
+    const pqIdx = log.poolQIndex % Math.max(1, state.poolQuestions.length);
+    qSubtitle = state.poolQuestions[pqIdx] || "Günün Derinlik Sorusu";
+  }
+
   openFullNoteEditor(
     "Günlük Öz Yansıma",
-    questionTitle,
+    qSubtitle,
     log.answers[qKey] || "",
     (newText) => {
       saveAnswer(qKey, newText);
@@ -2663,8 +2820,8 @@ function renderToday() {
     const block = document.createElement("div");
     block.className = "question-block";
     block.innerHTML = `
-      <label>${q}</label>
-      ${renderCollapsibleNoteBox(`q_${key}`, log.answers[key] || "", "Düşünceni geniş ekranda yazmak için dokun...", `openReflectionQuestionModal('${key}', ${JSON.stringify(q)})`)}
+      <label>${escapeHtml(q)}</label>
+      ${renderCollapsibleNoteBox(`q_${key}`, log.answers[key] || "", "Düşünceni geniş ekranda yazmak veya sesle söylemek için dokun...", `openReflectionByIndex('fixed', ${idx})`)}
     `;
     qContainer.appendChild(block);
   });
@@ -2675,8 +2832,8 @@ function renderToday() {
     const block = document.createElement("div");
     block.className = "question-block";
     block.innerHTML = `
-      <label>${pq} <span class="pool-badge">Günün Derinlik Sorusu</span></label>
-      ${renderCollapsibleNoteBox("q_pool_q", log.answers["pool_q"] || "", "İç sesini geniş ekranda yazmak için dokun...", `openReflectionQuestionModal('pool_q', ${JSON.stringify(pq)})`)}
+      <label>${escapeHtml(pq)} <span class="pool-badge">Günün Derinlik Sorusu</span></label>
+      ${renderCollapsibleNoteBox("q_pool_q", log.answers["pool_q"] || "", "İç sesini geniş ekranda yazmak veya sesle söylemek için dokun...", `openReflectionByIndex('pool', 0)`)}
     `;
     qContainer.appendChild(block);
   }
@@ -3205,7 +3362,7 @@ function renderGoalsStudio() {
             ${renderCollapsibleNoteBox(
               `studio_note_${g.id}`,
               currentNote,
-              "Tam ekran defterde not yazmak için dokun...",
+              "Tam ekran defterde not yazmak veya sesle söylemek için dokun...",
               isDaily ? `openGoalDailyNoteModal('${g.id}')` : `openGoalGeneralNoteModal('${g.id}', false)`
             )}
 
@@ -3906,16 +4063,23 @@ function renderFeedbackView() {
   }
 }
 
-/* --- KESİNTİSİZ ÇEVRİMDIŞI DOĞA & MEDİTASYON SES MOTORU + YOUTUBE CANLI PLAYLIST + MP3 --- */
+/* --- KESİNTİSİZ ÇEVRİMDIŞI DOĞA & MEDİTASYON SES MOTORU + GERÇEK KAMP ATEŞİ + YOUTUBE + MP3 --- */
 let audioCtx = null;
 let activeNodes = [];
 let masterGain = null;
 let htmlAudio = new Audio();
 htmlAudio.loop = true;
+htmlAudio.preload = "auto";
 let activeSoundId = null;
 let currentVolume = 0.6;
 let sleepTimerId = null;
 let sleepDeadlineMs = 0;
+
+htmlAudio.addEventListener("stalled", () => {
+  if (activeSoundId && (!sleepDeadlineMs || Date.now() < sleepDeadlineMs)) {
+    htmlAudio.play().catch(() => {});
+  }
+});
 
 function getAllSounds() {
   return [...DEFAULT_SOUNDS, ...state.customSounds];
@@ -4093,36 +4257,83 @@ function buildSeamlessNatureBuffer(ctx, preset) {
       }
     }
 
-  } else if (preset === "campfire") {
-    let lastBrown = 0;
-    let lpFlame = 0;
+  } else if (preset === "deep_nature") {
+    let b0=0, b1=0, b2=0, b3=0, b4=0, b5=0, b6=0;
+    let lpStream = 0, hpStream = 0, lpWind = 0;
     for (let i = 0; i < len; i++) {
-      const w = Math.random() * 2 - 1;
-      lastBrown = (lastBrown + 0.022 * w) / 1.022;
-      lpFlame = lpFlame + 0.025 * (lastBrown * 2.6 - lpFlame);
-      const flameBreath = 0.78 + 0.22 * Math.sin((2 * Math.PI * 2 * i) / len) * Math.cos((2 * Math.PI * 5 * i) / len);
-      data[i] = lpFlame * flameBreath * 0.48;
+      const white = Math.random() * 2 - 1;
+      b0 = 0.99886 * b0 + white * 0.0555179;
+      b1 = 0.99332 * b1 + white * 0.0750759;
+      b2 = 0.96900 * b2 + white * 0.1538520;
+      b3 = 0.86650 * b3 + white * 0.3104856;
+      b4 = 0.55000 * b4 + white * 0.5329522;
+      b5 = -0.7616 * b5 - white * 0.0168980;
+      const pink = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.04;
+      b6 = white * 0.115926;
+
+      const streamMod = 0.72 + 0.28 * Math.sin((2 * Math.PI * 5 * i) / len + Math.sin((2 * Math.PI * 2 * i) / len));
+      lpStream = lpStream + 0.12 * (pink - lpStream);
+      hpStream = hpStream + 0.025 * (lpStream - hpStream);
+      const streamLayer = (lpStream - hpStream) * streamMod * 0.72;
+
+      const windSwell = 0.5 + 0.5 * Math.sin((2 * Math.PI * 3 * i) / len);
+      lpWind = lpWind + 0.04 * (pink - lpWind);
+      const windLayer = lpWind * windSwell * 0.52;
+
+      data[i] = streamLayer + windLayer;
     }
 
-    const crackleCount = 95;
-    for (let c = 0; c < crackleCount; c++) {
-      const pos = Math.floor(Math.random() * (len - 2000));
-      const burstLen = Math.floor((0.008 + Math.random() * 0.024) * sr);
-      const intensity = 0.14 + Math.random() * 0.34;
-      let bpPrev = 0;
-      for (let j = 0; j < burstLen && (pos + j) < len; j++) {
-        const p = j / burstLen;
-        const env = Math.pow(1 - p, 2.4);
-        const impulse = (Math.random() * 2 - 1);
-        const resonant = impulse - bpPrev * 0.65;
-        bpPrev = impulse;
-        data[pos + j] += resonant * env * intensity;
+    for (let c = 0; c < 26; c++) {
+      const st = Math.floor((0.5 + Math.random() * (durationSec - 2.0)) * sr);
+      const sp = c % 3;
+      if (sp === 0) {
+        const bf = 2400 + Math.random() * 900;
+        for (let n = 0; n < 3; n++) {
+          const ns = st + Math.floor(n * 0.15 * sr);
+          const nl = Math.floor(0.085 * sr);
+          for (let j = 0; j < nl && (ns + j) < len; j++) {
+            const p = j / nl;
+            const env = Math.sin(p * Math.PI);
+            data[ns + j] += Math.sin((2 * Math.PI * bf * (1 + 0.16 * p) * j) / sr) * env * 0.032;
+          }
+        }
+      } else if (sp === 1) {
+        const bf = 1750 + Math.random() * 600;
+        const nl = Math.floor(0.38 * sr);
+        for (let j = 0; j < nl && (st + j) < len; j++) {
+          const p = j / nl;
+          const env = Math.sin(p * Math.PI);
+          const freq = bf + Math.sin(p * Math.PI * 9) * 110 - p * 250;
+          data[st + j] += Math.sin((2 * Math.PI * freq * j) / sr) * env * 0.036;
+        }
+      } else {
+        const bf = 520 + Math.random() * 80;
+        [0, 0.3].forEach(off => {
+          const ns = st + Math.floor(off * sr);
+          const nl = Math.floor(0.22 * sr);
+          for (let j = 0; j < nl && (ns + j) < len; j++) {
+            const p = j / nl;
+            const env = Math.sin(p * Math.PI);
+            data[ns + j] += Math.sin((2 * Math.PI * bf * j) / sr) * env * 0.042;
+          }
+        });
       }
     }
 
+  } else if (preset === "hearth_hum") {
+    let lastBrown = 0;
+    let lp1 = 0, lp2 = 0;
+    for (let i = 0; i < len; i++) {
+      const w = Math.random() * 2 - 1;
+      lastBrown = (lastBrown + 0.02 * w) / 1.02;
+      lp1 = lp1 + 0.022 * (lastBrown * 2.8 - lp1);
+      lp2 = lp2 + 0.015 * (lp1 - lp2);
+      const slowFlame = 0.72 + 0.28 * Math.sin((2 * Math.PI * 2 * i) / len) * Math.cos((2 * Math.PI * 3 * i) / len);
+      data[i] = lp2 * slowFlame * 0.85;
+    }
+
   } else if (preset === "tanpura") {
-    // Hint Tanpura (Sa-Pa-Sa-Sa armonik demlenmesi, 24 sn döngü)
-    const rootF = 136.1; // Om / C# kozmik yoga akordu
+    const rootF = 136.1;
     const fifthF = rootF * 1.498;
     const octaveF = rootF * 2;
     const stringCycle = 6 * sr;
@@ -4134,7 +4345,6 @@ function buildSeamlessNatureBuffer(ctx, preset) {
       const pluckEnv = Math.sin(Math.min(1, localT * 10) * (Math.PI / 2)) * Math.pow(1 - localT * 0.75, 1.4);
 
       const activeF = pluckIdx === 0 ? fifthF : (pluckIdx === 1 ? octaveF : (pluckIdx === 2 ? octaveF * 1.002 : rootF));
-      // Zengin armonik tını (Jivari köprüsü efekti)
       const h1 = Math.sin((2 * Math.PI * activeF * i) / sr) * 0.45;
       const h2 = Math.sin((2 * Math.PI * activeF * 2 * i) / sr) * 0.32;
       const h3 = Math.sin((2 * Math.PI * activeF * 3 * i) / sr) * 0.18;
@@ -4145,8 +4355,7 @@ function buildSeamlessNatureBuffer(ctx, preset) {
     }
 
   } else if (preset === "ambient_pad") {
-    // 432 Hz Sıcak Ambient Meditasyon Pedi (Yavaş nefes alıp veren akorlar)
-    const freqs = [108, 162, 216, 270, 324]; // 432 Hz harmonik dizisi
+    const freqs = [108, 162, 216, 270, 324];
     for (let i = 0; i < len; i++) {
       const t = i / sr;
       let sample = 0;
@@ -4160,7 +4369,6 @@ function buildSeamlessNatureBuffer(ctx, preset) {
     }
 
   } else if (preset === "zen_harp") {
-    // Pentatonik Meditasyon Arpi / Kalimba (432 Hz akortlu huzurlu notalar)
     const penta = [216.0, 243.0, 272.5, 324.0, 364.5, 432.0, 486.0, 545.0, 648.0];
     const notesCount = 14;
     for (let n = 0; n < notesCount; n++) {
@@ -4176,8 +4384,6 @@ function buildSeamlessNatureBuffer(ctx, preset) {
     }
 
   } else if (preset === "breath_46") {
-    // Rehberli Yavaş Nefes Ritim Sesi (4 sn Nefes Al + 6 sn Nefes Ver = 10 sn x 3 = 30 sn yerine 20 sn = 2 tam döngü)
-    // 24 sn tamponda 2 adet 12 saniyelik (5 sn al - 7 sn ver) derin pranayama döngüsü
     const cycleSamples = 12 * sr;
     const inhaleSamples = 5 * sr;
     let b0=0, b1=0, b2=0, lpBreath = 0;
@@ -4192,11 +4398,9 @@ function buildSeamlessNatureBuffer(ctx, preset) {
       const posInCycle = i % cycleSamples;
       let breathCurve = 0;
       if (posInCycle < inhaleSamples) {
-        // 5 sn yavaşça yükselen nefes alış
         const p = posInCycle / inhaleSamples;
         breathCurve = 0.5 - 0.5 * Math.cos(p * Math.PI);
       } else {
-        // 7 sn uzun, rahatlatıcı nefes veriş
         const p = (posInCycle - inhaleSamples) / (cycleSamples - inhaleSamples);
         breathCurve = 0.5 + 0.5 * Math.cos(p * Math.PI);
       }
@@ -4208,7 +4412,6 @@ function buildSeamlessNatureBuffer(ctx, preset) {
     }
 
   } else if (preset === "crystal_bowl") {
-    // Kristal Kase Harmonikleri (Saf kuvars rezonansı)
     const tones = [256, 384, 512, 768];
     for (let i = 0; i < len; i++) {
       let s = 0;
@@ -4222,7 +4425,6 @@ function buildSeamlessNatureBuffer(ctx, preset) {
     }
 
   } else if (preset === "temple_gong") {
-    // Gece Tapınağı Gong & Hafif Esinti (12 saniyede bir derin tapınak gongu)
     let lpWind = 0;
     for (let i = 0; i < len; i++) {
       const w = (Math.random() * 2 - 1) * 0.025;
@@ -4247,7 +4449,6 @@ function buildSeamlessNatureBuffer(ctx, preset) {
     });
   }
 
-  // Döngü başı ve sonu arasında 0.05 sn yumuşak çapraz geçiş
   const fadeSamples = Math.floor(0.05 * sr);
   for (let i = 0; i < fadeSamples; i++) {
     const ratio = i / fadeSamples;
@@ -4294,7 +4495,7 @@ function startSynth(preset) {
   applyHardwareSleepSchedule();
 
   const bufferedPresets = [
-    "rain_thunder", "forest_birds", "campfire",
+    "rain_thunder", "forest_birds", "deep_nature", "hearth_hum",
     "tanpura", "ambient_pad", "zen_harp", "breath_46", "crystal_bowl", "temple_gong"
   ];
 
@@ -4526,7 +4727,12 @@ function toggleSound(id) {
     htmlAudio.src = sound.url;
     htmlAudio.volume = currentVolume;
     htmlAudio.play().catch(() => {
-      showToast("Ses dosyası oynatılamadı, bağlantıyı kontrol edin");
+      if (sound.fallbackPreset) {
+        startSynth(sound.fallbackPreset);
+        showToast("Çevrimdışı şömine uğultusu başlatıldı");
+      } else {
+        showToast("Ses dosyası oynatılamadı, bağlantıyı kontrol edin");
+      }
     });
   }
   updateSoundHeader(sound.name);
