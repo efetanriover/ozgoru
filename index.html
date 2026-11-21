@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Öz'görü">
@@ -141,6 +141,7 @@
     line-height: 1.55;
     min-height: 100vh;
     overflow-x: hidden;
+    touch-action: pan-x pan-y pinch-zoom;
     transition: background-color 0.35s ease, color 0.35s ease;
   }
 
@@ -238,6 +239,90 @@
     background: transparent;
     box-shadow: none;
     border-color: transparent;
+  }
+
+  /* TAM EKRAN NOT EDİTÖRÜ (MODAL) */
+  #noteEditorModal {
+    position: fixed;
+    inset: 0;
+    z-index: 8500;
+    background: var(--bg);
+    display: none;
+    flex-direction: column;
+    padding: calc(14px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom));
+  }
+  #noteEditorModal.open {
+    display: flex;
+    animation: smoothViewIn 0.2s ease;
+  }
+  .note-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .note-modal-title {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--accent);
+    flex: 1;
+  }
+  .note-modal-sub {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  #noteEditorTextarea {
+    flex: 1;
+    width: 100%;
+    resize: none;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 14px;
+    font-size: calc(1.02rem * var(--font-scale));
+    line-height: 1.65;
+    color: var(--text);
+  }
+  .note-modal-footer {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  /* KATLANABİLİR NOT ÖNİZLEME KUTUSU */
+  .note-preview-box {
+    margin-top: 7px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .note-preview-text {
+    flex: 1;
+    font-size: 0.83rem;
+    color: var(--text);
+    white-space: pre-line;
+    cursor: pointer;
+    line-height: 1.48;
+  }
+  .note-preview-text.clamped {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .note-preview-text.placeholder-txt {
+    color: var(--text-muted);
+    font-style: italic;
   }
 
   /* ORGANİK ARKA PLAN DESENİ */
@@ -607,6 +692,7 @@
     align-items: center;
     justify-content: center;
     gap: 3px;
+    flex-shrink: 0;
   }
   .mini-btn.danger-outline {
     color: #c0564b;
@@ -778,8 +864,8 @@
   .horizontal-scroll::-webkit-scrollbar { display: none; }
 
   .cycle-card {
-    min-width: 235px;
-    max-width: 265px;
+    min-width: 245px;
+    max-width: 275px;
     flex-shrink: 0;
     background: var(--bg-elevated);
     border: 1px solid var(--border);
@@ -1093,7 +1179,15 @@
     margin-bottom: 6px;
   }
 
-  /* SES STÜDYOSU IZGARASI */
+  /* SES STÜDYOSU & YOUTUBE MINI OYNATICI */
+  .sound-cat-label {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 12px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
   .sound-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -1118,6 +1212,30 @@
     border-color: var(--accent);
     color: var(--accent);
     font-weight: 600;
+  }
+
+  #ytPlayerCard {
+    display: none;
+    margin-bottom: 14px;
+    padding: 12px;
+    border-radius: 16px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--accent);
+  }
+  #ytPlayerCard.visible { display: block; }
+  .yt-frame-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+    margin-top: 8px;
+  }
+  .yt-frame-wrap iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
   }
 
   /* TOAST BİLDİRİM */
@@ -1211,6 +1329,20 @@
   </div>
 </div>
 
+<!-- TAM EKRAN NOT EDİTÖRÜ PENCERESİ -->
+<div id="noteEditorModal">
+  <div class="note-modal-header">
+    <span class="note-modal-title" id="noteModalTitle">Not Düzenle</span>
+    <button class="mini-btn" onclick="closeNoteModal(false)">İptal</button>
+  </div>
+  <div class="note-modal-sub" id="noteModalSubtitle">Alt alta dilediğiniz kadar satır veya liste yazabilirsiniz.</div>
+  <textarea id="noteEditorTextarea" placeholder="Notunuzu buraya genişçe yazın..."></textarea>
+  <div class="note-modal-footer">
+    <button class="btn-secondary" style="flex:1;" onclick="closeNoteModal(false)">Vazgeç</button>
+    <button class="btn-primary" style="flex:2;" onclick="closeNoteModal(true)">✓ Kaydet & Kapat</button>
+  </div>
+</div>
+
 <div id="bg-pattern"></div>
 
 <header>
@@ -1251,7 +1383,7 @@
   </nav>
 </aside>
 
-<main>
+<main id="swipeContainer">
   <!-- 1. GÖRÜNÜM: ANA EKRAN (BUGÜN) -->
   <section id="view-today" class="view active">
     <div class="card quote-card">
@@ -1357,7 +1489,7 @@
       </div>
 
       <div id="weeklyPlanHint" style="display:none; font-size:0.8rem; color:var(--accent); background:var(--accent-soft); padding:9px 12px; border-radius:12px; margin-bottom:12px;">
-        Hedefi oluşturduktan sonra aşağıdaki <strong>Aktif Hedeflerim</strong> listesinden üzerine dokunarak Pazartesi–Pazar günlerinin sabit planını ve günlük notlarını düzenleyebilirsiniz.
+        Hedefi oluşturduktan sonra aşağıdaki <strong>Aktif Hedeflerim</strong> listesinden üzerine dokunarak Pazartesi–Pazar günlerinin sabit planını ve günlük notlarını tam ekran pencereden yazabilirsiniz.
       </div>
 
       <div id="numericFields" style="display:none;">
@@ -1437,13 +1569,11 @@
 
   <!-- 4. GÖRÜNÜM: ÖZ FEEDBACK & ZAMAN KAPSÜLÜ -->
   <section id="view-feedback" class="view">
-    <!-- DAİRESEL PUSULA HALKASI (GÜNLÜK & AYLIK DENGE) -->
     <div class="card">
       <div class="section-label"><span>🧭 Ritim Pusulası & Günlük Denge</span></div>
       <div class="compass-dial-wrap" id="compassDialContainer"></div>
     </div>
 
-    <!-- AYLIK TAKVİM ISI HARİTASI & DOKUNMATİK GÜN DÖKÜMÜ -->
     <div class="card">
       <div class="section-label">
         <span>📅 Aylık Ritim Takvimi</span>
@@ -1465,13 +1595,11 @@
       <div id="selectedDayBreakdown"></div>
     </div>
 
-    <!-- ZENGİNLEŞTİRİLMİŞ KENDİ KENDİNE AYNA -->
     <div class="card">
       <div class="section-label"><span>🪞 Kendi Kendine Ayna & Örüntüler</span></div>
       <div id="mirrorSummary" style="font-size:0.9rem; line-height:1.6;"></div>
     </div>
 
-    <!-- TAMAMLANAN / KAPATILAN PUSULA & DÖNGÜ HEDEFLERİ -->
     <div class="card">
       <div class="section-label">
         <span>🏆 Tamamlanan / Kapatılan Hedefler</span>
@@ -1484,7 +1612,6 @@
       <div id="closedGoalsArchiveList"></div>
     </div>
 
-    <!-- HAFTALIK PLAN & NOT ARŞİVİ -->
     <div class="card">
       <div class="section-label">
         <span>🗂️ Haftalık Plan & Not Arşivi</span>
@@ -1497,7 +1624,6 @@
       <div id="weeklyArchiveList"></div>
     </div>
 
-    <!-- GEÇMİŞTEN YANKI & GÜNLÜK YANSIMA ARŞİVİ -->
     <div class="card">
       <div class="section-label">
         <span>⏳ Geçmişten Yankı & Yansımalar</span>
@@ -1515,37 +1641,57 @@
   <section id="view-sounds" class="view">
     <div class="card">
       <div class="section-label">
-        <span>🎧 Doğa & Dinginlik Koleksiyonu</span>
+        <span>🎧 Doğa, Yoga & Meditasyon Sesleri</span>
         <button class="mini-btn" onclick="stopAllSounds()">⏹ Durdur</button>
       </div>
-      <div class="sound-grid" id="soundGrid"></div>
+      <p style="font-size:0.78rem; color:var(--text-muted); margin-top:0;">Dahili 16 ses manzarası tamamen çevrimdışı çalışır; ekran kilitlendiğinde bile kesilmez.</p>
+
+      <div class="sound-cat-label">🌿 Doğa & Huzur</div>
+      <div class="sound-grid" id="natureSoundGrid"></div>
+
+      <div class="sound-cat-label">🧘 Yoga, Nefes & Meditasyon</div>
+      <div class="sound-grid" id="meditationSoundGrid"></div>
+
+      <!-- YOUTUBE OYNATMA LİSTESİ / VİDEO MINI OYNATICI -->
+      <div id="ytPlayerCard">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.82rem; font-weight:700; color:var(--accent);" id="ytNowPlayingTitle">▶️ YouTube Akışı</span>
+          <button class="mini-btn danger-outline" onclick="stopAllSounds()">⏹ Kapat</button>
+        </div>
+        <div class="yt-frame-wrap" id="ytFrameContainer"></div>
+      </div>
 
       <div class="form-group">
-        <label>Ses Seviyesi: <span id="volLabel">%60</span></label>
+        <label>Ses Seviyesi (Dahili Sesler & MP3): <span id="volLabel">%60</span></label>
         <input type="range" id="volumeSlider" min="0" max="100" value="60" oninput="changeVolume(this.value)" style="width:100%; accent-color:var(--accent);">
       </div>
 
       <div class="form-group">
-        <label>Zamanlayıcı (Otomatik Kapanma)</label>
+        <label>Uyku Zamanlayıcısı (Ekran Kilitliyken de Çalışır)</label>
         <div class="chip-group">
           <button class="option-chip active" id="timer-0" onclick="setSleepTimer(0)">Süresiz</button>
           <button class="option-chip" id="timer-15" onclick="setSleepTimer(15)">15 dk</button>
           <button class="option-chip" id="timer-30" onclick="setSleepTimer(30)">30 dk</button>
+          <button class="option-chip" id="timer-45" onclick="setSleepTimer(45)">45 dk</button>
+          <button class="option-chip" id="timer-60" onclick="setSleepTimer(60)">1 saat</button>
         </div>
         <div id="timerStatus" style="font-size:0.78rem; color:var(--accent); margin-top:6px;"></div>
       </div>
     </div>
 
+    <!-- KENDİ EKLEDİĞİM SESLER / YOUTUBE LİSTELERİ -->
     <div class="card">
-      <div class="section-label"><span>➕ Kendi Ses Bağlantını Ekle</span></div>
-      <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0;">iPhone uyumlu doğrudan .mp3 veya .m4a bağlantılarınızı koleksiyonunuza ekleyebilirsiniz.</p>
+      <div class="section-label"><span>🎶 Kendi Eklediğim Sesler & YouTube Listeleri</span></div>
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0;">Doğrudan <strong>.mp3 / .m4a</strong> ses bağlantısı veya <strong>YouTube Oynatma Listesi (Playlist) / Video</strong> linki ekleyebilirsiniz. YouTube listesi güncellendiğinde uygulama otomatik olarak güncel listeyi çeker.</p>
       <div class="form-group">
-        <input type="text" id="customSoundName" placeholder="Ses Adı">
+        <input type="text" id="customSoundName" placeholder="Ses veya Liste Adı (Örn: Gitar Akustik, Yoga Listem)">
       </div>
       <div class="form-group">
-        <input type="text" id="customSoundUrl" placeholder="https://... (.mp3 / .m4a)">
+        <input type="text" id="customSoundUrl" placeholder="https://youtube.com/playlist?list=... veya https://.../ses.mp3">
       </div>
-      <button class="btn-secondary" style="width:100%;" onclick="addCustomSound()">Koleksiyona Ekle</button>
+      <button class="btn-secondary" style="width:100%; margin-bottom:12px;" onclick="addCustomSound()">+ Koleksiyona Ekle</button>
+
+      <div id="customSoundsManageList"></div>
     </div>
   </section>
 
@@ -1728,6 +1874,63 @@ function lockDeviceNow() {
   document.getElementById("lockScreen").classList.remove("hidden");
 }
 
+/* --- TAM EKRAN NOT EDİTÖRÜ (MODAL) VE KATLANABİLİR ÖNİZLEME YÖNETİMİ --- */
+let activeNoteCallback = null;
+let expandedNotePreviews = {};
+
+function openFullNoteEditor(title, subtitle, currentText, onSaveCallback) {
+  document.getElementById("noteModalTitle").textContent = title || "Not Düzenle";
+  document.getElementById("noteModalSubtitle").textContent = subtitle || "Alt alta dilediğiniz kadar satır veya liste yazabilirsiniz.";
+  const ta = document.getElementById("noteEditorTextarea");
+  ta.value = currentText || "";
+  activeNoteCallback = onSaveCallback;
+  document.getElementById("noteEditorModal").classList.add("open");
+  setTimeout(() => ta.focus(), 60);
+}
+
+function closeNoteModal(shouldSave) {
+  const modal = document.getElementById("noteEditorModal");
+  const val = document.getElementById("noteEditorTextarea").value;
+  modal.classList.remove("open");
+  if (shouldSave && typeof activeNoteCallback === "function") {
+    activeNoteCallback(val);
+    showToast("Not kaydedildi ✓");
+  }
+  activeNoteCallback = null;
+}
+
+function toggleNoteExpand(previewId) {
+  expandedNotePreviews[previewId] = !expandedNotePreviews[previewId];
+  const el = document.getElementById("nprev_" + previewId);
+  if (el) {
+    el.classList.toggle("clamped", !expandedNotePreviews[previewId]);
+  }
+}
+
+function renderCollapsibleNoteBox(previewId, textVal, placeholderTxt, openEditorCallStr) {
+  const hasText = !!(textVal && textVal.trim());
+  const isExpanded = !!expandedNotePreviews[previewId];
+  const safeDisplay = hasText ? escapeHtml(textVal) : escapeHtml(placeholderTxt);
+
+  return `
+    <div class="note-preview-box">
+      <div id="nprev_${previewId}" class="note-preview-text ${hasText ? (isExpanded ? "" : "clamped") : "placeholder-txt"}"
+        onclick="${hasText ? `toggleNoteExpand('${previewId}')` : openEditorCallStr}">
+        ${safeDisplay}
+      </div>
+      <button class="mini-btn" onclick="${openEditorCallStr}">✏️ Düzenle</button>
+    </div>
+  `;
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 /* --- 50 ADET ŞÜKÜR, DİNGİNLİK VE İÇ DENGE FARKINDALIK SÖZÜ --- */
 const DEFAULT_QUOTES = [
   "Bugün sahip olduğun ve bir zamanlar sadece hayalini kurduğun en az üç şey var; onları fark ederek başla.",
@@ -1806,21 +2009,31 @@ const DEFAULT_POOL_QUESTIONS = [
   "Bugün doğada, gökyüzünde veya çevremde fark ettiğim dingin bir detay neydi?"
 ];
 
+/* 10 DOĞA + 6 YOGA/MEDİTASYON SESİ (TAMAMEN ÇEVRİMDIŞI VE EKRAN KİLİTLİYKEN KESİLMEZ) */
 const DEFAULT_SOUNDS = [
-  { id: "s_drizzle", name: "Hafif Çiseleyen Yağmur", icon: "🌦️", type: "synth", preset: "drizzle" },
-  { id: "s_ocean", name: "Okyanus Dalgaları", icon: "🌊", type: "synth", preset: "ocean" },
-  { id: "s_breeze", name: "Dalgalı Gece Esintisi", icon: "🍃", type: "synth", preset: "breeze" },
-  { id: "s_birds", name: "Sabah Kuşları", icon: "🐦", type: "synth", preset: "birds" },
-  { id: "url_fire", name: "Kamp Ateşi", icon: "🔥", type: "url", url: "https://actions.google.com/sounds/v1/ambiences/fire.ogg", fallbackPreset: "fire" },
-  { id: "s_stream", name: "Dere Şırıltısı", icon: "🏞️", type: "synth", preset: "stream" },
-  { id: "s_crickets", name: "Yaz Gecesi Cırcırları", icon: "🦗", type: "synth", preset: "crickets" },
-  { id: "s_chimes", name: "Bambu Rüzgar Çanı", icon: "🎐", type: "synth", preset: "chimes" },
-  { id: "s_bowl", name: "Tibet Şifa Çanağı", icon: "🔔", type: "synth", preset: "bowl" },
-  { id: "s_theta", name: "432 Hz Derin Huzur", icon: "🌌", type: "synth", preset: "theta" }
+  // Doğa & Huzur (10)
+  { id: "s_rain_thunder", name: "Yağmur & Gök Gürültüsü", icon: "⛈️", group: "nature", type: "synth", preset: "rain_thunder" },
+  { id: "s_forest_birds", name: "Sabah Ormanı Kuşları", icon: "🐦", group: "nature", type: "synth", preset: "forest_birds" },
+  { id: "s_campfire", name: "Kamp Ateşi", icon: "🔥", group: "nature", type: "synth", preset: "campfire" },
+  { id: "s_ocean", name: "Okyanus Dalgaları", icon: "🌊", group: "nature", type: "synth", preset: "ocean" },
+  { id: "s_breeze", name: "Dalgalı Gece Esintisi", icon: "🍃", group: "nature", type: "synth", preset: "breeze" },
+  { id: "s_stream", name: "Dere Şırıltısı", icon: "🏞️", group: "nature", type: "synth", preset: "stream" },
+  { id: "s_crickets", name: "Yaz Gecesi Cırcırları", icon: "🦗", group: "nature", type: "synth", preset: "crickets" },
+  { id: "s_chimes", name: "Bambu Rüzgar Çanı", icon: "🎐", group: "nature", type: "synth", preset: "chimes" },
+  { id: "s_bowl", name: "Tibet Şifa Çanağı", icon: "🔔", group: "nature", type: "synth", preset: "bowl" },
+  { id: "s_theta", name: "432 Hz Derin Huzur", icon: "🌌", group: "nature", type: "synth", preset: "theta" },
+  // Yoga, Nefes & Meditasyon (6)
+  { id: "s_tanpura", name: "Hint Tanpura & Om Demlenmesi", icon: "🪷", group: "meditation", type: "synth", preset: "tanpura" },
+  { id: "s_ambient_pad", name: "Derin Ambient Meditasyon Pedi", icon: "🎹", group: "meditation", type: "synth", preset: "ambient_pad" },
+  { id: "s_zen_harp", name: "Pentatonik Meditasyon Arpi", icon: "🎶", group: "meditation", type: "synth", preset: "zen_harp" },
+  { id: "s_breath_46", name: "Rehberli Yavaş Nefes (4-6)", icon: "🌬️", group: "meditation", type: "synth", preset: "breath_46" },
+  { id: "s_crystal_bowl", name: "Kristal Kase Harmonikleri", icon: "🔮", group: "meditation", type: "synth", preset: "crystal_bowl" },
+  { id: "s_temple_gong", name: "Gece Tapınağı Gong & Çan", icon: "🕯️", group: "meditation", type: "synth", preset: "temple_gong" }
 ];
 
 const WEEK_DAYS_TR = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"];
 const MONTHS_TR = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+const VIEW_ORDER = ["today", "goals", "pool", "feedback", "sounds", "settings"];
 
 /* --- UYGULAMA DURUMU (STATE) --- */
 let state = {
@@ -1832,7 +2045,7 @@ let state = {
     spaceScale: 100,
     enableRandomQ: true,
     pinCode: DEFAULT_PIN,
-    lastSoundId: "s_drizzle"
+    lastSoundId: "s_rain_thunder"
   },
   goals: [
     { id: "g1", title: "20 Sayfa Kitap Okuma", horizon: "daily", type: "numeric", current: 0, target: 20, unit: "sayfa", step: 10, progressMode: "manual", note: "" },
@@ -2068,7 +2281,6 @@ function loadState() {
         prefs: { ...state.prefs, ...(parsed.prefs || {}) },
         closedGoalsArchive: parsed.closedGoalsArchive || []
       };
-      // Eski yedeklerde bulunmayan yeni sözleri havuza ekle
       DEFAULT_QUOTES.forEach(q => {
         if (!state.quotes.includes(q)) state.quotes.push(q);
       });
@@ -2093,7 +2305,7 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove("show"), 2300);
 }
 
-/* --- NAVİGASYON, DRAWER VE GERİ/İLERİ GEÇMİŞİ --- */
+/* --- NAVİGASYON, DRAWER, SWIPE (PARMAK KAYDIRMA) VE GERİ/İLERİ GEÇMİŞİ --- */
 let navHistory = ["today"];
 let navPointer = 0;
 
@@ -2157,6 +2369,53 @@ function goForward() {
   }
 }
 
+/* PARMAK KAYDIRMA (SWIPE) İLE MENÜLER ARASI GEÇİŞ */
+let touchStartX = 0;
+let touchStartY = 0;
+let swipeBlocked = false;
+
+document.addEventListener("touchstart", e => {
+  if (e.touches.length !== 1) {
+    swipeBlocked = true;
+    return;
+  }
+  const target = e.target;
+  if (
+    target.closest(".horizontal-scroll") ||
+    target.closest("input[type='range']") ||
+    target.closest("textarea") ||
+    target.closest("input") ||
+    document.getElementById("noteEditorModal").classList.contains("open") ||
+    !document.getElementById("lockScreen").classList.contains("hidden")
+  ) {
+    swipeBlocked = true;
+    return;
+  }
+  swipeBlocked = false;
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+document.addEventListener("touchend", e => {
+  if (swipeBlocked || e.changedTouches.length !== 1) return;
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+
+  if (Math.abs(dx) > 72 && Math.abs(dx) > Math.abs(dy) * 1.6) {
+    const activeView = document.querySelector(".view.active");
+    if (!activeView) return;
+    const currentName = activeView.id.replace("view-", "");
+    const idx = VIEW_ORDER.indexOf(currentName);
+    if (idx === -1) return;
+
+    if (dx < 0 && idx < VIEW_ORDER.length - 1) {
+      switchView(VIEW_ORDER[idx + 1]);
+    } else if (dx > 0 && idx > 0) {
+      switchView(VIEW_ORDER[idx - 1]);
+    }
+  }
+}, { passive: true });
+
 /* --- GÖRÜNÜM & TEMA AYARLARI --- */
 function applyPrefs() {
   const p = state.prefs;
@@ -2217,6 +2476,78 @@ function toggleTodayCompassExpand(id) {
   renderToday();
 }
 
+function openGoalDailyNoteModal(goalId) {
+  const g = state.goals.find(x => x.id === goalId);
+  const log = ensureTodayLog();
+  openFullNoteEditor(
+    g ? g.title : "Günlük Ritim Notu",
+    "Bugüne ait notunuzu alt alta dilediğiniz gibi yazın:",
+    log.goalNotesDaily[goalId] || "",
+    (newText) => {
+      saveDailyGoalNote(goalId, newText);
+      renderToday();
+    }
+  );
+}
+
+function openWeeklySlotNoteModal(goalId, dayIdx, fromToday) {
+  const g = state.goals.find(x => x.id === goalId);
+  if (!g || !g.weekSlots) return;
+  const dayName = WEEK_DAYS_TR[dayIdx];
+  openFullNoteEditor(
+    `${g.title} — ${dayName}`,
+    "Bu güne ait plan veya not listesini alt alta düzenleyin:",
+    g.weekSlots[dayIdx].note || "",
+    (newText) => {
+      updateWeeklySlotField(goalId, dayIdx, "note", newText, false);
+      if (fromToday) renderToday();
+      else renderGoalsStudio();
+    }
+  );
+}
+
+function openWeeklySlotPlanModal(goalId, dayIdx) {
+  const g = state.goals.find(x => x.id === goalId);
+  if (!g || !g.weekSlots) return;
+  const dayName = WEEK_DAYS_TR[dayIdx];
+  openFullNoteEditor(
+    `${g.title} — ${dayName} (Sabit Şablon)`,
+    "Her hafta otomatik korunacak sabit plan listesini yazın:",
+    g.weekSlots[dayIdx].plan || "",
+    (newText) => {
+      updateWeeklySlotField(goalId, dayIdx, "plan", newText, true);
+    }
+  );
+}
+
+function openGoalGeneralNoteModal(goalId, rerenderToday) {
+  const g = state.goals.find(x => x.id === goalId);
+  if (!g) return;
+  openFullNoteEditor(
+    g.title,
+    "Bu hedefe veya pusula yönelimine ait notlarınız:",
+    g.note || "",
+    (newText) => {
+      updateGoalProp(goalId, "note", newText, false);
+      if (rerenderToday) renderToday();
+      else renderGoalsStudio();
+    }
+  );
+}
+
+function openReflectionQuestionModal(qKey, questionTitle) {
+  const log = ensureTodayLog();
+  openFullNoteEditor(
+    "Günlük Öz Yansıma",
+    questionTitle,
+    log.answers[qKey] || "",
+    (newText) => {
+      saveAnswer(qKey, newText);
+      renderToday();
+    }
+  );
+}
+
 function renderToday() {
   runAutomatedProgressions();
   const nowObj = new Date();
@@ -2262,8 +2593,8 @@ function renderToday() {
             <button class="check-circle" onclick="toggleWeeklySlotDone('${g.id}', ${todayIdx}, true)">${isDone ? "✓" : ""}</button>
           </div>
           <div class="daily-plan-inline">
-            ${slot.plan ? `<span class="daily-plan-tag">Plan: ${slot.plan}</span>` : ""}
-            <input type="text" class="compact-input" placeholder="${todayDayName} gününe özel not / değişiklik..." value="${(slot.note || "").replace(/"/g, '&quot;')}" oninput="updateWeeklySlotField('${g.id}', ${todayIdx}, 'note', this.value, false)">
+            ${slot.plan ? renderCollapsibleNoteBox(`wplan_${g.id}`, `Plan:\n${slot.plan}`, "", `openGoalDetail('${g.id}')`) : ""}
+            ${renderCollapsibleNoteBox(`wnote_${g.id}`, slot.note, `${todayDayName} gününe özel not / liste eklemek için dokun...`, `openWeeklySlotNoteModal('${g.id}', ${todayIdx}, true)`)}
             ${isOpen ? `<div style="margin-top:6px; text-align:right;"><button class="mini-btn" onclick="openGoalDetail('${g.id}')">Tüm 7 Günü Düzenle →</button></div>` : ""}
           </div>
         `;
@@ -2276,9 +2607,10 @@ function renderToday() {
             </div>
             <button class="check-circle" onclick="toggleDailyCheck('${g.id}')">${isDone ? "✓" : ""}</button>
           </div>
-          ${isOpen ? `
+          ${dailyNote ? renderCollapsibleNoteBox(`dnote_${g.id}`, dailyNote, "", `openGoalDailyNoteModal('${g.id}')`) : ""}
+          ${isOpen && !dailyNote ? `
             <div class="inline-drawer">
-              <input type="text" class="compact-input" placeholder="Bugüne özel ritim notu yaz..." value="${dailyNote.replace(/"/g, '&quot;')}" oninput="saveDailyGoalNote('${g.id}', this.value)">
+              ${renderCollapsibleNoteBox(`dnote_${g.id}`, "", "Bugüne özel ritim notu yazmak için dokun...", `openGoalDailyNoteModal('${g.id}')`)}
             </div>
           ` : ""}
         `;
@@ -2295,6 +2627,7 @@ function renderToday() {
               <button class="step-btn" onclick="stepDailyNumeric('${g.id}', ${g.step})">+${g.step}</button>
             </div>
           </div>
+          ${dailyNote ? renderCollapsibleNoteBox(`dnote_${g.id}`, dailyNote, "", `openGoalDailyNoteModal('${g.id}')`) : ""}
           ${isOpen ? `
             <div class="inline-drawer">
               <div class="row-2">
@@ -2307,8 +2640,7 @@ function renderToday() {
                   <input type="number" class="compact-input" value="${g.target}" min="1" onchange="updateGoalProp('${g.id}', 'target', Number(this.value), true)">
                 </div>
               </div>
-              <span class="mini-label">Bugüne Özel Not</span>
-              <input type="text" class="compact-input" placeholder="Örn: Kitabın 45. sayfasına geldim..." value="${dailyNote.replace(/"/g, '&quot;')}" oninput="saveDailyGoalNote('${g.id}', this.value)">
+              ${!dailyNote ? renderCollapsibleNoteBox(`dnote_empty_${g.id}`, "", "Bugüne özel not yazmak için dokun...", `openGoalDailyNoteModal('${g.id}')`) : ""}
             </div>
           ` : ""}
         `;
@@ -2332,7 +2664,7 @@ function renderToday() {
     block.className = "question-block";
     block.innerHTML = `
       <label>${q}</label>
-      <textarea placeholder="Düşünceni buraya bırak..." oninput="saveAnswer('${key}', this.value)">${log.answers[key] || ""}</textarea>
+      ${renderCollapsibleNoteBox(`q_${key}`, log.answers[key] || "", "Düşünceni geniş ekranda yazmak için dokun...", `openReflectionQuestionModal('${key}', ${JSON.stringify(q)})`)}
     `;
     qContainer.appendChild(block);
   });
@@ -2344,12 +2676,12 @@ function renderToday() {
     block.className = "question-block";
     block.innerHTML = `
       <label>${pq} <span class="pool-badge">Günün Derinlik Sorusu</span></label>
-      <textarea placeholder="İç sesini dinle..." oninput="saveAnswer('pool_q', this.value)">${log.answers["pool_q"] || ""}</textarea>
+      ${renderCollapsibleNoteBox("q_pool_q", log.answers["pool_q"] || "", "İç sesini geniş ekranda yazmak için dokun...", `openReflectionQuestionModal('pool_q', ${JSON.stringify(pq)})`)}
     `;
     qContainer.appendChild(block);
   }
 
-  // 3. KADEME: AYLIK / SPRINT / ÖZEL DÖNGÜ HEDEFLERİ (AYRI DÜZENLE / ARŞİVLE / SİL BUTONLARI)
+  // 3. KADEME: AYLIK / SPRINT / ÖZEL DÖNGÜ HEDEFLERİ
   const cycleGoals = state.goals.filter(g => ["monthly", "sprint", "custom"].includes(g.horizon));
   const cycleStrip = document.getElementById("cycleGoalsStrip");
   cycleStrip.innerHTML = "";
@@ -2396,14 +2728,14 @@ function renderToday() {
           <span>${subText}</span>
           ${actionHtml}
         </div>
+        ${g.note ? renderCollapsibleNoteBox(`cnote_${g.id}`, g.note, "", `openGoalGeneralNoteModal('${g.id}', true)`) : ""}
         ${isOpen ? `
           <div class="inline-drawer">
             ${g.type === "numeric" ? `
               <span class="mini-label">Mevcut Değeri Elle Gir (${g.unit})</span>
               <input type="number" class="compact-input" value="${g.current || 0}" min="0" onchange="updateGoalProp('${g.id}', 'current', Number(this.value), true)">
             ` : ""}
-            <span class="mini-label">Döngü Notu</span>
-            <input type="text" class="compact-input" placeholder="Döngü notu..." value="${(g.note || "").replace(/"/g, '&quot;')}" oninput="updateGoalProp('${g.id}', 'note', this.value, false)">
+            ${!g.note ? renderCollapsibleNoteBox(`cnote_empty_${g.id}`, "", "Döngü notu eklemek için dokun...", `openGoalGeneralNoteModal('${g.id}', true)`) : ""}
             <div class="tri-action-bar">
               <button class="mini-btn" onclick="openGoalDetail('${g.id}')">✏️ Düzenle</button>
               <button class="mini-btn" onclick="archiveAndResetGoal('${g.id}')">📦 Arşivle</button>
@@ -2416,7 +2748,7 @@ function renderToday() {
     });
   }
 
-  // 4. KADEME: UZUN VADELİ PUSULA (AYRI DÜZENLE / ARŞİVLE / SİL BUTONLARI)
+  // 4. KADEME: UZUN VADELİ PUSULA
   const longGoals = state.goals.filter(g => g.horizon === "yearly");
   const longStrip = document.getElementById("longTermStrip");
   longStrip.innerHTML = "";
@@ -2449,6 +2781,7 @@ function renderToday() {
           </div>
           <div class="progress-track" style="margin-bottom:0;"><div class="progress-fill" style="width:${ratio}%"></div></div>
         </div>
+        ${g.note ? renderCollapsibleNoteBox(`pnote_${g.id}`, g.note, "", `openGoalGeneralNoteModal('${g.id}', true)`) : ""}
         ${isOpen ? `
           <div class="inline-drawer">
             ${g.type === "numeric" ? `
@@ -2465,8 +2798,7 @@ function renderToday() {
             ` : (g.type === "check" ? `
               <button class="mini-btn" style="width:100%; margin-bottom:6px;" onclick="advanceCycleGoal('${g.id}')">${g.done ? "Tamamlandı ✓ (Geri Al)" : "Tamamlandı Olarak İşaretle"}</button>
             ` : "")}
-            <span class="mini-label">Pusula Notu</span>
-            <input type="text" class="compact-input" placeholder="Bu pusula hedefine dair notunuz..." value="${(g.note || "").replace(/"/g, '&quot;')}" oninput="updateGoalProp('${g.id}', 'note', this.value, false)">
+            ${!g.note ? renderCollapsibleNoteBox(`pnote_empty_${g.id}`, "", "Pusula notu eklemek için dokun...", `openGoalGeneralNoteModal('${g.id}', true)`) : ""}
             <div class="tri-action-bar">
               <button class="mini-btn" onclick="openGoalDetail('${g.id}')">✏️ Düzenle</button>
               <button class="mini-btn" onclick="archiveAndResetGoal('${g.id}')">📦 Arşivle</button>
@@ -2787,8 +3119,10 @@ function renderGoalsStudio() {
                 <span class="day-name-badge">${dayName} ${isTodaySlot ? "• Bugün" : ""}</span>
                 <button class="check-circle" style="width:28px; height:28px; ${slot.done ? "background:var(--accent);" : ""}" onclick="toggleWeeklySlotDone('${g.id}', ${dIdx}, false)">${slot.done ? "✓" : ""}</button>
               </div>
-              <input type="text" class="compact-input" placeholder="Sabit Plan Şablonu (Her hafta korunur)..." value="${(slot.plan || "").replace(/"/g, '&quot;')}" oninput="updateWeeklySlotField('${g.id}', ${dIdx}, 'plan', this.value)">
-              <input type="text" class="compact-input" placeholder="Bu haftaya özel değişiklik / not..." value="${(slot.note || "").replace(/"/g, '&quot;')}" oninput="updateWeeklySlotField('${g.id}', ${dIdx}, 'note', this.value)">
+              <span class="mini-label">Sabit Plan Şablonu (Her Hafta Korunur)</span>
+              ${renderCollapsibleNoteBox(`splan_${g.id}_${dIdx}`, slot.plan, "Sabit plan listesini yazmak için dokun...", `openWeeklySlotPlanModal('${g.id}', ${dIdx})`)}
+              <span class="mini-label">Bu Haftaya Özel Not / Değişiklik</span>
+              ${renderCollapsibleNoteBox(`snote_${g.id}_${dIdx}`, slot.note, "Bu haftaya özel not eklemek için dokun...", `openWeeklySlotNoteModal('${g.id}', ${dIdx}, false)`)}
             </div>
           `;
         });
@@ -2868,7 +3202,12 @@ function renderGoalsStudio() {
             ` : ""}
 
             <span class="mini-label">${isDaily ? "Bugüne Özel Not" : "Hedef / Pusula Notu"}</span>
-            <input type="text" class="compact-input" placeholder="Not ekleyin..." value="${currentNote.replace(/"/g, '&quot;')}" oninput="${isDaily ? `saveDailyGoalNote('${g.id}', this.value)` : `updateGoalProp('${g.id}', 'note', this.value, false)`}">
+            ${renderCollapsibleNoteBox(
+              `studio_note_${g.id}`,
+              currentNote,
+              "Tam ekran defterde not yazmak için dokun...",
+              isDaily ? `openGoalDailyNoteModal('${g.id}')` : `openGoalGeneralNoteModal('${g.id}', false)`
+            )}
 
             ${!isDaily ? `
               <div style="margin-top:10px;">
@@ -3083,15 +3422,19 @@ function deleteSingleClosedGoal(archId) {
   showToast("Kayıt silindi");
 }
 
-function updateClosedGoalNote(archId, newNote) {
+function openEditClosedGoalModal(archId) {
   const item = (state.closedGoalsArchive || []).find(x => x.id === archId);
-  if (item) {
-    item.note = newNote;
-    editingArchiveKey = null;
-    saveState();
-    renderFeedbackView();
-    showToast("Not güncellendi");
-  }
+  if (!item) return;
+  openFullNoteEditor(
+    item.title,
+    "Arşiv kaydı notunu düzenleyin:",
+    item.note || "",
+    (newText) => {
+      item.note = newText;
+      saveState();
+      renderFeedbackView();
+    }
+  );
 }
 
 function archiveAllClosedGoals() {
@@ -3161,16 +3504,20 @@ function toggleHideReflection(dateKey) {
   }
 }
 
-function updateReflectionText(dateKey, newText) {
+function openEditReflectionModal(dateKey) {
   const l = state.logs[dateKey];
-  if (l && l.answers) {
-    const firstKey = Object.keys(l.answers).find(k => l.answers[k] && l.answers[k].trim()) || "fixed_0";
-    l.answers[firstKey] = newText;
-    editingArchiveKey = null;
-    saveState();
-    renderFeedbackView();
-    showToast("Yansıma notu güncellendi");
-  }
+  if (!l || !l.answers) return;
+  const firstKey = Object.keys(l.answers).find(k => l.answers[k] && l.answers[k].trim()) || "fixed_0";
+  openFullNoteEditor(
+    `${dateKey} — Günlük Yansıma`,
+    "Geçmiş gün yansıma metninizi düzenleyin:",
+    l.answers[firstKey] || "",
+    (newText) => {
+      l.answers[firstKey] = newText;
+      saveState();
+      renderFeedbackView();
+    }
+  );
 }
 
 function deleteSingleReflection(dateKey) {
@@ -3343,7 +3690,7 @@ function renderFeedbackView() {
     </div>
   `;
 
-  // Dokunulan Günün Detay Dökümü (Her Görev Ayrı Düzenlenebilir & Sıfırlanabilir)
+  // Dokunulan Günün Detay Dökümü
   const breakdownBox = document.getElementById("selectedDayBreakdown");
   const activeSelKey = selectedCalDateKey || todayKey;
   const selDateObj = new Date(activeSelKey + "T00:00:00");
@@ -3366,7 +3713,7 @@ function renderFeedbackView() {
             <div style="flex:1; font-size:0.82rem;">
               <span>${it.pct >= 100 ? "✓ " : "• "}<strong>${it.title}</strong></span>
               <div style="font-size:0.75rem; color:var(--accent);">${it.detail}</div>
-              ${it.note ? `<div style="font-size:0.75rem; color:var(--text-muted); font-style:italic;">Not: ${it.note}</div>` : ""}
+              ${it.note ? `<div style="font-size:0.75rem; color:var(--text-muted); white-space:pre-line; margin-top:2px;">Not: ${escapeHtml(it.note)}</div>` : ""}
             </div>
             <div style="display:flex; gap:4px; flex-shrink:0;">
               <button class="mini-btn" onclick="editingBreakdownGoalId = '${isEditingThis ? "" : it.id}'; renderFeedbackView();">${isEditingThis ? "Kapat" : "✏️"}</button>
@@ -3386,7 +3733,7 @@ function renderFeedbackView() {
                 </select>
               `}
               <span class="mini-label">Güne Özel Not</span>
-              <input type="text" id="bd_note_${it.id}" class="compact-input" value="${(it.note || "").replace(/"/g, '&quot;')}">
+              <textarea id="bd_note_${it.id}" class="compact-input" style="min-height:60px;">${escapeHtml(it.note || "")}</textarea>
               <button class="btn-primary" style="margin-top:8px; padding:7px;" onclick="saveBreakdownGoalEdit('${activeSelKey}', '${it.id}', '${it.type}', document.getElementById('bd_val_${it.id}').value, document.getElementById('bd_note_${it.id}').value)">Kaydet</button>
             </div>
           ` : ""}
@@ -3396,7 +3743,7 @@ function renderFeedbackView() {
 
     const answersHtml = Object.values((selEval.log && selEval.log.answers) || {})
       .filter(x => x && x.trim())
-      .map(ans => `<div style="font-size:0.8rem; font-style:italic; color:var(--text-muted); margin-top:6px;">“${ans}”</div>`)
+      .map(ans => `<div style="font-size:0.8rem; font-style:italic; color:var(--text-muted); margin-top:6px; white-space:pre-line;">“${escapeHtml(ans)}”</div>`)
       .join("");
 
     breakdownBox.innerHTML = `
@@ -3469,28 +3816,21 @@ function renderFeedbackView() {
     closedContainer.innerHTML = `<p style="font-size:0.83rem; color:var(--text-muted); margin:0;">Görünür tamamlanan/kapatılan hedef kaydı yok.</p>`;
   } else {
     closedList.forEach(item => {
-      const isEditing = editingArchiveKey === "closed_" + item.id;
       const div = document.createElement("div");
       div.className = "archive-item-box" + (item.hiddenArchived ? " is-hidden-archived" : "");
       div.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
           <div style="flex:1;">
-            <div style="font-size:0.82rem; color:var(--accent); font-weight:700;">${item.title} (${item.horizonLabel}) ${item.hiddenArchived ? "• [Arşivde]" : ""}</div>
-            <div style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">Kapanış: ${item.closedDate} • Sonuç: <strong>${item.resultText}</strong></div>
-            ${item.note ? `<div style="font-size:0.82rem; margin-top:3px;">Not: ${item.note}</div>` : ""}
+            <div style="font-size:0.82rem; color:var(--accent); font-weight:700;">${escapeHtml(item.title)} (${item.horizonLabel}) ${item.hiddenArchived ? "• [Arşivde]" : ""}</div>
+            <div style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">Kapanış: ${item.closedDate} • Sonuç: <strong>${escapeHtml(item.resultText)}</strong></div>
+            ${item.note ? `<div style="font-size:0.82rem; margin-top:3px; white-space:pre-line;">Not: ${escapeHtml(item.note)}</div>` : ""}
           </div>
           <div style="display:flex; gap:4px; flex-shrink:0;">
-            <button class="mini-btn" onclick="editingArchiveKey = '${isEditing ? "" : "closed_" + item.id}'; renderFeedbackView();">✏️</button>
+            <button class="mini-btn" onclick="openEditClosedGoalModal('${item.id}')">✏️</button>
             <button class="mini-btn" onclick="toggleHideClosedGoal('${item.id}')" title="Arşive Kaldır / Çıkar">📦</button>
             <button class="mini-btn danger-outline" onclick="deleteSingleClosedGoal('${item.id}')">✕</button>
           </div>
         </div>
-        ${isEditing ? `
-          <div style="margin-top:8px;">
-            <input type="text" id="edit_closed_${item.id}" class="compact-input" value="${(item.note || "").replace(/"/g, '&quot;')}" placeholder="Notu düzenle...">
-            <button class="btn-primary" style="margin-top:6px; padding:7px;" onclick="updateClosedGoalNote('${item.id}', document.getElementById('edit_closed_${item.id}').value)">Kaydet</button>
-          </div>
-        ` : ""}
       `;
       closedContainer.appendChild(div);
     });
@@ -3507,7 +3847,7 @@ function renderFeedbackView() {
       if (!showHiddenArchives.weekly && arch.hiddenArchived) return;
       archCount++;
       const notesSummary = arch.slots
-        .map((s, sIdx) => (s.note && s.note.trim()) ? `<strong>${WEEK_DAYS_TR[sIdx].slice(0,3)}:</strong> ${s.note}` : "")
+        .map((s, sIdx) => (s.note && s.note.trim()) ? `<strong>${WEEK_DAYS_TR[sIdx].slice(0,3)}:</strong> ${escapeHtml(s.note)}` : "")
         .filter(Boolean)
         .join(" • ");
       const item = document.createElement("div");
@@ -3515,7 +3855,7 @@ function renderFeedbackView() {
       item.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
           <div style="flex:1;">
-            <div style="font-size:0.8rem; color:var(--accent); font-weight:700;">${g.title} — ${arch.weekKey} (${arch.doneCount}/7 gün) ${arch.hiddenArchived ? "• [Arşivde]" : ""}</div>
+            <div style="font-size:0.8rem; color:var(--accent); font-weight:700;">${escapeHtml(g.title)} — ${arch.weekKey} (${arch.doneCount}/7 gün) ${arch.hiddenArchived ? "• [Arşivde]" : ""}</div>
             <div style="font-size:0.82rem; color:var(--text-muted); margin-top:3px;">${notesSummary || "Bu haftada ek not girilmemiş."}</div>
           </div>
           <div style="display:flex; gap:4px; flex-shrink:0;">
@@ -3543,27 +3883,20 @@ function renderFeedbackView() {
     const ansList = Object.values(l.answers || {}).filter(x => x && x.trim());
     if (ansList.length > 0 && shown < 15) {
       shown++;
-      const isEditing = editingArchiveKey === "ref_" + k;
       const div = document.createElement("div");
       div.className = "archive-item-box" + (l.reflectionArchived ? " is-hidden-archived" : "");
       div.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
           <div style="flex:1;">
             <div style="font-size:0.78rem; color:var(--accent); font-weight:600;">${k} ${l.mood ? "• " + l.mood : ""} ${l.reflectionArchived ? "• [Arşivde]" : ""}</div>
-            <div style="font-size:0.86rem; margin-top:4px;">${ansList.join(" / ")}</div>
+            <div style="font-size:0.86rem; margin-top:4px; white-space:pre-line;">${escapeHtml(ansList.join("\n—\n"))}</div>
           </div>
           <div style="display:flex; gap:4px; flex-shrink:0;">
-            <button class="mini-btn" onclick="editingArchiveKey = '${isEditing ? "" : "ref_" + k}'; renderFeedbackView();">✏️</button>
+            <button class="mini-btn" onclick="openEditReflectionModal('${k}')">✏️</button>
             <button class="mini-btn" onclick="toggleHideReflection('${k}')" title="Arşive Kaldır / Çıkar">📦</button>
             <button class="mini-btn danger-outline" onclick="deleteSingleReflection('${k}')">✕</button>
           </div>
         </div>
-        ${isEditing ? `
-          <div style="margin-top:8px;">
-            <textarea id="edit_ref_${k}" style="min-height:54px;">${ansList[0]}</textarea>
-            <button class="btn-primary" style="margin-top:6px; padding:7px;" onclick="updateReflectionText('${k}', document.getElementById('edit_ref_${k}').value)">Kaydet</button>
-          </div>
-        ` : ""}
       `;
       archive.appendChild(div);
     }
@@ -3573,42 +3906,365 @@ function renderFeedbackView() {
   }
 }
 
-/* --- HİBRİT AMBİYANS SES MOTORU + ANA EKRAN HIZLI OYNAT/DURDUR --- */
+/* --- KESİNTİSİZ ÇEVRİMDIŞI DOĞA & MEDİTASYON SES MOTORU + YOUTUBE CANLI PLAYLIST + MP3 --- */
 let audioCtx = null;
 let activeNodes = [];
-let activeTimers = [];
 let masterGain = null;
 let htmlAudio = new Audio();
 htmlAudio.loop = true;
 let activeSoundId = null;
 let currentVolume = 0.6;
 let sleepTimerId = null;
+let sleepDeadlineMs = 0;
 
 function getAllSounds() {
   return [...DEFAULT_SOUNDS, ...state.customSounds];
 }
 
+function parseYouTubeUrl(urlStr) {
+  try {
+    const u = new URL(urlStr.trim());
+    const host = u.hostname.replace("www.", "");
+    if (!host.includes("youtube.com") && !host.includes("youtu.be")) return null;
+
+    const listId = u.searchParams.get("list");
+    let videoId = u.searchParams.get("v");
+    if (!videoId && host === "youtu.be") {
+      videoId = u.pathname.replace("/", "");
+    }
+    if (listId) {
+      return { kind: "yt_playlist", listId, videoId: videoId || "" };
+    }
+    if (videoId) {
+      return { kind: "yt_video", videoId };
+    }
+  } catch (e) {}
+  return null;
+}
+
 function renderSoundsGrid() {
-  const grid = document.getElementById("soundGrid");
-  grid.innerHTML = "";
-  getAllSounds().forEach(s => {
+  const natureGrid = document.getElementById("natureSoundGrid");
+  const medGrid = document.getElementById("meditationSoundGrid");
+  natureGrid.innerHTML = "";
+  medGrid.innerHTML = "";
+
+  DEFAULT_SOUNDS.forEach(s => {
     const btn = document.createElement("button");
     btn.className = "sound-tile" + (activeSoundId === s.id ? " active" : "");
     btn.onclick = () => toggleSound(s.id);
     btn.innerHTML = `
       <span style="font-size:1.3rem;">${s.icon || "🎵"}</span>
-      <span style="font-size:0.86rem;">${s.name}</span>
+      <span style="font-size:0.86rem;">${escapeHtml(s.name)}</span>
     `;
-    grid.appendChild(btn);
+    if (s.group === "meditation") medGrid.appendChild(btn);
+    else natureGrid.appendChild(btn);
   });
+
+  // Özel Eklenen Sesler & YouTube Listeleri Yönetim Kartı
+  const customManage = document.getElementById("customSoundsManageList");
+  if (customManage) {
+    customManage.innerHTML = "";
+    if (state.customSounds.length === 0) {
+      customManage.innerHTML = `<div style="font-size:0.8rem; color:var(--text-muted);">Henüz özel ses veya YouTube listesi eklemediniz.</div>`;
+    } else {
+      state.customSounds.forEach(cs => {
+        const typeBadge = cs.type === "yt_playlist" ? "📺 YouTube Canlı Liste" : (cs.type === "yt_video" ? "▶️ YouTube Video" : "🎵 Ses Dosyası");
+        const row = document.createElement("div");
+        row.className = "list-row";
+        row.innerHTML = `
+          <div class="list-row-top">
+            <div style="flex:1; min-width:0;">
+              <strong style="font-size:0.88rem;">${cs.icon || "🎶"} ${escapeHtml(cs.name)}</strong>
+              <div style="font-size:0.74rem; color:var(--accent);">${typeBadge}</div>
+            </div>
+            <div style="display:flex; gap:6px; flex-shrink:0;">
+              <button class="mini-btn" onclick="toggleSound('${cs.id}')">${activeSoundId === cs.id ? "⏹ Durdur" : "▶ Çal"}</button>
+              <button class="mini-btn danger-outline" onclick="deleteCustomSound('${cs.id}')">Sil</button>
+            </div>
+          </div>
+        `;
+        customManage.appendChild(row);
+      });
+    }
+  }
 }
 
-function createNoiseBuffer(ctx, mode) {
+/* ÖNCEDEN İŞLENMİŞ PÜRÜZSÜZ DOĞA & MEDİTASYON TAMPONLARI (EKRAN KAPALIYKEN ASLA KESİLMEZ) */
+function buildSeamlessNatureBuffer(ctx, preset) {
+  const durationSec = 24;
+  const sr = ctx.sampleRate;
+  const len = durationSec * sr;
+  const buffer = ctx.createBuffer(1, len, sr);
+  const data = buffer.getChannelData(0);
+
+  if (preset === "rain_thunder") {
+    let b0=0, b1=0, b2=0, b3=0, b4=0, b5=0, b6=0;
+    let lpRain = 0;
+    for (let i = 0; i < len; i++) {
+      const white = Math.random() * 2 - 1;
+      b0 = 0.99886 * b0 + white * 0.0555179;
+      b1 = 0.99332 * b1 + white * 0.0750759;
+      b2 = 0.96900 * b2 + white * 0.1538520;
+      b3 = 0.86650 * b3 + white * 0.3104856;
+      b4 = 0.55000 * b4 + white * 0.5329522;
+      b5 = -0.7616 * b5 - white * 0.0168980;
+      const pink = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.045;
+      b6 = white * 0.115926;
+
+      lpRain = lpRain + 0.14 * (pink - lpRain);
+      data[i] = lpRain * 1.15;
+    }
+
+    const thunderStarts = [Math.floor(4.5 * sr), Math.floor(15.2 * sr)];
+    thunderStarts.forEach(startIdx => {
+      const tDur = Math.floor(5.2 * sr);
+      let r1 = 0, r2 = 0;
+      for (let j = 0; j < tDur && (startIdx + j) < len; j++) {
+        const progress = j / tDur;
+        const env = Math.sin(Math.min(1, progress * 3.5) * (Math.PI / 2)) * Math.pow(1 - progress, 1.8);
+        const mod = 0.65 + 0.35 * Math.sin(j * 0.00085);
+        const w = Math.random() * 2 - 1;
+        r1 = r1 + 0.009 * (w - r1);
+        r2 = r2 + 0.009 * (r1 - r2);
+        data[startIdx + j] += r2 * env * mod * 6.5;
+      }
+    });
+
+  } else if (preset === "forest_birds") {
+    let lpLeaf = 0;
+    for (let i = 0; i < len; i++) {
+      const w = (Math.random() * 2 - 1) * 0.018;
+      lpLeaf = lpLeaf + 0.06 * (w - lpLeaf);
+      data[i] = lpLeaf;
+    }
+
+    const callCount = 34;
+    for (let c = 0; c < callCount; c++) {
+      const startSample = Math.floor((0.4 + Math.random() * (durationSec - 2.2)) * sr);
+      const birdSpecies = c % 4;
+
+      if (birdSpecies === 0) {
+        const baseF = 2600 + Math.random() * 900;
+        for (let n = 0; n < 3; n++) {
+          const nStart = startSample + Math.floor(n * 0.14 * sr);
+          const nLen = Math.floor(0.09 * sr);
+          for (let j = 0; j < nLen && (nStart + j) < len; j++) {
+            const p = j / nLen;
+            const env = Math.sin(p * Math.PI);
+            const freq = baseF * (1 + 0.18 * Math.sin(p * Math.PI * 1.3));
+            data[nStart + j] += Math.sin((2 * Math.PI * freq * j) / sr) * env * 0.042;
+          }
+        }
+      } else if (birdSpecies === 1) {
+        const baseF = 1850 + Math.random() * 650;
+        const nLen = Math.floor(0.42 * sr);
+        for (let j = 0; j < nLen && (startSample + j) < len; j++) {
+          const p = j / nLen;
+          const env = Math.sin(p * Math.PI);
+          const trill = Math.sin(p * Math.PI * 11) * 140;
+          const sweep = baseF + trill - p * 320;
+          data[startSample + j] += Math.sin((2 * Math.PI * sweep * j) / sr) * env * 0.048;
+        }
+      } else if (birdSpecies === 2) {
+        const baseF = 540 + Math.random() * 90;
+        const pattern = [0, 0.28, 0.46];
+        pattern.forEach((offsetSec, idx) => {
+          const nStart = startSample + Math.floor(offsetSec * sr);
+          const nLen = Math.floor((idx === 1 ? 0.14 : 0.24) * sr);
+          for (let j = 0; j < nLen && (nStart + j) < len; j++) {
+            const p = j / nLen;
+            const env = Math.sin(p * Math.PI);
+            const freq = baseF * (1 - 0.06 * p);
+            data[nStart + j] += Math.sin((2 * Math.PI * freq * j) / sr) * env * 0.055;
+          }
+        });
+      } else {
+        const f1 = 3100 + Math.random() * 700;
+        [0, 0.22].forEach((off, idx) => {
+          const nStart = startSample + Math.floor(off * sr);
+          const nLen = Math.floor(0.11 * sr);
+          const f = idx === 0 ? f1 : f1 * 0.86;
+          for (let j = 0; j < nLen && (nStart + j) < len; j++) {
+            const p = j / nLen;
+            const env = Math.sin(p * Math.PI);
+            data[nStart + j] += Math.sin((2 * Math.PI * f * (1 + 0.12 * p) * j) / sr) * env * 0.036;
+          }
+        });
+      }
+    }
+
+  } else if (preset === "campfire") {
+    let lastBrown = 0;
+    let lpFlame = 0;
+    for (let i = 0; i < len; i++) {
+      const w = Math.random() * 2 - 1;
+      lastBrown = (lastBrown + 0.022 * w) / 1.022;
+      lpFlame = lpFlame + 0.025 * (lastBrown * 2.6 - lpFlame);
+      const flameBreath = 0.78 + 0.22 * Math.sin((2 * Math.PI * 2 * i) / len) * Math.cos((2 * Math.PI * 5 * i) / len);
+      data[i] = lpFlame * flameBreath * 0.48;
+    }
+
+    const crackleCount = 95;
+    for (let c = 0; c < crackleCount; c++) {
+      const pos = Math.floor(Math.random() * (len - 2000));
+      const burstLen = Math.floor((0.008 + Math.random() * 0.024) * sr);
+      const intensity = 0.14 + Math.random() * 0.34;
+      let bpPrev = 0;
+      for (let j = 0; j < burstLen && (pos + j) < len; j++) {
+        const p = j / burstLen;
+        const env = Math.pow(1 - p, 2.4);
+        const impulse = (Math.random() * 2 - 1);
+        const resonant = impulse - bpPrev * 0.65;
+        bpPrev = impulse;
+        data[pos + j] += resonant * env * intensity;
+      }
+    }
+
+  } else if (preset === "tanpura") {
+    // Hint Tanpura (Sa-Pa-Sa-Sa armonik demlenmesi, 24 sn döngü)
+    const rootF = 136.1; // Om / C# kozmik yoga akordu
+    const fifthF = rootF * 1.498;
+    const octaveF = rootF * 2;
+    const stringCycle = 6 * sr;
+
+    for (let i = 0; i < len; i++) {
+      const cyclePos = i % stringCycle;
+      const pluckIdx = Math.floor(cyclePos / (1.5 * sr));
+      const localT = (cyclePos % (1.5 * sr)) / (1.5 * sr);
+      const pluckEnv = Math.sin(Math.min(1, localT * 10) * (Math.PI / 2)) * Math.pow(1 - localT * 0.75, 1.4);
+
+      const activeF = pluckIdx === 0 ? fifthF : (pluckIdx === 1 ? octaveF : (pluckIdx === 2 ? octaveF * 1.002 : rootF));
+      // Zengin armonik tını (Jivari köprüsü efekti)
+      const h1 = Math.sin((2 * Math.PI * activeF * i) / sr) * 0.45;
+      const h2 = Math.sin((2 * Math.PI * activeF * 2 * i) / sr) * 0.32;
+      const h3 = Math.sin((2 * Math.PI * activeF * 3 * i) / sr) * 0.18;
+      const h4 = Math.sin((2 * Math.PI * activeF * 4 * i) / sr) * 0.08;
+      const bed = Math.sin((2 * Math.PI * rootF * i) / sr) * 0.08;
+
+      data[i] = ((h1 + h2 + h3 + h4) * pluckEnv * 0.22) + bed;
+    }
+
+  } else if (preset === "ambient_pad") {
+    // 432 Hz Sıcak Ambient Meditasyon Pedi (Yavaş nefes alıp veren akorlar)
+    const freqs = [108, 162, 216, 270, 324]; // 432 Hz harmonik dizisi
+    for (let i = 0; i < len; i++) {
+      const t = i / sr;
+      let sample = 0;
+      freqs.forEach((f, idx) => {
+        const lfo = 0.55 + 0.45 * Math.sin((2 * Math.PI * (idx + 1) * i) / len);
+        const detune = Math.sin((2 * Math.PI * (f * 1.003) * t));
+        const main = Math.sin((2 * Math.PI * f * t));
+        sample += (main + detune * 0.6) * lfo * (0.045 / (1 + idx * 0.25));
+      });
+      data[i] = sample;
+    }
+
+  } else if (preset === "zen_harp") {
+    // Pentatonik Meditasyon Arpi / Kalimba (432 Hz akortlu huzurlu notalar)
+    const penta = [216.0, 243.0, 272.5, 324.0, 364.5, 432.0, 486.0, 545.0, 648.0];
+    const notesCount = 14;
+    for (let n = 0; n < notesCount; n++) {
+      const st = Math.floor((0.6 + n * 1.65) * sr);
+      const freq = penta[(n * 3 + Math.floor(Math.random() * 4)) % penta.length];
+      const nLen = Math.floor(3.4 * sr);
+      for (let j = 0; j < nLen && (st + j) < len; j++) {
+        const p = j / nLen;
+        const env = Math.sin(Math.min(1, p * 45) * (Math.PI / 2)) * Math.pow(1 - p, 2.9);
+        const tone = Math.sin((2 * Math.PI * freq * j) / sr) * 0.75 + Math.sin((2 * Math.PI * freq * 2 * j) / sr) * 0.22;
+        data[st + j] += tone * env * 0.11;
+      }
+    }
+
+  } else if (preset === "breath_46") {
+    // Rehberli Yavaş Nefes Ritim Sesi (4 sn Nefes Al + 6 sn Nefes Ver = 10 sn x 3 = 30 sn yerine 20 sn = 2 tam döngü)
+    // 24 sn tamponda 2 adet 12 saniyelik (5 sn al - 7 sn ver) derin pranayama döngüsü
+    const cycleSamples = 12 * sr;
+    const inhaleSamples = 5 * sr;
+    let b0=0, b1=0, b2=0, lpBreath = 0;
+
+    for (let i = 0; i < len; i++) {
+      const w = Math.random() * 2 - 1;
+      b0 = 0.99886 * b0 + w * 0.0555179;
+      b1 = 0.99332 * b1 + w * 0.0750759;
+      b2 = 0.96900 * b2 + w * 0.1538520;
+      const pink = (b0 + b1 + b2 + w * 0.18) * 0.05;
+
+      const posInCycle = i % cycleSamples;
+      let breathCurve = 0;
+      if (posInCycle < inhaleSamples) {
+        // 5 sn yavaşça yükselen nefes alış
+        const p = posInCycle / inhaleSamples;
+        breathCurve = 0.5 - 0.5 * Math.cos(p * Math.PI);
+      } else {
+        // 7 sn uzun, rahatlatıcı nefes veriş
+        const p = (posInCycle - inhaleSamples) / (cycleSamples - inhaleSamples);
+        breathCurve = 0.5 + 0.5 * Math.cos(p * Math.PI);
+      }
+
+      const alpha = 0.03 + breathCurve * 0.11;
+      lpBreath = lpBreath + alpha * (pink - lpBreath);
+      const harmonicGuide = Math.sin((2 * Math.PI * (144 + breathCurve * 36) * i) / sr) * 0.025 * breathCurve;
+      data[i] = lpBreath * (0.35 + breathCurve * 1.45) + harmonicGuide;
+    }
+
+  } else if (preset === "crystal_bowl") {
+    // Kristal Kase Harmonikleri (Saf kuvars rezonansı)
+    const tones = [256, 384, 512, 768];
+    for (let i = 0; i < len; i++) {
+      let s = 0;
+      tones.forEach((f, idx) => {
+        const swell = 0.5 + 0.5 * Math.sin((2 * Math.PI * (idx + 1) * i) / len - idx);
+        const beat = Math.sin((2 * Math.PI * (f + 0.5) * i) / sr);
+        const pure = Math.sin((2 * Math.PI * f * i) / sr);
+        s += (pure + beat * 0.5) * swell * (0.042 / (1 + idx * 0.35));
+      });
+      data[i] = s;
+    }
+
+  } else if (preset === "temple_gong") {
+    // Gece Tapınağı Gong & Hafif Esinti (12 saniyede bir derin tapınak gongu)
+    let lpWind = 0;
+    for (let i = 0; i < len; i++) {
+      const w = (Math.random() * 2 - 1) * 0.025;
+      lpWind = lpWind + 0.03 * (w - lpWind);
+      data[i] = lpWind;
+    }
+
+    const gongHits = [Math.floor(1.0 * sr), Math.floor(13.0 * sr)];
+    gongHits.forEach(st => {
+      const gLen = Math.floor(10.5 * sr);
+      for (let j = 0; j < gLen && (st + j) < len; j++) {
+        const p = j / gLen;
+        const env = Math.sin(Math.min(1, p * 22) * (Math.PI / 2)) * Math.pow(1 - p, 2.3);
+        const shimmer = 1 + 0.004 * Math.sin(j * 0.0012);
+        const gSample =
+          Math.sin((2 * Math.PI * 108 * shimmer * j) / sr) * 0.16 +
+          Math.sin((2 * Math.PI * 162 * j) / sr) * 0.09 +
+          Math.sin((2 * Math.PI * 259.2 * j) / sr) * 0.05 +
+          Math.sin((2 * Math.PI * 432 * j) / sr) * 0.025;
+        data[st + j] += gSample * env;
+      }
+    });
+  }
+
+  // Döngü başı ve sonu arasında 0.05 sn yumuşak çapraz geçiş
+  const fadeSamples = Math.floor(0.05 * sr);
+  for (let i = 0; i < fadeSamples; i++) {
+    const ratio = i / fadeSamples;
+    const tailIdx = len - fadeSamples + i;
+    const blended = data[i] * ratio + data[tailIdx] * (1 - ratio);
+    data[i] = blended;
+    data[tailIdx] = blended;
+  }
+
+  return buffer;
+}
+
+function createSimpleNoiseBuffer(ctx, mode) {
   const bufferSize = 3 * ctx.sampleRate;
   const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
   const data = buffer.getChannelData(0);
-  let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0, lastOut = 0;
-
+  let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
   for (let i = 0; i < bufferSize; i++) {
     const white = Math.random() * 2 - 1;
     if (mode === "pink") {
@@ -3620,10 +4276,6 @@ function createNoiseBuffer(ctx, mode) {
       b5 = -0.7616 * b5 - white * 0.0168980;
       data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.04;
       b6 = white * 0.115926;
-    } else if (mode === "brown") {
-      data[i] = (lastOut + (0.02 * white)) / 1.02;
-      lastOut = data[i];
-      data[i] *= 2.8;
     } else {
       data[i] = white * 0.5;
     }
@@ -3636,49 +4288,27 @@ function startSynth(preset) {
   if (audioCtx.state === "suspended") audioCtx.resume();
 
   masterGain = audioCtx.createGain();
-  masterGain.gain.value = currentVolume;
+  masterGain.gain.setValueAtTime(currentVolume, audioCtx.currentTime);
   masterGain.connect(audioCtx.destination);
 
-  if (preset === "drizzle") {
+  applyHardwareSleepSchedule();
+
+  const bufferedPresets = [
+    "rain_thunder", "forest_birds", "campfire",
+    "tanpura", "ambient_pad", "zen_harp", "breath_46", "crystal_bowl", "temple_gong"
+  ];
+
+  if (bufferedPresets.includes(preset)) {
     const src = audioCtx.createBufferSource();
-    src.buffer = createNoiseBuffer(audioCtx, "pink");
+    src.buffer = buildSeamlessNatureBuffer(audioCtx, preset);
     src.loop = true;
-
-    const filter = audioCtx.createBiquadFilter();
-    filter.type = "lowpass";
-    filter.frequency.value = 480;
-
-    const bedGain = audioCtx.createGain();
-    bedGain.gain.value = 0.38;
-
-    src.connect(filter);
-    filter.connect(bedGain);
-    bedGain.connect(masterGain);
+    src.connect(masterGain);
     src.start();
     activeNodes.push(src);
 
-    const dropTimer = setInterval(() => {
-      if (!audioCtx || activeSoundId !== "s_drizzle") return;
-      const now = audioCtx.currentTime;
-      const osc = audioCtx.createOscillator();
-      const g = audioCtx.createGain();
-      osc.type = "sine";
-      const freq = 750 + Math.random() * 650;
-      osc.frequency.setValueAtTime(freq, now);
-      osc.frequency.exponentialRampToValueAtTime(freq * 1.45, now + 0.09);
-      g.gain.setValueAtTime(0.001, now);
-      g.gain.linearRampToValueAtTime(0.055, now + 0.015);
-      g.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
-      osc.connect(g);
-      g.connect(masterGain);
-      osc.start(now);
-      osc.stop(now + 0.13);
-    }, 340);
-    activeTimers.push(dropTimer);
-
   } else if (preset === "ocean") {
     const src = audioCtx.createBufferSource();
-    src.buffer = createNoiseBuffer(audioCtx, "pink");
+    src.buffer = createSimpleNoiseBuffer(audioCtx, "pink");
     src.loop = true;
 
     const filter = audioCtx.createBiquadFilter();
@@ -3710,7 +4340,7 @@ function startSynth(preset) {
 
   } else if (preset === "breeze") {
     const src = audioCtx.createBufferSource();
-    src.buffer = createNoiseBuffer(audioCtx, "pink");
+    src.buffer = createSimpleNoiseBuffer(audioCtx, "pink");
     src.loop = true;
 
     const filter = audioCtx.createBiquadFilter();
@@ -3737,71 +4367,9 @@ function startSynth(preset) {
     lfo.start();
     activeNodes.push(src, lfo);
 
-  } else if (preset === "birds") {
-    const birdTimer = setInterval(() => {
-      if (!audioCtx || activeSoundId !== "s_birds") return;
-      const notes = 2 + Math.floor(Math.random() * 3);
-      for (let n = 0; n < notes; n++) {
-        const start = audioCtx.currentTime + n * 0.16;
-        const osc = audioCtx.createOscillator();
-        const g = audioCtx.createGain();
-        osc.type = "sine";
-        const baseFreq = 2100 + Math.random() * 1400;
-        osc.frequency.setValueAtTime(baseFreq, start);
-        osc.frequency.exponentialRampToValueAtTime(baseFreq * (0.82 + Math.random() * 0.45), start + 0.11);
-
-        g.gain.setValueAtTime(0.0001, start);
-        g.gain.linearRampToValueAtTime(0.075, start + 0.025);
-        g.gain.exponentialRampToValueAtTime(0.0001, start + 0.13);
-
-        osc.connect(g);
-        g.connect(masterGain);
-        osc.start(start);
-        osc.stop(start + 0.14);
-      }
-    }, 2400);
-    activeTimers.push(birdTimer);
-
-  } else if (preset === "fire") {
-    const src = audioCtx.createBufferSource();
-    src.buffer = createNoiseBuffer(audioCtx, "brown");
-    src.loop = true;
-
-    const filter = audioCtx.createBiquadFilter();
-    filter.type = "lowpass";
-    filter.frequency.value = 180;
-
-    const g = audioCtx.createGain();
-    g.gain.value = 0.32;
-    src.connect(filter);
-    filter.connect(g);
-    g.connect(masterGain);
-    src.start();
-    activeNodes.push(src);
-
-    const crackleTimer = setInterval(() => {
-      if (!audioCtx || !activeSoundId) return;
-      if (Math.random() > 0.45) return;
-      const now = audioCtx.currentTime;
-      const popSrc = audioCtx.createBufferSource();
-      popSrc.buffer = createNoiseBuffer(audioCtx, "white");
-      const hp = audioCtx.createBiquadFilter();
-      hp.type = "bandpass";
-      hp.frequency.value = 1600 + Math.random() * 1800;
-      const pg = audioCtx.createGain();
-      pg.gain.setValueAtTime(0.18, now);
-      pg.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
-      popSrc.connect(hp);
-      hp.connect(pg);
-      pg.connect(masterGain);
-      popSrc.start(now);
-      popSrc.stop(now + 0.04);
-    }, 260);
-    activeTimers.push(crackleTimer);
-
   } else if (preset === "stream") {
     const src = audioCtx.createBufferSource();
-    src.buffer = createNoiseBuffer(audioCtx, "pink");
+    src.buffer = createSimpleNoiseBuffer(audioCtx, "pink");
     src.loop = true;
 
     const bp = audioCtx.createBiquadFilter();
@@ -3826,66 +4394,70 @@ function startSynth(preset) {
     activeNodes.push(src, lfo);
 
   } else if (preset === "crickets") {
-    const cricketTimer = setInterval(() => {
-      if (!audioCtx || activeSoundId !== "s_crickets") return;
+    const sr = audioCtx.sampleRate;
+    const len = 12 * sr;
+    const buf = audioCtx.createBuffer(1, len, sr);
+    const d = buf.getChannelData(0);
+    for (let s = 0; s < len; s += Math.floor(1.35 * sr)) {
       for (let p = 0; p < 3; p++) {
-        const t = audioCtx.currentTime + p * 0.07;
-        const osc = audioCtx.createOscillator();
-        const g = audioCtx.createGain();
-        osc.type = "sine";
-        osc.frequency.value = 4150;
-        g.gain.setValueAtTime(0.0001, t);
-        g.gain.linearRampToValueAtTime(0.035, t + 0.015);
-        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.055);
-        osc.connect(g);
-        g.connect(masterGain);
-        osc.start(t);
-        osc.stop(t + 0.06);
+        const st = s + Math.floor(p * 0.075 * sr);
+        const pLen = Math.floor(0.05 * sr);
+        for (let j = 0; j < pLen && (st + j) < len; j++) {
+          const env = Math.sin((j / pLen) * Math.PI);
+          d[st + j] = Math.sin((2 * Math.PI * 4150 * j) / sr) * env * 0.04;
+        }
       }
-    }, 1350);
-    activeTimers.push(cricketTimer);
+    }
+    const src = audioCtx.createBufferSource();
+    src.buffer = buf;
+    src.loop = true;
+    src.connect(masterGain);
+    src.start();
+    activeNodes.push(src);
 
   } else if (preset === "chimes") {
+    const sr = audioCtx.sampleRate;
+    const len = 18 * sr;
+    const buf = audioCtx.createBuffer(1, len, sr);
+    const d = buf.getChannelData(0);
     const scale = [523.25, 587.33, 659.25, 783.99, 880.0, 1046.5];
-    const chimeTimer = setInterval(() => {
-      if (!audioCtx || activeSoundId !== "s_chimes") return;
-      const now = audioCtx.currentTime;
-      const osc = audioCtx.createOscillator();
-      const g = audioCtx.createGain();
-      osc.type = "sine";
-      osc.frequency.value = scale[Math.floor(Math.random() * scale.length)];
-      g.gain.setValueAtTime(0.0001, now);
-      g.gain.linearRampToValueAtTime(0.09, now + 0.02);
-      g.gain.exponentialRampToValueAtTime(0.0001, now + 2.4);
-      osc.connect(g);
-      g.connect(masterGain);
-      osc.start(now);
-      osc.stop(now + 2.5);
-    }, 2800);
-    activeTimers.push(chimeTimer);
+    for (let c = 0; c < 7; c++) {
+      const st = Math.floor((0.3 + c * 2.4) * sr);
+      const freq = scale[Math.floor(Math.random() * scale.length)];
+      const cLen = Math.floor(2.3 * sr);
+      for (let j = 0; j < cLen && (st + j) < len; j++) {
+        const env = Math.pow(1 - (j / cLen), 2.8);
+        d[st + j] += Math.sin((2 * Math.PI * freq * j) / sr) * env * 0.085;
+      }
+    }
+    const src = audioCtx.createBufferSource();
+    src.buffer = buf;
+    src.loop = true;
+    src.connect(masterGain);
+    src.start();
+    activeNodes.push(src);
 
   } else if (preset === "bowl") {
-    const playBowl = () => {
-      if (!audioCtx || activeSoundId !== "s_bowl") return;
-      const now = audioCtx.currentTime;
-      [216, 432, 648].forEach((freq, idx) => {
-        const osc = audioCtx.createOscillator();
-        const g = audioCtx.createGain();
-        osc.type = "sine";
-        osc.frequency.value = freq;
-        const amp = idx === 0 ? 0.14 : (idx === 1 ? 0.07 : 0.03);
-        g.gain.setValueAtTime(0.0001, now);
-        g.gain.linearRampToValueAtTime(amp, now + 0.35);
-        g.gain.exponentialRampToValueAtTime(0.0001, now + 6.5);
-        osc.connect(g);
-        g.connect(masterGain);
-        osc.start(now);
-        osc.stop(now + 6.6);
-      });
-    };
-    playBowl();
-    const bowlTimer = setInterval(playBowl, 7200);
-    activeTimers.push(bowlTimer);
+    const sr = audioCtx.sampleRate;
+    const len = 8 * sr;
+    const buf = audioCtx.createBuffer(1, len, sr);
+    const d = buf.getChannelData(0);
+    const bLen = Math.floor(7.2 * sr);
+    for (let j = 0; j < bLen; j++) {
+      const p = j / bLen;
+      const env = Math.sin(Math.min(1, p * 14) * (Math.PI / 2)) * Math.pow(1 - p, 2.2);
+      d[j] = (
+        Math.sin((2 * Math.PI * 216 * j) / sr) * 0.14 +
+        Math.sin((2 * Math.PI * 432 * j) / sr) * 0.07 +
+        Math.sin((2 * Math.PI * 648 * j) / sr) * 0.03
+      ) * env;
+    }
+    const src = audioCtx.createBufferSource();
+    src.buffer = buf;
+    src.loop = true;
+    src.connect(masterGain);
+    src.start();
+    activeNodes.push(src);
 
   } else if (preset === "theta") {
     [432, 436].forEach(freq => {
@@ -3907,10 +4479,14 @@ function stopAllSounds() {
     try { n.stop(); n.disconnect(); } catch (e) {}
   });
   activeNodes = [];
-  activeTimers.forEach(t => clearInterval(t));
-  activeTimers = [];
   htmlAudio.pause();
   htmlAudio.src = "";
+
+  const ytCard = document.getElementById("ytPlayerCard");
+  const ytFrame = document.getElementById("ytFrameContainer");
+  if (ytCard) ytCard.classList.remove("visible");
+  if (ytFrame) ytFrame.innerHTML = "";
+
   activeSoundId = null;
   updateSoundHeader();
   renderSoundsGrid();
@@ -3931,11 +4507,26 @@ function toggleSound(id) {
 
   if (sound.type === "synth") {
     startSynth(sound.preset);
+  } else if (sound.type === "yt_playlist" || sound.type === "yt_video") {
+    const ytCard = document.getElementById("ytPlayerCard");
+    const ytTitle = document.getElementById("ytNowPlayingTitle");
+    const ytFrame = document.getElementById("ytFrameContainer");
+
+    let embedSrc = "";
+    if (sound.type === "yt_playlist") {
+      embedSrc = `https://www.youtube.com/embed/videoseries?list=${encodeURIComponent(sound.listId)}&autoplay=1&playsinline=1&rel=0`;
+    } else {
+      embedSrc = `https://www.youtube.com/embed/${encodeURIComponent(sound.videoId)}?autoplay=1&playsinline=1&loop=1&playlist=${encodeURIComponent(sound.videoId)}&rel=0`;
+    }
+
+    ytTitle.textContent = `▶️ ${sound.name}`;
+    ytFrame.innerHTML = `<iframe src="${embedSrc}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+    ytCard.classList.add("visible");
   } else {
     htmlAudio.src = sound.url;
     htmlAudio.volume = currentVolume;
     htmlAudio.play().catch(() => {
-      startSynth(sound.fallbackPreset || "drizzle");
+      showToast("Ses dosyası oynatılamadı, bağlantıyı kontrol edin");
     });
   }
   updateSoundHeader(sound.name);
@@ -3976,8 +4567,31 @@ function updateSoundHeader(name) {
 function changeVolume(val) {
   currentVolume = Number(val) / 100;
   document.getElementById("volLabel").textContent = "%" + val;
-  if (masterGain) masterGain.gain.value = currentVolume;
+  if (masterGain && audioCtx) {
+    masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+    masterGain.gain.setValueAtTime(currentVolume, audioCtx.currentTime);
+    applyHardwareSleepSchedule();
+  }
   htmlAudio.volume = currentVolume;
+}
+
+/* EKRAN KİLİTLİYKEN BİLE ÇALIŞAN DONANIM UYKU ZAMANLAYICISI */
+function applyHardwareSleepSchedule() {
+  if (!sleepDeadlineMs) return;
+  const remainingSec = (sleepDeadlineMs - Date.now()) / 1000;
+  if (remainingSec <= 0) {
+    stopAllSounds();
+    return;
+  }
+  if (masterGain && audioCtx) {
+    const now = audioCtx.currentTime;
+    const stopAt = now + remainingSec;
+    const fadeStart = Math.max(now, stopAt - 4);
+    masterGain.gain.cancelScheduledValues(now);
+    masterGain.gain.setValueAtTime(currentVolume, now);
+    masterGain.gain.setValueAtTime(currentVolume, fadeStart);
+    masterGain.gain.linearRampToValueAtTime(0.0001, stopAt);
+  }
 }
 
 function setSleepTimer(mins) {
@@ -3987,26 +4601,79 @@ function setSleepTimer(mins) {
 
   const st = document.getElementById("timerStatus");
   if (mins === 0) {
+    sleepDeadlineMs = 0;
     st.textContent = "";
+    if (masterGain && audioCtx) {
+      masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+      masterGain.gain.setValueAtTime(currentVolume, audioCtx.currentTime);
+    }
     return;
   }
-  st.textContent = `${mins} dakika sonra ses otomatik kapanacak.`;
+
+  sleepDeadlineMs = Date.now() + mins * 60000;
+  applyHardwareSleepSchedule();
+
+  const labelStr = mins === 60 ? "1 saat" : `${mins} dakika`;
+  st.textContent = `${labelStr} sonra ses yumuşakça kısılarak otomatik kapanacak.`;
+
   sleepTimerId = setTimeout(() => {
     stopAllSounds();
-    st.textContent = "Zamanlayıcı tamamlandı.";
+    sleepDeadlineMs = 0;
+    st.textContent = "Uyku zamanlayıcısı tamamlandı.";
   }, mins * 60000);
 }
+
+/* EKRAN UYANDIĞINDA SÜRE DOLMUŞSA ANINDA DURDUR */
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && sleepDeadlineMs > 0 && Date.now() >= sleepDeadlineMs) {
+    stopAllSounds();
+    sleepDeadlineMs = 0;
+    const st = document.getElementById("timerStatus");
+    if (st) st.textContent = "Uyku zamanlayıcısı tamamlandı.";
+  }
+});
 
 function addCustomSound() {
   const name = document.getElementById("customSoundName").value.trim();
   const url = document.getElementById("customSoundUrl").value.trim();
   if (!name || !url) return showToast("Lütfen ses adı ve bağlantısını girin");
-  state.customSounds.push({ id: "cs_" + Date.now(), name, icon: "🎶", type: "url", url });
+
+  const ytParsed = parseYouTubeUrl(url);
+  if (ytParsed) {
+    state.customSounds.push({
+      id: "cs_" + Date.now(),
+      name,
+      icon: ytParsed.kind === "yt_playlist" ? "📺" : "▶️",
+      type: ytParsed.kind,
+      listId: ytParsed.listId || "",
+      videoId: ytParsed.videoId || "",
+      url
+    });
+    showToast(ytParsed.kind === "yt_playlist" ? "Canlı YouTube listesi koleksiyona eklendi" : "YouTube videosu eklendi");
+  } else {
+    state.customSounds.push({
+      id: "cs_" + Date.now(),
+      name,
+      icon: "🎶",
+      type: "url",
+      url
+    });
+    showToast("Ses dosyası koleksiyona eklendi");
+  }
+
   saveState();
   document.getElementById("customSoundName").value = "";
   document.getElementById("customSoundUrl").value = "";
   renderSoundsGrid();
-  showToast("Ses koleksiyona eklendi");
+}
+
+function deleteCustomSound(id) {
+  if (!confirm("Bu özel sesi/listeyi silmek istediğinize emin misiniz?")) return;
+  if (activeSoundId === id) stopAllSounds();
+  state.customSounds = state.customSounds.filter(s => s.id !== id);
+  saveState();
+  renderSoundsGrid();
+  showToast("Silindi");
 }
 
 /* --- VERİ DIŞA / İÇE AKTARMA --- */
